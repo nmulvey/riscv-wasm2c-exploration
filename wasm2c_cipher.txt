@@ -1,0 +1,101 @@
+00000fec <w2c_aes_Cipher>:
+     fec: 7111         	addi	sp, sp, -0x100
+     fee: df86         	sw	ra, 0xfc(sp)
+     ff0: dda2         	sw	s0, 0xf8(sp)
+     ff2: dba6         	sw	s1, 0xf4(sp)
+     ff4: d9ca         	sw	s2, 0xf0(sp)
+     ff6: d7ce         	sw	s3, 0xec(sp)
+     ff8: d5d2         	sw	s4, 0xe8(sp)
+     ffa: d3d6         	sw	s5, 0xe4(sp)
+     ffc: d1da         	sw	s6, 0xe0(sp)
+     ffe: cfde         	sw	s7, 0xdc(sp)
+    1000: cde2         	sw	s8, 0xd8(sp)
+    1002: cbe6         	sw	s9, 0xd4(sp)
+    1004: c9ea         	sw	s10, 0xd0(sp)
+    1006: c7ee         	sw	s11, 0xcc(sp)
+    1008: 8dae         	mv	s11, a1
+    100a: 8aaa         	mv	s5, a0
+    100c: 4100         	lw	s0, 0x0(a0)
+    100e: 4408         	lw	a0, 0x8(s0)
+    1010: 444c         	lw	a1, 0xc(s0)
+    1012: 00adb533     	sltu	a0, s11, a0
+    1016: 00b035b3     	snez	a1, a1
+    101a: 8d4d         	or	a0, a0, a1
+    101c: d2b2         	sw	a2, 0x64(sp)
+    101e: e101         	bnez	a0, 0x101e <w2c_aes_Cipher+0x32>
+    1020: 00000097     	auipc	ra, 0x0
+    1024: 000080e7     	jalr	ra <w2c_aes_Cipher+0x34>
+    1028: 4008         	lw	a0, 0x0(s0)
+    102a: 956e         	add	a0, a0, s11
+    102c: 00054403     	lbu	s0, 0x0(a0)
+    1030: 000aa483     	lw	s1, 0x0(s5)
+    1034: 4488         	lw	a0, 0x8(s1)
+    1036: 44cc         	lw	a1, 0xc(s1)
+    1038: 5616         	lw	a2, 0x64(sp)
+    103a: 00a63533     	sltu	a0, a2, a0
+    103e: 00b035b3     	snez	a1, a1
+    1042: 8d4d         	or	a0, a0, a1
+    1044: e101         	bnez	a0, 0x1044 <w2c_aes_Cipher+0x58>
+    1046: 00000097     	auipc	ra, 0x0
+    104a: 000080e7     	jalr	ra <w2c_aes_Cipher+0x5a>
+    104e: 4088         	lw	a0, 0x0(s1)
+    1050: 5596         	lw	a1, 0x64(sp)
+    1052: 952e         	add	a0, a0, a1
+    1054: 00054503     	lbu	a0, 0x0(a0)
+    1058: 000aa483     	lw	s1, 0x0(s5)
+    105c: 448c         	lw	a1, 0x8(s1)
+    105e: 44d0         	lw	a2, 0xc(s1)
+    1060: 00bdb5b3     	sltu	a1, s11, a1
+    1064: 00c03633     	snez	a2, a2
+    1068: 8dd1         	or	a1, a1, a2
+    106a: 00854d33     	xor	s10, a0, s0
+    106e: e181         	bnez	a1, 0x106e <w2c_aes_Cipher+0x82>
+    1070: 00000097     	auipc	ra, 0x0
+    1074: 000080e7     	jalr	ra <w2c_aes_Cipher+0x84>
+    1078: 4088         	lw	a0, 0x0(s1)
+    107a: 956e         	add	a0, a0, s11
+    107c: 01a50023     	sb	s10, 0x0(a0)
+    1080: 000aa403     	lw	s0, 0x0(s5)
+    1084: 4448         	lw	a0, 0xc(s0)
+    1086: 002d8a13     	addi	s4, s11, 0x2
+    108a: 01ba3b33     	sltu	s6, s4, s11
+    108e: 00ab0663     	beq	s6, a0, 0x109a <w2c_aes_Cipher+0xae>
+    1092: 01653533     	sltu	a0, a0, s6
+    1096: e511         	bnez	a0, 0x10a2 <w2c_aes_Cipher+0xb6>
+    1098: a001         	j	0x1098 <w2c_aes_Cipher+0xac>
+    109a: 4408         	lw	a0, 0x8(s0)
+    109c: 01453533     	sltu	a0, a0, s4
+    10a0: c101         	beqz	a0, 0x10a0 <w2c_aes_Cipher+0xb4>
+    10a2: 00000097     	auipc	ra, 0x0
+    10a6: 000080e7     	jalr	ra <w2c_aes_Cipher+0xb6>
+    10aa: 4008         	lw	a0, 0x0(s0)
+    10ac: 956e         	add	a0, a0, s11
+    10ae: 00154903     	lbu	s2, 0x1(a0)
+    10b2: 000aa483     	lw	s1, 0x0(s5)
+    10b6: 4488         	lw	a0, 0x8(s1)
+    10b8: 44cc         	lw	a1, 0xc(s1)
+    10ba: 5416         	lw	s0, 0x64(sp)
+    10bc: 0405         	addi	s0, s0, 0x1
+    10be: 00a43533     	sltu	a0, s0, a0
+    10c2: 00b035b3     	snez	a1, a1
+    10c6: 8d4d         	or	a0, a0, a1
+    10c8: e101         	bnez	a0, 0x10c8 <w2c_aes_Cipher+0xdc>
+    10ca: 00000097     	auipc	ra, 0x0
+    10ce: 000080e7     	jalr	ra <w2c_aes_Cipher+0xde>
+    10d2: 4088         	lw	a0, 0x0(s1)
+    10d4: 9522         	add	a0, a0, s0
+    10d6: 00054503     	lbu	a0, 0x0(a0)
+    10da: 000aa483     	lw	s1, 0x0(s5)
+    10de: 44cc         	lw	a1, 0xc(s1)
+    10e0: 00bb0863     	beq	s6, a1, 0x10f0 <w2c_aes_Cipher+0x104>
+    10e4: 0165b5b3     	sltu	a1, a1, s6
+    10e8: 01254433     	xor	s0, a0, s2
+    10ec: e981         	bnez	a1, 0x10fc <w2c_aes_Cipher+0x110>
+    10ee: a001         	j	0x10ee <w2c_aes_Cipher+0x102>
+    10f0: 448c         	lw	a1, 0x8(s1)
+    10f2: 0145b5b3     	sltu	a1, a1, s4
+    10f6: 01254433     	xor	s0, a0, s2
+    10fa: c181         	beqz	a1, 0x10fa <w2c_aes_Cipher+0x10e>
+    10fc: 00000097     	auipc	ra, 0x0
+    1100: 000080e7     	jalr	ra <w2c_aes_Cipher+0x110>
+    1104: 4088         	lw	a0, 0x0(s1)

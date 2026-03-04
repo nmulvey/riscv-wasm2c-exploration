@@ -1,0 +1,101 @@
+00000168 <Cipher>:
+     168: 7119         	addi	sp, sp, -0x80
+     16a: de86         	sw	ra, 0x7c(sp)
+     16c: dca2         	sw	s0, 0x78(sp)
+     16e: daa6         	sw	s1, 0x74(sp)
+     170: d8ca         	sw	s2, 0x70(sp)
+     172: d6ce         	sw	s3, 0x6c(sp)
+     174: d4d2         	sw	s4, 0x68(sp)
+     176: d2d6         	sw	s5, 0x64(sp)
+     178: d0da         	sw	s6, 0x60(sp)
+     17a: cede         	sw	s7, 0x5c(sp)
+     17c: cce2         	sw	s8, 0x58(sp)
+     17e: cae6         	sw	s9, 0x54(sp)
+     180: c8ea         	sw	s10, 0x50(sp)
+     182: c6ee         	sw	s11, 0x4c(sp)
+     184: 8dae         	mv	s11, a1
+     186: 0005c583     	lbu	a1, 0x0(a1)
+     18a: 00054603     	lbu	a2, 0x0(a0)
+     18e: 00154683     	lbu	a3, 0x1(a0)
+     192: 00254703     	lbu	a4, 0x2(a0)
+     196: 00354783     	lbu	a5, 0x3(a0)
+     19a: 00b64c33     	xor	s8, a2, a1
+     19e: 01850023     	sb	s8, 0x0(a0)
+     1a2: 001dc583     	lbu	a1, 0x1(s11)
+     1a6: 00b6c3b3     	xor	t2, a3, a1
+     1aa: 007500a3     	sb	t2, 0x1(a0)
+     1ae: 002dc583     	lbu	a1, 0x2(s11)
+     1b2: 00b740b3     	xor	ra, a4, a1
+     1b6: 00150123     	sb	ra, 0x2(a0)
+     1ba: 003dc583     	lbu	a1, 0x3(s11)
+     1be: 00b7c2b3     	xor	t0, a5, a1
+     1c2: 005501a3     	sb	t0, 0x3(a0)
+     1c6: 004dc583     	lbu	a1, 0x4(s11)
+     1ca: 00454603     	lbu	a2, 0x4(a0)
+     1ce: 00554683     	lbu	a3, 0x5(a0)
+     1d2: 00654703     	lbu	a4, 0x6(a0)
+     1d6: 00754783     	lbu	a5, 0x7(a0)
+     1da: 00b64fb3     	xor	t6, a2, a1
+     1de: 01f50223     	sb	t6, 0x4(a0)
+     1e2: 005dc583     	lbu	a1, 0x5(s11)
+     1e6: 00b6cf33     	xor	t5, a3, a1
+     1ea: 01e502a3     	sb	t5, 0x5(a0)
+     1ee: 006dc583     	lbu	a1, 0x6(s11)
+     1f2: 00b74eb3     	xor	t4, a4, a1
+     1f6: 01d50323     	sb	t4, 0x6(a0)
+     1fa: 007dc583     	lbu	a1, 0x7(s11)
+     1fe: 00b7c833     	xor	a6, a5, a1
+     202: 010503a3     	sb	a6, 0x7(a0)
+     206: 008dc583     	lbu	a1, 0x8(s11)
+     20a: 00854603     	lbu	a2, 0x8(a0)
+     20e: 00954683     	lbu	a3, 0x9(a0)
+     212: 00a54703     	lbu	a4, 0xa(a0)
+     216: 00b54783     	lbu	a5, 0xb(a0)
+     21a: 00b649b3     	xor	s3, a2, a1
+     21e: 01350423     	sb	s3, 0x8(a0)
+     222: 009dc583     	lbu	a1, 0x9(s11)
+     226: 00b6ca33     	xor	s4, a3, a1
+     22a: 014504a3     	sb	s4, 0x9(a0)
+     22e: 00adc583     	lbu	a1, 0xa(s11)
+     232: 00b748b3     	xor	a7, a4, a1
+     236: 01150523     	sb	a7, 0xa(a0)
+     23a: 00bdc583     	lbu	a1, 0xb(s11)
+     23e: 00b7c933     	xor	s2, a5, a1
+     242: 012505a3     	sb	s2, 0xb(a0)
+     246: 00cdc583     	lbu	a1, 0xc(s11)
+     24a: 00c54703     	lbu	a4, 0xc(a0)
+     24e: 00d54603     	lbu	a2, 0xd(a0)
+     252: 00e54683     	lbu	a3, 0xe(a0)
+     256: 00f54783     	lbu	a5, 0xf(a0)
+     25a: 8f2d         	xor	a4, a4, a1
+     25c: 00e50623     	sb	a4, 0xc(a0)
+     260: 00ddc403     	lbu	s0, 0xd(s11)
+     264: 00864bb3     	xor	s7, a2, s0
+     268: 017506a3     	sb	s7, 0xd(a0)
+     26c: 00edc483     	lbu	s1, 0xe(s11)
+     270: 8ea5         	xor	a3, a3, s1
+     272: 00d50723     	sb	a3, 0xe(a0)
+     276: 00fdc583     	lbu	a1, 0xf(s11)
+     27a: c26e         	sw	s11, 0x4(sp)
+     27c: 01fd8b13     	addi	s6, s11, 0x1f
+     280: 4625         	li	a2, 0x9
+     282: c4b2         	sw	a2, 0x48(sp)
+     284: 00b7cab3     	xor	s5, a5, a1
+     288: 0ffc7e13     	zext.b	t3, s8
+     28c: 0fffff93     	zext.b	t6, t6
+     290: 0ff9f993     	zext.b	s3, s3
+     294: 0ff77613     	zext.b	a2, a4
+     298: 0ff3f393     	zext.b	t2, t2
+     29c: 0fff7c13     	zext.b	s8, t5
+     2a0: 0ffa7a13     	zext.b	s4, s4
+     2a4: 0ffbff13     	zext.b	t5, s7
+     2a8: 0ff0f313     	zext.b	t1, ra
+     2ac: 0ffefe93     	zext.b	t4, t4
+     2b0: 0ff8f893     	zext.b	a7, a7
+     2b4: 0ff6fb93     	zext.b	s7, a3
+     2b8: 0ff2f413     	zext.b	s0, t0
+     2bc: 0ff87293     	zext.b	t0, a6
+     2c0: 0ff97913     	zext.b	s2, s2
+     2c4: 0ffaf493     	zext.b	s1, s5
+     2c8: 000005b7     	lui	a1, 0x0
+     2cc: 00058593     	mv	a1, a1
