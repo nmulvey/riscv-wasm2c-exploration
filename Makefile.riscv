@@ -1,0 +1,81 @@
+# Makefile for CoreMark RISC-V native vs wasm2c code size comparison
+# Usage:
+#   make -f Makefile.riscv native    # build native rv32imac objects
+#   make -f Makefile.riscv wasm      # compile to wasm
+#   make -f Makefile.riscv wasm2c    # convert wasm to C and compile to rv32imac
+#   make -f Makefile.riscv size      # print size comparison
+#   make -f Makefile.riscv insns     # print instruction pattern counts
+#   make -f Makefile.riscv all       # run everything
+#   make -f Makefile.riscv clean     # remove generated files
+
+WASI_SDK     = $(HOME)/wabt/wasi-sdk-24.0-arm64-macos
+WABT_BIN     = $(HOME)/wabt/bin
+WASM2C       = $(WABT_BIN)/wasm2c
+
+CC_RISCV     = riscv64-unknown-elf-gcc
+MARCH        = rv32imac_zicsr
+MABI         = ilp32
+RISCV_FLAGS  = -O2 -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles
+
+WASI_CC      = $(WASI_SDK)/bin/clang
+WASI_FLAGS   = -O2 --sysroot=$(WASI_SDK)/share/wasi-sysroot \
+               -DPERFORMANCE_RUN=1 -DITERATIONS=100 \
+               -DFLAGS_STR=\"wasm\" -Iwasm -I.
+
+CORE_SRCS    = core_list_join.c core_main.c core_matrix.c core_state.c core_util.c
+NATIVE_OBJS  = core_list_join.o core_main.o core_matrix.o core_portme.o \
+               core_state.o core_util.o
+
+.PHONY: all native wasm wasm2c size insns clean
+
+all: native wasm wasm2c size insns
+
+# --- Native RISC-V ---
+native: $(NATIVE_OBJS)
+
+%.o: %.c
+	$(CC_RISCV) $(RISCV_FLAGS) -Iriscv -I. -DPERFORMANCE_RUN=1 -DITERATIONS=100 -c $< -o $@
+
+core_portme.o: riscv/core_portme.c
+	$(CC_RISCV) $(RISCV_FLAGS) -Iriscv -I. -DPERFORMANCE_RUN=1 -DITERATIONS=100 -c $< -o $@
+
+# --- WebAssembly ---
+coremark.wasm: $(CORE_SRCS) wasm/core_portme.c
+	$(WASI_CC) $(WASI_FLAGS) -o $@ $^
+
+wasm: coremark.wasm
+
+# --- wasm2c -> RISC-V ---
+coremark_converted.c: coremark.wasm
+	$(WASM2C) $< -o $@
+
+coremark_wasm2c.o: coremark_converted.c wasm-rt.h
+	$(CC_RISCV) $(RISCV_FLAGS) -I. -c $< -o $@
+
+wasm2c: coremark_wasm2c.o
+
+# --- Size comparison ---
+size: native wasm2c
+	@echo "\n=== Native RISC-V ==="
+	@riscv64-unknown-elf-size $(NATIVE_OBJS)
+	@echo "\n=== wasm2c ==="
+	@riscv64-unknown-elf-size coremark_wasm2c.o
+
+# --- Instruction pattern counts ---
+insns: native wasm2c
+	@echo "\n=== Instruction counts: native vs wasm2c ==="
+	@printf "%-12s %8s %8s\n" "Instruction" "Native" "wasm2c"
+	@printf "%-12s %8s %8s\n" "lbu" \
+		$$(riscv64-unknown-elf-objdump -d $(NATIVE_OBJS) | grep -c "lbu") \
+		$$(riscv64-unknown-elf-objdump -d coremark_wasm2c.o | grep -c "lbu")
+	@printf "%-12s %8s %8s\n" "bltu" \
+		$$(riscv64-unknown-elf-objdump -d $(NATIVE_OBJS) | grep -c "bltu") \
+		$$(riscv64-unknown-elf-objdump -d coremark_wasm2c.o | grep -c "bltu")
+	@printf "%-12s %8s %8s\n" "bgeu" \
+		$$(riscv64-unknown-elf-objdump -d $(NATIVE_OBJS) | grep -c "bgeu") \
+		$$(riscv64-unknown-elf-objdump -d coremark_wasm2c.o | grep -c "bgeu")
+
+# --- Clean ---
+clean:
+	rm -f $(NATIVE_OBJS) coremark.wasm coremark_converted.c \
+	      coremark_converted.h coremark_wasm2c.o

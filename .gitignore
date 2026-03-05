@@ -1,2 +1,7 @@
 wasi-sdk.tar.gz
 wasi-sdk-24.0-arm64-macos/
+*.o
+*.wasm
+coremark_converted.c
+coremark_converted.h
+coremark/
