@@ -1,0 +1,848 @@
+[
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/apply-names.cc.o -c /Users/nicole/wabt/src/apply-names.cc",
+  "file": "/Users/nicole/wabt/src/apply-names.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/apply-names.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binary-reader-ir.cc.o -c /Users/nicole/wabt/src/binary-reader-ir.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader-ir.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binary-reader-ir.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binary-reader-logging.cc.o -c /Users/nicole/wabt/src/binary-reader-logging.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader-logging.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binary-reader-logging.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binary-reader.cc.o -c /Users/nicole/wabt/src/binary-reader.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binary-reader.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binary-writer-spec.cc.o -c /Users/nicole/wabt/src/binary-writer-spec.cc",
+  "file": "/Users/nicole/wabt/src/binary-writer-spec.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binary-writer-spec.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binary-writer.cc.o -c /Users/nicole/wabt/src/binary-writer.cc",
+  "file": "/Users/nicole/wabt/src/binary-writer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binary-writer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binary.cc.o -c /Users/nicole/wabt/src/binary.cc",
+  "file": "/Users/nicole/wabt/src/binary.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binary.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/binding-hash.cc.o -c /Users/nicole/wabt/src/binding-hash.cc",
+  "file": "/Users/nicole/wabt/src/binding-hash.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/binding-hash.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/color.cc.o -c /Users/nicole/wabt/src/color.cc",
+  "file": "/Users/nicole/wabt/src/color.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/color.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/common.cc.o -c /Users/nicole/wabt/src/common.cc",
+  "file": "/Users/nicole/wabt/src/common.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/common.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/config.cc.o -c /Users/nicole/wabt/src/config.cc",
+  "file": "/Users/nicole/wabt/src/config.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/config.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/decompiler.cc.o -c /Users/nicole/wabt/src/decompiler.cc",
+  "file": "/Users/nicole/wabt/src/decompiler.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/decompiler.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/error-formatter.cc.o -c /Users/nicole/wabt/src/error-formatter.cc",
+  "file": "/Users/nicole/wabt/src/error-formatter.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/error-formatter.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/expr-visitor.cc.o -c /Users/nicole/wabt/src/expr-visitor.cc",
+  "file": "/Users/nicole/wabt/src/expr-visitor.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/expr-visitor.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/feature.cc.o -c /Users/nicole/wabt/src/feature.cc",
+  "file": "/Users/nicole/wabt/src/feature.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/feature.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/filenames.cc.o -c /Users/nicole/wabt/src/filenames.cc",
+  "file": "/Users/nicole/wabt/src/filenames.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/filenames.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/generate-names.cc.o -c /Users/nicole/wabt/src/generate-names.cc",
+  "file": "/Users/nicole/wabt/src/generate-names.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/generate-names.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/ir-util.cc.o -c /Users/nicole/wabt/src/ir-util.cc",
+  "file": "/Users/nicole/wabt/src/ir-util.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/ir-util.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/ir.cc.o -c /Users/nicole/wabt/src/ir.cc",
+  "file": "/Users/nicole/wabt/src/ir.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/ir.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/leb128.cc.o -c /Users/nicole/wabt/src/leb128.cc",
+  "file": "/Users/nicole/wabt/src/leb128.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/leb128.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/lexer-source-line-finder.cc.o -c /Users/nicole/wabt/src/lexer-source-line-finder.cc",
+  "file": "/Users/nicole/wabt/src/lexer-source-line-finder.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/lexer-source-line-finder.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/lexer-source.cc.o -c /Users/nicole/wabt/src/lexer-source.cc",
+  "file": "/Users/nicole/wabt/src/lexer-source.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/lexer-source.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/literal.cc.o -c /Users/nicole/wabt/src/literal.cc",
+  "file": "/Users/nicole/wabt/src/literal.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/literal.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/opcode-code-table.c.o -c /Users/nicole/wabt/src/opcode-code-table.c",
+  "file": "/Users/nicole/wabt/src/opcode-code-table.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/opcode-code-table.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/opcode.cc.o -c /Users/nicole/wabt/src/opcode.cc",
+  "file": "/Users/nicole/wabt/src/opcode.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/opcode.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/option-parser.cc.o -c /Users/nicole/wabt/src/option-parser.cc",
+  "file": "/Users/nicole/wabt/src/option-parser.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/option-parser.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/resolve-names.cc.o -c /Users/nicole/wabt/src/resolve-names.cc",
+  "file": "/Users/nicole/wabt/src/resolve-names.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/resolve-names.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/sha256.cc.o -c /Users/nicole/wabt/src/sha256.cc",
+  "file": "/Users/nicole/wabt/src/sha256.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/sha256.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/shared-validator.cc.o -c /Users/nicole/wabt/src/shared-validator.cc",
+  "file": "/Users/nicole/wabt/src/shared-validator.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/shared-validator.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/stream.cc.o -c /Users/nicole/wabt/src/stream.cc",
+  "file": "/Users/nicole/wabt/src/stream.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/stream.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/token.cc.o -c /Users/nicole/wabt/src/token.cc",
+  "file": "/Users/nicole/wabt/src/token.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/token.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/tracing.cc.o -c /Users/nicole/wabt/src/tracing.cc",
+  "file": "/Users/nicole/wabt/src/tracing.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/tracing.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/type-checker.cc.o -c /Users/nicole/wabt/src/type-checker.cc",
+  "file": "/Users/nicole/wabt/src/type-checker.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/type-checker.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/utf8.cc.o -c /Users/nicole/wabt/src/utf8.cc",
+  "file": "/Users/nicole/wabt/src/utf8.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/utf8.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/validator.cc.o -c /Users/nicole/wabt/src/validator.cc",
+  "file": "/Users/nicole/wabt/src/validator.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/validator.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/wast-lexer.cc.o -c /Users/nicole/wabt/src/wast-lexer.cc",
+  "file": "/Users/nicole/wabt/src/wast-lexer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/wast-lexer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/wast-parser.cc.o -c /Users/nicole/wabt/src/wast-parser.cc",
+  "file": "/Users/nicole/wabt/src/wast-parser.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/wast-parser.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/wat-writer.cc.o -c /Users/nicole/wabt/src/wat-writer.cc",
+  "file": "/Users/nicole/wabt/src/wat-writer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/wat-writer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/c-writer.cc.o -c /Users/nicole/wabt/src/c-writer.cc",
+  "file": "/Users/nicole/wabt/src/c-writer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/c-writer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/prebuilt/wasm2c_header_top.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_header_top.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_header_top.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/prebuilt/wasm2c_header_top.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/prebuilt/wasm2c_header_bottom.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_header_bottom.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_header_bottom.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/prebuilt/wasm2c_header_bottom.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/prebuilt/wasm2c_source_includes.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_source_includes.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_source_includes.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/prebuilt/wasm2c_source_includes.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/prebuilt/wasm2c_source_declarations.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_source_declarations.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_source_declarations.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/prebuilt/wasm2c_source_declarations.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/prebuilt/wasm2c_simd_source_declarations.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_simd_source_declarations.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_simd_source_declarations.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/prebuilt/wasm2c_simd_source_declarations.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/prebuilt/wasm2c_atomicops_source_declarations.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_atomicops_source_declarations.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_atomicops_source_declarations.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/prebuilt/wasm2c_atomicops_source_declarations.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/interp/binary-reader-interp.cc.o -c /Users/nicole/wabt/src/interp/binary-reader-interp.cc",
+  "file": "/Users/nicole/wabt/src/interp/binary-reader-interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/interp/binary-reader-interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/interp/interp.cc.o -c /Users/nicole/wabt/src/interp/interp.cc",
+  "file": "/Users/nicole/wabt/src/interp/interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/interp/interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/interp/interp-util.cc.o -c /Users/nicole/wabt/src/interp/interp-util.cc",
+  "file": "/Users/nicole/wabt/src/interp/interp-util.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/interp/interp-util.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt.dir/src/interp/istream.cc.o -c /Users/nicole/wabt/src/interp/istream.cc",
+  "file": "/Users/nicole/wabt/src/interp/istream.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt.dir/src/interp/istream.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-rt-impl.dir/wasm2c/wasm-rt-impl.c.o -c /Users/nicole/wabt/wasm2c/wasm-rt-impl.c",
+  "file": "/Users/nicole/wabt/wasm2c/wasm-rt-impl.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-rt-impl.dir/wasm2c/wasm-rt-impl.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-rt-impl.dir/wasm2c/wasm-rt-exceptions-impl.c.o -c /Users/nicole/wabt/wasm2c/wasm-rt-exceptions-impl.c",
+  "file": "/Users/nicole/wabt/wasm2c/wasm-rt-exceptions-impl.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-rt-impl.dir/wasm2c/wasm-rt-exceptions-impl.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-rt-impl.dir/wasm2c/wasm-rt-mem-impl.c.o -c /Users/nicole/wabt/wasm2c/wasm-rt-mem-impl.c",
+  "file": "/Users/nicole/wabt/wasm2c/wasm-rt-mem-impl.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-rt-impl.dir/wasm2c/wasm-rt-mem-impl.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/apply-names.cc.o -c /Users/nicole/wabt/src/apply-names.cc",
+  "file": "/Users/nicole/wabt/src/apply-names.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/apply-names.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binary-reader-ir.cc.o -c /Users/nicole/wabt/src/binary-reader-ir.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader-ir.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binary-reader-ir.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binary-reader-logging.cc.o -c /Users/nicole/wabt/src/binary-reader-logging.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader-logging.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binary-reader-logging.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binary-reader.cc.o -c /Users/nicole/wabt/src/binary-reader.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binary-reader.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binary-writer-spec.cc.o -c /Users/nicole/wabt/src/binary-writer-spec.cc",
+  "file": "/Users/nicole/wabt/src/binary-writer-spec.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binary-writer-spec.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binary-writer.cc.o -c /Users/nicole/wabt/src/binary-writer.cc",
+  "file": "/Users/nicole/wabt/src/binary-writer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binary-writer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binary.cc.o -c /Users/nicole/wabt/src/binary.cc",
+  "file": "/Users/nicole/wabt/src/binary.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binary.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/binding-hash.cc.o -c /Users/nicole/wabt/src/binding-hash.cc",
+  "file": "/Users/nicole/wabt/src/binding-hash.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/binding-hash.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/color.cc.o -c /Users/nicole/wabt/src/color.cc",
+  "file": "/Users/nicole/wabt/src/color.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/color.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/common.cc.o -c /Users/nicole/wabt/src/common.cc",
+  "file": "/Users/nicole/wabt/src/common.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/common.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/config.cc.o -c /Users/nicole/wabt/src/config.cc",
+  "file": "/Users/nicole/wabt/src/config.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/config.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/decompiler.cc.o -c /Users/nicole/wabt/src/decompiler.cc",
+  "file": "/Users/nicole/wabt/src/decompiler.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/decompiler.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/error-formatter.cc.o -c /Users/nicole/wabt/src/error-formatter.cc",
+  "file": "/Users/nicole/wabt/src/error-formatter.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/error-formatter.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/expr-visitor.cc.o -c /Users/nicole/wabt/src/expr-visitor.cc",
+  "file": "/Users/nicole/wabt/src/expr-visitor.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/expr-visitor.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/feature.cc.o -c /Users/nicole/wabt/src/feature.cc",
+  "file": "/Users/nicole/wabt/src/feature.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/feature.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/filenames.cc.o -c /Users/nicole/wabt/src/filenames.cc",
+  "file": "/Users/nicole/wabt/src/filenames.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/filenames.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/generate-names.cc.o -c /Users/nicole/wabt/src/generate-names.cc",
+  "file": "/Users/nicole/wabt/src/generate-names.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/generate-names.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/ir-util.cc.o -c /Users/nicole/wabt/src/ir-util.cc",
+  "file": "/Users/nicole/wabt/src/ir-util.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/ir-util.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/ir.cc.o -c /Users/nicole/wabt/src/ir.cc",
+  "file": "/Users/nicole/wabt/src/ir.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/ir.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/leb128.cc.o -c /Users/nicole/wabt/src/leb128.cc",
+  "file": "/Users/nicole/wabt/src/leb128.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/leb128.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/lexer-source-line-finder.cc.o -c /Users/nicole/wabt/src/lexer-source-line-finder.cc",
+  "file": "/Users/nicole/wabt/src/lexer-source-line-finder.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/lexer-source-line-finder.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/lexer-source.cc.o -c /Users/nicole/wabt/src/lexer-source.cc",
+  "file": "/Users/nicole/wabt/src/lexer-source.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/lexer-source.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/literal.cc.o -c /Users/nicole/wabt/src/literal.cc",
+  "file": "/Users/nicole/wabt/src/literal.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/literal.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64 -fPIC   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm.dir/src/opcode-code-table.c.o -c /Users/nicole/wabt/src/opcode-code-table.c",
+  "file": "/Users/nicole/wabt/src/opcode-code-table.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/opcode-code-table.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/opcode.cc.o -c /Users/nicole/wabt/src/opcode.cc",
+  "file": "/Users/nicole/wabt/src/opcode.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/opcode.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/option-parser.cc.o -c /Users/nicole/wabt/src/option-parser.cc",
+  "file": "/Users/nicole/wabt/src/option-parser.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/option-parser.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/resolve-names.cc.o -c /Users/nicole/wabt/src/resolve-names.cc",
+  "file": "/Users/nicole/wabt/src/resolve-names.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/resolve-names.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/sha256.cc.o -c /Users/nicole/wabt/src/sha256.cc",
+  "file": "/Users/nicole/wabt/src/sha256.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/sha256.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/shared-validator.cc.o -c /Users/nicole/wabt/src/shared-validator.cc",
+  "file": "/Users/nicole/wabt/src/shared-validator.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/shared-validator.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/stream.cc.o -c /Users/nicole/wabt/src/stream.cc",
+  "file": "/Users/nicole/wabt/src/stream.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/stream.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/token.cc.o -c /Users/nicole/wabt/src/token.cc",
+  "file": "/Users/nicole/wabt/src/token.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/token.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/tracing.cc.o -c /Users/nicole/wabt/src/tracing.cc",
+  "file": "/Users/nicole/wabt/src/tracing.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/tracing.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/type-checker.cc.o -c /Users/nicole/wabt/src/type-checker.cc",
+  "file": "/Users/nicole/wabt/src/type-checker.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/type-checker.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/utf8.cc.o -c /Users/nicole/wabt/src/utf8.cc",
+  "file": "/Users/nicole/wabt/src/utf8.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/utf8.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/validator.cc.o -c /Users/nicole/wabt/src/validator.cc",
+  "file": "/Users/nicole/wabt/src/validator.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/validator.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/wast-lexer.cc.o -c /Users/nicole/wabt/src/wast-lexer.cc",
+  "file": "/Users/nicole/wabt/src/wast-lexer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/wast-lexer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/wast-parser.cc.o -c /Users/nicole/wabt/src/wast-parser.cc",
+  "file": "/Users/nicole/wabt/src/wast-parser.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/wast-parser.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/wat-writer.cc.o -c /Users/nicole/wabt/src/wat-writer.cc",
+  "file": "/Users/nicole/wabt/src/wat-writer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/wat-writer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/c-writer.cc.o -c /Users/nicole/wabt/src/c-writer.cc",
+  "file": "/Users/nicole/wabt/src/c-writer.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/c-writer.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/prebuilt/wasm2c_header_top.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_header_top.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_header_top.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/prebuilt/wasm2c_header_top.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/prebuilt/wasm2c_header_bottom.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_header_bottom.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_header_bottom.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/prebuilt/wasm2c_header_bottom.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/prebuilt/wasm2c_source_includes.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_source_includes.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_source_includes.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/prebuilt/wasm2c_source_includes.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/prebuilt/wasm2c_source_declarations.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_source_declarations.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_source_declarations.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/prebuilt/wasm2c_source_declarations.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/prebuilt/wasm2c_simd_source_declarations.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_simd_source_declarations.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_simd_source_declarations.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/prebuilt/wasm2c_simd_source_declarations.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/prebuilt/wasm2c_atomicops_source_declarations.cc.o -c /Users/nicole/wabt/src/prebuilt/wasm2c_atomicops_source_declarations.cc",
+  "file": "/Users/nicole/wabt/src/prebuilt/wasm2c_atomicops_source_declarations.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/prebuilt/wasm2c_atomicops_source_declarations.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/interp/binary-reader-interp.cc.o -c /Users/nicole/wabt/src/interp/binary-reader-interp.cc",
+  "file": "/Users/nicole/wabt/src/interp/binary-reader-interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/interp/binary-reader-interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/interp/interp.cc.o -c /Users/nicole/wabt/src/interp/interp.cc",
+  "file": "/Users/nicole/wabt/src/interp/interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/interp/interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/interp/interp-util.cc.o -c /Users/nicole/wabt/src/interp/interp-util.cc",
+  "file": "/Users/nicole/wabt/src/interp/interp-util.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/interp/interp-util.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/interp/istream.cc.o -c /Users/nicole/wabt/src/interp/istream.cc",
+  "file": "/Users/nicole/wabt/src/interp/istream.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/interp/istream.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -DWASM_API_EXTERN=\"__attribute__((visibility(\\\"default\\\")))\" -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Dwasm_EXPORTS -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64 -fPIC -fvisibility=hidden   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -Wno-old-style-cast -o CMakeFiles/wasm.dir/src/interp/interp-wasm-c-api.cc.o -c /Users/nicole/wabt/src/interp/interp-wasm-c-api.cc",
+  "file": "/Users/nicole/wabt/src/interp/interp-wasm-c-api.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm.dir/src/interp/interp-wasm-c-api.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wat2wasm.dir/src/tools/wat2wasm.cc.o -c /Users/nicole/wabt/src/tools/wat2wasm.cc",
+  "file": "/Users/nicole/wabt/src/tools/wat2wasm.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wat2wasm.dir/src/tools/wat2wasm.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wast2json.dir/src/tools/wast2json.cc.o -c /Users/nicole/wabt/src/tools/wast2json.cc",
+  "file": "/Users/nicole/wabt/src/tools/wast2json.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wast2json.dir/src/tools/wast2json.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm2wat.dir/src/tools/wasm2wat.cc.o -c /Users/nicole/wabt/src/tools/wasm2wat.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm2wat.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm2wat.dir/src/tools/wasm2wat.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm2c.dir/src/tools/wasm2c.cc.o -c /Users/nicole/wabt/src/tools/wasm2c.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm2c.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm2c.dir/src/tools/wasm2c.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-stats.dir/src/tools/wasm-stats.cc.o -c /Users/nicole/wabt/src/tools/wasm-stats.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm-stats.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-stats.dir/src/tools/wasm-stats.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-stats.dir/src/binary-reader-stats.cc.o -c /Users/nicole/wabt/src/binary-reader-stats.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader-stats.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-stats.dir/src/binary-reader-stats.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-objdump.dir/src/tools/wasm-objdump.cc.o -c /Users/nicole/wabt/src/tools/wasm-objdump.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm-objdump.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-objdump.dir/src/tools/wasm-objdump.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-objdump.dir/src/binary-reader-objdump.cc.o -c /Users/nicole/wabt/src/binary-reader-objdump.cc",
+  "file": "/Users/nicole/wabt/src/binary-reader-objdump.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-objdump.dir/src/binary-reader-objdump.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-interp.dir/src/tools/wasm-interp.cc.o -c /Users/nicole/wabt/src/tools/wasm-interp.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm-interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-interp.dir/src/tools/wasm-interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/spectest-interp.dir/src/tools/spectest-interp.cc.o -c /Users/nicole/wabt/src/tools/spectest-interp.cc",
+  "file": "/Users/nicole/wabt/src/tools/spectest-interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/spectest-interp.dir/src/tools/spectest-interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wat-desugar.dir/src/tools/wat-desugar.cc.o -c /Users/nicole/wabt/src/tools/wat-desugar.cc",
+  "file": "/Users/nicole/wabt/src/tools/wat-desugar.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wat-desugar.dir/src/tools/wat-desugar.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-validate.dir/src/tools/wasm-validate.cc.o -c /Users/nicole/wabt/src/tools/wasm-validate.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm-validate.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-validate.dir/src/tools/wasm-validate.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-strip.dir/src/tools/wasm-strip.cc.o -c /Users/nicole/wabt/src/tools/wasm-strip.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm-strip.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-strip.dir/src/tools/wasm-strip.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wasm-decompile.dir/src/tools/wasm-decompile.cc.o -c /Users/nicole/wabt/src/tools/wasm-decompile.cc",
+  "file": "/Users/nicole/wabt/src/tools/wasm-decompile.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-decompile.dir/src/tools/wasm-decompile.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/gtest.dir/third_party/gtest/googletest/src/gtest-all.cc.o -c /Users/nicole/wabt/third_party/gtest/googletest/src/gtest-all.cc",
+  "file": "/Users/nicole/wabt/third_party/gtest/googletest/src/gtest-all.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/gtest.dir/third_party/gtest/googletest/src/gtest-all.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/gtest_main.dir/third_party/gtest/googletest/src/gtest_main.cc.o -c /Users/nicole/wabt/third_party/gtest/googletest/src/gtest_main.cc",
+  "file": "/Users/nicole/wabt/third_party/gtest/googletest/src/gtest_main.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/gtest_main.dir/third_party/gtest/googletest/src/gtest_main.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/hexfloat_test.dir/src/literal.cc.o -c /Users/nicole/wabt/src/literal.cc",
+  "file": "/Users/nicole/wabt/src/literal.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/hexfloat_test.dir/src/literal.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/hexfloat_test.dir/src/test-hexfloat.cc.o -c /Users/nicole/wabt/src/test-hexfloat.cc",
+  "file": "/Users/nicole/wabt/src/test-hexfloat.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/hexfloat_test.dir/src/test-hexfloat.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-binary-reader.cc.o -c /Users/nicole/wabt/src/test-binary-reader.cc",
+  "file": "/Users/nicole/wabt/src/test-binary-reader.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-binary-reader.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-interp.cc.o -c /Users/nicole/wabt/src/test-interp.cc",
+  "file": "/Users/nicole/wabt/src/test-interp.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-interp.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-intrusive-list.cc.o -c /Users/nicole/wabt/src/test-intrusive-list.cc",
+  "file": "/Users/nicole/wabt/src/test-intrusive-list.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-intrusive-list.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-literal.cc.o -c /Users/nicole/wabt/src/test-literal.cc",
+  "file": "/Users/nicole/wabt/src/test-literal.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-literal.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-option-parser.cc.o -c /Users/nicole/wabt/src/test-option-parser.cc",
+  "file": "/Users/nicole/wabt/src/test-option-parser.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-option-parser.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-filenames.cc.o -c /Users/nicole/wabt/src/test-filenames.cc",
+  "file": "/Users/nicole/wabt/src/test-filenames.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-filenames.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-utf8.cc.o -c /Users/nicole/wabt/src/test-utf8.cc",
+  "file": "/Users/nicole/wabt/src/test-utf8.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-utf8.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/c++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -Wold-style-cast -fno-exceptions -std=c++17 -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -o CMakeFiles/wabt-unittests.dir/src/test-wast-parser.cc.o -c /Users/nicole/wabt/src/test-wast-parser.cc",
+  "file": "/Users/nicole/wabt/src/test-wast-parser.cc",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wabt-unittests.dir/src/test-wast-parser.cc.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-callback.dir/third_party/wasm-c-api/example/callback.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/callback.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/callback.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-callback.dir/third_party/wasm-c-api/example/callback.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-finalize.dir/third_party/wasm-c-api/example/finalize.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/finalize.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/finalize.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-finalize.dir/third_party/wasm-c-api/example/finalize.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-global.dir/third_party/wasm-c-api/example/global.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/global.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/global.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-global.dir/third_party/wasm-c-api/example/global.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-hello.dir/third_party/wasm-c-api/example/hello.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/hello.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/hello.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-hello.dir/third_party/wasm-c-api/example/hello.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-hostref.dir/third_party/wasm-c-api/example/hostref.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/hostref.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/hostref.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-hostref.dir/third_party/wasm-c-api/example/hostref.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-multi.dir/third_party/wasm-c-api/example/multi.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/multi.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/multi.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-multi.dir/third_party/wasm-c-api/example/multi.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-memory.dir/third_party/wasm-c-api/example/memory.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/memory.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/memory.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-memory.dir/third_party/wasm-c-api/example/memory.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-reflect.dir/third_party/wasm-c-api/example/reflect.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/reflect.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/reflect.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-reflect.dir/third_party/wasm-c-api/example/reflect.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-serialize.dir/third_party/wasm-c-api/example/serialize.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/serialize.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/serialize.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-serialize.dir/third_party/wasm-c-api/example/serialize.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-start.dir/third_party/wasm-c-api/example/start.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/start.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/start.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-start.dir/third_party/wasm-c-api/example/start.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-table.dir/third_party/wasm-c-api/example/table.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/table.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/table.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-table.dir/third_party/wasm-c-api/example/table.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-trap.dir/third_party/wasm-c-api/example/trap.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/trap.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/trap.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-trap.dir/third_party/wasm-c-api/example/trap.c.o"
+},
+{
+  "directory": "/Users/nicole/wabt/build",
+  "command": "/usr/bin/cc -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/Users/nicole/wabt/third_party/gtest/googletest -I/Users/nicole/wabt/third_party/gtest/googletest/include -I/Users/nicole/wabt/third_party/wasm-c-api/include -I/Users/nicole/wabt/include -I/Users/nicole/wabt/build/include -isystem /usr/local/Cellar/openssl@3/3.6.1/include  -arch x86_64   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -Wimplicit-fallthrough -std=gnu11 -Wno-pointer-to-int-cast -o CMakeFiles/wasm-c-api-threads.dir/third_party/wasm-c-api/example/threads.c.o -c /Users/nicole/wabt/third_party/wasm-c-api/example/threads.c",
+  "file": "/Users/nicole/wabt/third_party/wasm-c-api/example/threads.c",
+  "output": "/Users/nicole/wabt/build/CMakeFiles/wasm-c-api-threads.dir/third_party/wasm-c-api/example/threads.c.o"
+}
+]

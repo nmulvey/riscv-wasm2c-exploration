@@ -5,3 +5,5 @@ wasi-sdk-24.0-arm64-macos/
 coremark_converted.c
 coremark_converted.h
 coremark/
+riscv-wasm2c-exploration/
+third_party/
