@@ -33,6 +33,10 @@
         CFLAGS_FOR_TARGET = "-O2 -march=rv32imac -mabi=ilp32 -mcmodel=medany";
       });
 
+      patchedWabt = pkgs: pkgs.wabt.overrideAttrs (oldAttrs: {
+        patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
+      });
+
       mkPackages = system:
         let
           pkgs = pkgsFor.${system};
@@ -50,6 +54,7 @@
             nativeBuildInputs = [
               crossPkgs.stdenv.cc
               (targetNewlib crossPkgs)
+              (patchedWabt pkgs)
             ];
             makeFlags = [
               "TOOLCHAIN_PREFIX=riscv32-none-elf-"
@@ -88,6 +93,7 @@
               pkgs.qemu
               pkgs.gnumake
               pkgs.gdb
+              (patchedWabt pkgs)
             ];
             CROSS_COMPILE = "riscv32-none-elf-";
             NEWLIB_PREFIX = "${targetNewlib crossPkgs}";

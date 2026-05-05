@@ -1,0 +1,46 @@
+From 780ae0621b2118f54af48ba757276a5f63b32282 Mon Sep 17 00:00:00 2001
+From: Leon Schuermann <leon@is.currently.online>
+Date: Tue, 5 May 2026 16:47:34 -0400
+Subject: [PATCH] wasm2c/wasm-rt: allow overriding WASM_RT_THREAD_LOCAL
+
+Freestanding / bare-metal targets have no TLS runtime, so _Thread_local &
+co. link-fail. This lets these users opt out of thread local storage (in a
+single-threaded setting) or define their own thread-local storage class
+specifier.
+---
+ wasm2c/wasm-rt.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/wasm2c/wasm-rt.h b/wasm2c/wasm-rt.h
+index c6859f73..c114ebf1 100644
+--- a/wasm2c/wasm-rt.h
++++ b/wasm2c/wasm-rt.h
+@@ -75,6 +75,14 @@ extern "C" {
+ 
+ #endif
+ 
++/**
++ * Freestanding / bare-metal targets have no TLS runtime, so _Thread_local &
++ * co. link-fail. This lets these users opt out of thread local storage (in a
++ * single-threaded setting) or define their own thread-local storage class
++ * specifier.
++ */
++#ifndef WASM_RT_THREAD_LOCAL
++
+ #ifdef WASM_RT_C11_AVAILABLE
+ #define WASM_RT_THREAD_LOCAL _Thread_local
+ #elif defined(_MSC_VER)
+@@ -86,6 +94,8 @@ extern "C" {
+ #define WASM_RT_THREAD_LOCAL
+ #endif
+ 
++#endif
++
+ /**
+  * If enabled, perform additional sanity checks in the generated wasm2c code and
+  * wasm2c runtime. This is useful to enable on debug builds.
+
+base-commit: 77a95c8c82325ac3a716f9aacbe0a3822718f3cf
+-- 
+2.51.2
+
