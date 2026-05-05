@@ -9,30 +9,55 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
       pkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
 
-      # nixpkgs ships newlib for riscv32-none-elf built only for rv32gc/ilp32d.
-      # Picolibc 1.8.9 currently fails to build on this channel (gcc 15 +
-      # crt0-semihost CFI issue), so we use newlib's semihost.specs which
-      # provides the same printf/exit-via-semihosting story.
+      # Build all of our targets for this particular RISC-V architecture.
+      targetMarch = "rv32imac";
+      targetMabi  = "ilp32";
+
+      # Using `crossSystem` forces a rebuild of the entire compiler toolchain
+      # (stage 0 and stage 1). We instead build just newlib with our correct
+      # target spec, and override the compiler flags in the Makefile:
       #
-      # TODO: why can't we use rv32i here?
-      flakeMarch = "rv32gc";
-      flakeMabi  = "ilp32d";
+      # crossFor = forAllSystems (system: import nixpkgs {
+      #   inherit system;
+      #   crossSystem = {
+      #     config = "riscv32-none-elf";
+      #     libc = "newlib";
+      #     gcc = {
+      #       arch = targetMarch;
+      #       abi  = targetMabi;
+      #     };
+      #   };
+      # });
+
+      targetNewlib = crossPkgs: crossPkgs.newlib.overrideAttrs (_old: {
+        CFLAGS_FOR_TARGET = "-O2 -march=rv32imac -mabi=ilp32 -mcmodel=medany";
+      });
 
       mkPackages = system:
         let
           pkgs = pkgsFor.${system};
-          cross = pkgs.pkgsCross.riscv32-embedded;
+
+          # Use the Nix prebuilt stdenv, then override newlib:
+          crossPkgs = pkgs.pkgsCross.riscv32-embedded;
+
+          # If it didn't want to override newlib we'd use:
+          # crossPkgs = crossFor system;
         in {
           hello = pkgs.stdenv.mkDerivation {
             pname = "qemu-rv32-hello";
             version = "0.1.0";
             src = ./.;
-            nativeBuildInputs = [ cross.stdenv.cc ];
-            makeFlags = [
-              "CROSS_COMPILE=riscv32-none-elf-"
-              "MARCH=${flakeMarch}"
-              "MABI=${flakeMabi}"
+            nativeBuildInputs = [
+              crossPkgs.stdenv.cc
+              (targetNewlib crossPkgs)
             ];
+            makeFlags = [
+              "TOOLCHAIN_PREFIX=riscv32-none-elf-"
+              "NEWLIB_PREFIX=${targetNewlib crossPkgs}"
+              "MARCH=${targetMarch}"
+              "MABI=${targetMabi}"
+            ];
+            hardeningDisable = [ "relro" "bindnow" ];
             installPhase = ''
               mkdir -p $out/bin
               cp build/hello.elf $out/bin/
@@ -53,18 +78,22 @@
       devShells = forAllSystems (system:
         let
           pkgs = pkgsFor.${system};
-          cross = pkgs.pkgsCross.riscv32-embedded;
+          crossPkgs = pkgs.pkgsCross.riscv32-embedded;
+          # crossPkgs = crossFor.${system};
         in {
           default = pkgs.mkShell {
             packages = [
-              cross.stdenv.cc
+              crossPkgs.stdenv.cc
+              (targetNewlib crossPkgs)
               pkgs.qemu
               pkgs.gnumake
               pkgs.gdb
             ];
             CROSS_COMPILE = "riscv32-none-elf-";
-            MARCH = flakeMarch;
-            MABI  = flakeMabi;
+            NEWLIB_PREFIX = "${targetNewlib crossPkgs}";
+            MARCH = targetMarch;
+            MABI  = targetMabi;
+            hardeningDisable = [ "relro" "bindnow" ];
           };
         });
 

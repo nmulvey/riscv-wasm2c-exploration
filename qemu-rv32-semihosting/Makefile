@@ -1,29 +1,15 @@
-# Bare-metal RISC-V32 hello-world for QEMU `virt`.
-#
-#   make           # build build/hello.elf
-#   make run       # run it under qemu-system-riscv32 (semihosted, exits cleanly)
-#   make clean
-#
-# Toolchain selection (override on the command line or in env):
-#   CROSS_COMPILE  prefix for the cross toolchain. Auto-detected from the first
-#                  of riscv32-none-elf-gcc / riscv64-unknown-elf-gcc on PATH.
-#   MARCH/MABI     RISC-V arch and ABI. Defaults match the HiFive1 Rev B target
-#                  Nicole has been using; the Nix devShell overrides to
-#                  rv32gc/ilp32d to match the libc that nixpkgs ships.
-#   QEMU           qemu-system-riscv32 binary.
-
-ifndef CROSS_COMPILE
+ifndef TOOLCHAIN_PREFIX
   ifneq (,$(shell command -v riscv32-none-elf-gcc 2>/dev/null))
-    CROSS_COMPILE := riscv32-none-elf-
+    TOOLCHAIN_PREFIX := riscv32-none-elf-
   else ifneq (,$(shell command -v riscv64-unknown-elf-gcc 2>/dev/null))
-    CROSS_COMPILE := riscv64-unknown-elf-
+    TOOLCHAIN_PREFIX := riscv64-unknown-elf-
   else
-    $(error No RISC-V cross toolchain on PATH. Set CROSS_COMPILE or run `nix develop`.)
+    $(error No RISC-V cross toolchain on PATH. Set TOOLCHAIN_PREFIX or run `nix develop`.)
   endif
 endif
 
-CC      := $(CROSS_COMPILE)gcc
-SIZE    := $(CROSS_COMPILE)size
+CC   := $(TOOLCHAIN_PREFIX)gcc
+SIZE := $(TOOLCHAIN_PREFIX)size
 
 MARCH ?= rv32imac
 MABI  ?= ilp32
@@ -35,33 +21,50 @@ ARCHFLAGS := -march=$(MARCH) -mabi=$(MABI) -mcmodel=medany
 CFLAGS    := $(ARCHFLAGS) -O2 -g -ffunction-sections -fdata-sections \
              -Wall -Wextra -Wno-unused-parameter
 ASFLAGS   := $(ARCHFLAGS)
-LDFLAGS   := $(ARCHFLAGS) -nostartfiles -T link.ld \
-             -Wl,--gc-sections -Wl,-Map=$(BUILD)/hello.map \
+LDFLAGS   := $(ARCHFLAGS) -nostartfiles  -T src/link.ld \
+             -Wl,--no-warn-rwx-segments -Wl,--gc-sections \
              -specs=semihost.specs
 
-OBJS  := $(BUILD)/crt0.o $(BUILD)/main.o
-ELF   := $(BUILD)/hello.elf
+# The user may pass `NEWLIB_PREFIX` to force compiling and linking against a
+# custom newlib libc build. This is useful when the system one isn't compiled
+# with the right options, or the compiler isn't built with a multilib newlib.
+ifdef NEWLIB_PREFIX
+    CFLAGS  += -nolibc \
+               -I$(NEWLIB_PREFIX)/riscv32-none-elf/include
+    LDFLAGS += -L$(NEWLIB_PREFIX)/riscv32-none-elf/lib \
+               -lc -lsemihost
+endif
 
-.PHONY: all run clean
+TESTS := $(notdir $(wildcard tests/*))
+ELFS  := $(foreach t,$(TESTS),$(BUILD)/$(t)/$(t))
 
-all: $(ELF)
+COMMON_OBJS := $(BUILD)/crt0.o
 
-$(BUILD):
-	mkdir -p $(BUILD)
+.PHONY: all clean $(foreach t,$(TESTS),run-$(t))
 
-$(BUILD)/%.o: src/%.S | $(BUILD)
+all: $(ELFS)
+
+$(BUILD)/crt0.o: src/crt0.S
+	mkdir -p $(dir $@)
 	$(CC) $(ASFLAGS) -c $< -o $@
 
-$(BUILD)/%.o: src/%.c | $(BUILD)
+$(BUILD)/%/main.o: tests/%/main.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(ELF): $(OBJS) link.ld | $(BUILD)
-	$(CC) $(LDFLAGS) $(OBJS) -o $@
+define TEST_RULES
+$(BUILD)/$(1)/$(1): $(COMMON_OBJS) $(BUILD)/$(1)/main.o
+	mkdir -p $$(dir $$@)
+	$(CC) $(LDFLAGS) $$^ -o $$@
 	@echo
-	@$(SIZE) $@
+	@$(SIZE) $$@
 
-run: $(ELF)
-	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $(ELF)
+.PHONY: run-$(1)
+run-$(1): $(BUILD)/$(1)/$(1)
+	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $$<
+endef
+
+$(foreach t,$(TESTS),$(eval $(call TEST_RULES,$(t))))
 
 clean:
 	rm -rf $(BUILD)
