@@ -1,0 +1,4 @@
+Starting wasm2c test
+runtime init done
+instantiate done
+wasm2c result: 42

@@ -4,12 +4,18 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, treefmt-nix }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs { inherit system; };
       inherit (pkgs) lib;
+
+      treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
       # Build all of our targets for this particular RISC-V architecture.
       targetMarch = "rv32imac";
@@ -91,6 +97,29 @@
         }
       );
 
+      # `nix flake check` runs each test under QEMU and diffs its output
+      # against tests/<test>/expected.txt. The check fails (with a unified
+      # diff) if they don't match. The `formatting` check enforces treefmt.
+      checks = (lib.genAttrs' testApps (testName: lib.nameValuePair
+        "qemu-${testName}"
+        (pkgs.runCommand "check-qemu-${testName}" {
+          nativeBuildInputs = [ pkgs.qemu ];
+          expected = ./tests + "/${testName}/expected.txt";
+        } ''
+          qemu-system-riscv32 \
+            -machine virt -bios none -nographic -semihosting \
+            -kernel ${builtTestApps}/bin/${testName} \
+            </dev/null >actual.txt
+          diff -u "$expected" actual.txt
+          touch $out
+        '')
+      )) // {
+        formatting = treefmtEval.config.build.check self;
+      };
+
+      # `nix fmt` runs the treefmt wrapper across the tree.
+      formatter = treefmtEval.config.build.wrapper;
+
       devShells.default = pkgs.mkShell {
         packages = [
           crossPkgs.stdenv.cc
@@ -101,7 +130,7 @@
           pkgs.gdb
         ];
         CROSS_COMPILE = "riscv32-none-elf-";
-        NEWLIB_PREFIX = "${targetNewlib crossPkgs}";
+        NEWLIB_PREFIX = "${targetNewlib}";
         MARCH = targetMarch;
         MABI  = targetMabi;
         hardeningDisable = [ "relro" "bindnow" ];
