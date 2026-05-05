@@ -101,7 +101,7 @@ $(BUILD)/$(1)/$(1): $(COMMON_OBJS) $(BUILD)/$(1)/main.o $$(EXTRA_OBJS_$(1))
 
 # QEMU target:
 .PHONY: run-$(1)
-run-$(1): $(BUILD)/$(1)/$(1)
+qemu-$(1): $(BUILD)/$(1)/$(1)
 	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $$<
 endef
 
