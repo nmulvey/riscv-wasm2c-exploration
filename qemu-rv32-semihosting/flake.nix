@@ -1,13 +1,15 @@
 {
   description = "Bare-metal rv32 hello-world for QEMU `virt` with semihosting.";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
 
-  outputs = { self, nixpkgs }:
-    let
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-      pkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs { inherit system; };
+      inherit (pkgs) lib;
 
       # Build all of our targets for this particular RISC-V architecture.
       targetMarch = "rv32imac";
@@ -29,97 +31,80 @@
       #   };
       # });
 
-      targetNewlib = crossPkgs: crossPkgs.newlib.overrideAttrs (_old: {
+      # Use the Nix prebuilt stdenv, then override newlib:
+      crossPkgs = pkgs.pkgsCross.riscv32-embedded;
+
+      targetNewlib = crossPkgs.newlib.overrideAttrs (_old: {
         CFLAGS_FOR_TARGET = "-O2 -march=rv32imac -mabi=ilp32 -mcmodel=medany";
       });
 
-      patchedWabt = pkgs: pkgs.wabt.overrideAttrs (oldAttrs: {
+      patchedWabt = pkgs.wabt.overrideAttrs (oldAttrs: {
         patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
       });
 
-      mkPackages = system:
-        let
-          pkgs = pkgsFor.${system};
+      testApps = [
+        "00_semihosting-hello-world"
+        "01_constant"
+      ];
 
-          # Use the Nix prebuilt stdenv, then override newlib:
-          crossPkgs = pkgs.pkgsCross.riscv32-embedded;
-
-          # If it didn't want to override newlib we'd use:
-          # crossPkgs = crossFor system;
-        in {
-          hello = pkgs.stdenv.mkDerivation {
-            pname = "qemu-rv32-hello";
-            version = "0.1.0";
-            src = ./.;
-            nativeBuildInputs = [
-              crossPkgs.stdenv.cc
-              (targetNewlib crossPkgs)
-              (patchedWabt pkgs)
-            ];
-            makeFlags = [
-              "TOOLCHAIN_PREFIX=riscv32-none-elf-"
-              "NEWLIB_PREFIX=${targetNewlib crossPkgs}"
-              "MARCH=${targetMarch}"
-              "MABI=${targetMabi}"
-            ];
-            hardeningDisable = [ "relro" "bindnow" ];
-            installPhase = ''
+      builtTestApps = pkgs.stdenv.mkDerivation {
+        pname = "qemu-rv32-semihosting-wasm-tests";
+        version = "0.1.0";
+        src = ./.;
+        nativeBuildInputs = [
+          crossPkgs.stdenv.cc
+          targetNewlib
+          patchedWabt
+        ];
+        makeFlags = [
+          "TOOLCHAIN_PREFIX=riscv32-none-elf-"
+          "NEWLIB_PREFIX=${targetNewlib}"
+          "MARCH=${targetMarch}"
+          "MABI=${targetMabi}"
+        ];
+        hardeningDisable = [ "relro" "bindnow" ];
+        installPhase = ''
               mkdir -p $out/bin
-              cp build/hello.elf $out/bin/
+              ${
+                lib.concatStringsSep "\n" (
+                  lib.map (testName: ''
+                    cp ./build/${testName}/${testName} $out/bin/
+                  '') testApps
+                )
+              }
             '';
-          };
-
-          run-hello = pkgs.writeShellApplication {
-            name = "run-hello";
+      };
+    in {
+      apps = lib.genAttrs' testApps (testName: lib.nameValuePair
+        "qemu-${testName}"
+        {
+          type = "app";
+          program = "${pkgs.writeShellApplication {
+            name = "qemu-${testName}";
             runtimeInputs = [ pkgs.qemu ];
             text = ''
               exec qemu-system-riscv32 \
                 -machine virt -bios none -nographic -semihosting \
-                -kernel ${self.packages.${system}.hello}/bin/hello.elf "$@"
+                -kernel ${builtTestApps}/bin/${testName} "$@"
             '';
-          };
-        };
-    in {
-      devShells = forAllSystems (system:
-        let
-          pkgs = pkgsFor.${system};
-          crossPkgs = pkgs.pkgsCross.riscv32-embedded;
-          # crossPkgs = crossFor.${system};
-        in {
-          default = pkgs.mkShell {
-            packages = [
-              crossPkgs.stdenv.cc
-              (targetNewlib crossPkgs)
-              pkgs.qemu
-              pkgs.gnumake
-              pkgs.gdb
-              (patchedWabt pkgs)
-            ];
-            CROSS_COMPILE = "riscv32-none-elf-";
-            NEWLIB_PREFIX = "${targetNewlib crossPkgs}";
-            MARCH = targetMarch;
-            MABI  = targetMabi;
-            hardeningDisable = [ "relro" "bindnow" ];
-          };
-        });
+          }}/bin/qemu-${testName}";
+        }
+      );
 
-      packages = forAllSystems (system:
-        let p = mkPackages system; in {
-          default = p.hello;
-          hello = p.hello;
-          run-hello = p.run-hello;
-        });
-
-      apps = forAllSystems (system:
-        let p = mkPackages system; in {
-          default = {
-            type = "app";
-            program = "${p.run-hello}/bin/run-hello";
-          };
-          run = {
-            type = "app";
-            program = "${p.run-hello}/bin/run-hello";
-          };
-        });
-    };
+      devShells.default = pkgs.mkShell {
+        packages = [
+          crossPkgs.stdenv.cc
+          targetNewlib
+          patchedWabt
+          pkgs.qemu
+          pkgs.gnumake
+          pkgs.gdb
+        ];
+        CROSS_COMPILE = "riscv32-none-elf-";
+        NEWLIB_PREFIX = "${targetNewlib crossPkgs}";
+        MARCH = targetMarch;
+        MABI  = targetMabi;
+        hardeningDisable = [ "relro" "bindnow" ];
+      };
+    });
 }
