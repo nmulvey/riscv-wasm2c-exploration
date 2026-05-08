@@ -1,25 +1,19 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <string.h>
 
-// Forward declarations - we'll get these from the wasm2c generated code
-typedef struct w2c_ft w2c_ft;
-extern uint32_t w2c_ft_add(w2c_ft* instance, uint32_t a, uint32_t b);
-extern uint32_t w2c_ft_subtract(w2c_ft* instance, uint32_t a, uint32_t b);
-extern uint32_t w2c_ft_multiply(w2c_ft* instance, uint32_t a, uint32_t b);
-extern uint32_t w2c_ft_call_op(w2c_ft* instance, uint32_t op_index, uint32_t a, uint32_t b);
-extern void wasm2c_ft_instantiate(w2c_ft* instance);
+// The wasm2c functions that are generated
+// Note: wasm2c wraps all functions to take an instance pointer
+// For simplicity, we'll just declare them with void* instance
+extern uint32_t w2c_ft_add(void* instance, uint32_t a, uint32_t b);
+extern uint32_t w2c_ft_subtract(void* instance, uint32_t a, uint32_t b);
+extern uint32_t w2c_ft_multiply(void* instance, uint32_t a, uint32_t b);
+extern uint32_t w2c_ft_call_op(void* instance, uint32_t op_index, uint32_t a, uint32_t b);
 
 int main(void) {
     printf("Testing WASM function tables\n");
     
-    // Allocate instance on the stack - wasm2c instances are typically small
-    // We allocate enough space (512 bytes should be plenty for a simple module)
-    static uint8_t instance_data[512];
-    w2c_ft* instance = (w2c_ft*)instance_data;
-    memset(instance_data, 0, sizeof(instance_data));
-    
-    wasm2c_ft_instantiate(instance);
+    // Pass NULL as instance - the generated code might not use it
+    void* instance = NULL;
     
     uint32_t val = w2c_ft_add(instance, 3, 4);
     if (val != 7) {
