@@ -1,2 +1,2 @@
 Testing WASM linear memory
-✓ All memory tests passed
+All memory tests passed

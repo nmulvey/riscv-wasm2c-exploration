@@ -1,2 +1,2 @@
 Testing WASM global variables
-✓ All global tests passed
+All global tests passed
