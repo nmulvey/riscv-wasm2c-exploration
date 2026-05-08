@@ -7,8 +7,14 @@ extern void w2c_global_set_counter(uint32_t value);
 
 int main(void) {
     printf("Testing WASM global variables\n");
+    fflush(stdout);
     
+    printf("Calling w2c_global_get_counter...\n");
+    fflush(stdout);
     uint32_t val = w2c_global_get_counter();
+    printf("Got initial value: %lu\n", val);
+    fflush(stdout);
+    
     if (val != 0) {
         printf("FAIL: Initial value is %lu, expected 0\n", val);
         return 1;
@@ -36,6 +42,7 @@ int main(void) {
         return 1;
     }
     
-    printf("✓ All global tests passed\n");
+    printf("All global tests passed\n");
+    fflush(stdout);
     return 0;
 }
