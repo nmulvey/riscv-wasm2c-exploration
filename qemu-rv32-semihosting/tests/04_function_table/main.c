@@ -1,16 +1,19 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// The generated wasm2c code will be in the build directory
-// wasm2c generates a .h file alongside the .c file
-// Since we're compiling with -Ibuild/04_function_table, we can include it directly
-#include "function_table.wasm.h"
+// Forward declarations - we'll get these from the wasm2c generated code
+typedef struct w2c_ft w2c_ft;
+extern uint32_t w2c_ft_add(w2c_ft* instance, uint32_t a, uint32_t b);
+extern uint32_t w2c_ft_subtract(w2c_ft* instance, uint32_t a, uint32_t b);
+extern uint32_t w2c_ft_multiply(w2c_ft* instance, uint32_t a, uint32_t b);
+extern uint32_t w2c_ft_call_op(w2c_ft* instance, uint32_t op_index, uint32_t a, uint32_t b);
+extern void wasm2c_ft_instantiate(w2c_ft* instance);
 
 int main(void) {
     printf("Testing WASM function tables\n");
     
-    // Create and initialize instance
-    w2c_ft instance;
+    // Allocate space for the instance - the struct size will be linked from the .o file
+    static w2c_ft instance;
     wasm2c_ft_instantiate(&instance);
     
     uint32_t val = w2c_ft_add(&instance, 3, 4);
