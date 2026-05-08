@@ -1,17 +1,48 @@
 #include <stdio.h>
 #include <stdint.h>
+#include "global.wasm.h"
 
-extern uint32_t w2c_global_get_counter(void);
-extern void w2c_global_increment_counter(void);
-extern void w2c_global_set_counter(uint32_t value);
-
-int main(void) {
-    printf("Hello from global test\n");
-    printf("About to call w2c_global_get_counter\n");
+int main(int argc, char* argv[]) {
+    (void)argc;
+    (void)argv;
     
-    uint32_t val = w2c_global_get_counter();
+    printf("Testing WASM global variables\n");
+    wasm_rt_init();
     
-    printf("Got value: %lu\n", val);
-    printf("Test completed\n");
+    w2c_global instance;
+    wasm2c_global_instantiate(&instance);
+    
+    uint32_t val = w2c_global_get_counter(&instance);
+    if (val != 0) {
+        printf("FAIL: Initial value is %lu, expected 0\n", val);
+        return 1;
+    }
+    
+    w2c_global_increment_counter(&instance);
+    val = w2c_global_get_counter(&instance);
+    if (val != 1) {
+        printf("FAIL: After increment, value is %lu, expected 1\n", val);
+        return 1;
+    }
+    
+    w2c_global_set_counter(&instance, 42);
+    val = w2c_global_get_counter(&instance);
+    if (val != 42) {
+        printf("FAIL: After set_counter(42), value is %lu, expected 42\n", val);
+        return 1;
+    }
+    
+    w2c_global_increment_counter(&instance);
+    w2c_global_increment_counter(&instance);
+    val = w2c_global_get_counter(&instance);
+    if (val != 44) {
+        printf("FAIL: After 2 increments from 42, value is %lu, expected 44\n", val);
+        return 1;
+    }
+    
+    wasm2c_global_free(&instance);
+    wasm_rt_free();
+    
+    printf("All global tests passed\n");
     return 0;
 }
