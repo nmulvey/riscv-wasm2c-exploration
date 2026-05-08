@@ -1,0 +1,2 @@
+Testing WASM function tables
+✓ All function_table tests passed
