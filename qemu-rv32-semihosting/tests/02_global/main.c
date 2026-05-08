@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 
 extern uint32_t w2c_get_counter(void);
 extern void w2c_increment_counter(void);
