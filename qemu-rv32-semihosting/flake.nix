@@ -59,6 +59,9 @@
         testApps = [
           "00_semihosting-hello-world"
           "01_constant"
+	  "02_global"
+ 	  "03_memory"
+  	  "04_function_table"
         ];
 
         builtTestApps = pkgs.stdenv.mkDerivation {

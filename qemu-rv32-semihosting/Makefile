@@ -111,3 +111,7 @@ $(foreach t,$(TESTS),$(eval $(call TEST_RULES,$(t))))
 
 clean:
 	rm -rf $(BUILD)
+
+EXTRA_OBJS_02_global := $(BUILD)/02_global/global.wasm.o
+EXTRA_OBJS_03_memory := $(BUILD)/03_memory/memory.wasm.o
+EXTRA_OBJS_04_function_table := $(BUILD)/04_function_table/function_table.wasm.o
