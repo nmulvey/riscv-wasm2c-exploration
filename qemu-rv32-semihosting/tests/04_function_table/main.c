@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// Include the generated WASM header
+// The generated wasm2c code will be in the build directory
+// wasm2c generates a .h file alongside the .c file
+// Since we're compiling with -Ibuild/04_function_table, we can include it directly
 #include "function_table.wasm.h"
 
 int main(void) {
     printf("Testing WASM function tables\n");
     
-    w2c_ft instance = {};
+    // Create and initialize instance
+    w2c_ft instance;
     wasm2c_ft_instantiate(&instance);
     
     uint32_t val = w2c_ft_add(&instance, 3, 4);
