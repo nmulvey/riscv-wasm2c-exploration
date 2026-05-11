@@ -103,22 +103,3 @@ void halt(void) {
 }
 
 /* Function reference table support for wasm2c */
-
-/* Function reference table support for wasm2c */
-void wasm_rt_allocate_funcref_table(wasm_rt_funcref_table_t* table,
-                                     uint32_t size,
-                                     uint32_t max_size) {
-    table->size = size;
-    table->max_size = max_size;
-    table->data = calloc(size, sizeof(wasm_rt_funcref_t));
-    if (!table->data) {
-        abort();
-    }
-}
-
-void wasm_rt_free_funcref_table(wasm_rt_funcref_table_t* table) {
-    if (table && table->data) {
-        free(table->data);
-        table->data = NULL;
-    }
-}

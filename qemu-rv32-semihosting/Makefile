@@ -114,8 +114,14 @@ endef
 EXTRA_OBJS_01_constant := $(BUILD)/01_constant/constant.wasm.o
 EXTRA_OBJS_02_global   := $(BUILD)/02_global/global.wasm.o
 EXTRA_OBJS_03_memory   := $(BUILD)/03_memory/memory.wasm.o
+EXTRA_OBJS_04_function_table := $(BUILD)/04_function_table/function_table.wasm.o
 
 $(foreach t,$(TESTS),$(eval $(call TEST_RULES,$(t))))
 
 clean:
 	rm -rf $(BUILD)
+
+
+.PHONY: run-04_function_table
+run-04_function_table: build/04_function_table/04_function_table
+	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel build/04_function_table/04_function_table
