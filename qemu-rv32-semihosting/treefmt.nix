@@ -5,9 +5,9 @@
   programs.nixfmt.enable = true;
   programs.clang-format.enable = true;
 
-  # File types we don't have a sensible formatter for. Listing them
-  # explicitly keeps `treefmt --fail-on-unmatched` honest.
   settings.global.excludes = [
+    # File types we don't have a sensible formatter for. Listing them
+    # explicitly keeps `treefmt --fail-on-unmatched` honest.
     "*.S"
     "*.ld"
     "*.wat"
@@ -17,5 +17,9 @@
     "flake.lock"
     ".gitignore"
     ".clang-format"
+
+    # Files that we vendor and don't want formatted:
+    "tests/05_box/tweetnacl.c"
+    "tests/05_box/tweetnacl.h"
   ];
 }

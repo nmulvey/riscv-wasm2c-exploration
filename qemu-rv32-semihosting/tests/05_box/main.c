@@ -1,6 +1,6 @@
 #include "tweetnacl.h"
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 #define MSG_LEN 64
@@ -13,7 +13,7 @@ static uint32_t prng_next(void) {
     return (prng_state / 65536) % 32768;
 }
 
-void randombytes(unsigned char *x, unsigned long long xlen) {
+void randombytes(unsigned char* x, unsigned long long xlen) {
     for (unsigned long long i = 0; i < xlen; i++) {
         x[i] = prng_next() & 0xFF;
     }
