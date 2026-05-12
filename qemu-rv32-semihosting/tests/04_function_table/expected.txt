@@ -1,0 +1,18 @@
+Testing WASM function table and indirect calls
+
+Direct function calls:
+  add_one(5) = 6
+  multiply_two(7) = 14
+  square(4) = 16
+
+Now testing indirect calls via function table...
+  table[0](5) = 6
+  table[1](5) = 15
+  table[2](7) = 14
+  table[3](7) = 21
+  table[4](4) = 16
+
+Testing bounds checking...
+  Out of bounds access correctly returned 0
+
+All tests passed!

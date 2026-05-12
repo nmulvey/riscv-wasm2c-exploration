@@ -56,12 +56,11 @@
           patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
         });
 
-        testApps = [
-          "00_semihosting-hello-world"
-          "01_constant"
-          "02_global"
-          "03_memory"
-        ];
+        # An array of test apps:
+        # [ "00_semihosting-hello-world" "01_constant" ... ]
+        testApps = builtins.filter (test: (builtins.substring 0 1 test) != ".") (
+          builtins.attrNames (builtins.readDir ./tests)
+        );
 
         builtTestApps = pkgs.stdenv.mkDerivation {
           pname = "qemu-rv32-semihosting-wasm-tests";
