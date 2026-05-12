@@ -115,13 +115,21 @@ EXTRA_OBJS_01_constant := $(BUILD)/01_constant/constant.wasm.o
 EXTRA_OBJS_02_global   := $(BUILD)/02_global/global.wasm.o
 EXTRA_OBJS_03_memory   := $(BUILD)/03_memory/memory.wasm.o
 EXTRA_OBJS_04_function_table := $(BUILD)/04_function_table/function_table.wasm.o
+$(BUILD)/05_box/tweetnacl.o: tests/05_box/tweetnacl.c
+	mkdir -p $(BUILD)/05_box/
+	$(CC) $(CFLAGS) -Wno-sign-compare -Wno-error=unterminated-string-initialization -c $< -o $@
+
+EXTRA_OBJS_05_box := $(BUILD)/05_box/tweetnacl_wrapper.o
 
 $(foreach t,$(TESTS),$(eval $(call TEST_RULES,$(t))))
 
 clean:
 	rm -rf $(BUILD)
 
-
 .PHONY: run-04_function_table
 run-04_function_table: build/04_function_table/04_function_table
 	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel build/04_function_table/04_function_table
+
+.PHONY: run-05_box
+run-05_box: build/05_box/05_box
+	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel build/05_box/05_box
