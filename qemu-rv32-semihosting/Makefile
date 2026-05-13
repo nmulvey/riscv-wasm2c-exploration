@@ -23,6 +23,7 @@ BUILD := build
 ARCHFLAGS := -march=$(MARCH) -mabi=$(MABI) -mcmodel=medany
 CFLAGS    := $(ARCHFLAGS) -O2 -g -ffunction-sections -fdata-sections \
              -Wall -Wextra -Werror \
+             -Isrc \
              -DWASM_RT_THREAD_LOCAL= \
              -MMD -MP
 ASFLAGS   := $(ARCHFLAGS)
@@ -34,6 +35,49 @@ LDFLAGS   := $(ARCHFLAGS) -nostartfiles  -T src/link.ld \
 # target-specific variable on %.wasm.o below.
 WASM2C_CFLAGS := -Wno-unused-variable -Wno-unused-function \
                  -Wno-unused-value -Wno-unused-parameter
+
+# ---- Optimization ablation knobs ---------------------------------------------
+# Toggle individually on the command line (e.g. `make LTO=1 O3_WASM=1`).
+# Defaults preserve the project baseline (no extra optimization, no timing).
+# `make clean` between toggles is recommended so every TU is rebuilt with the
+# new flag set.
+LTO         ?= 0  # -flto on compile + link
+O3_WASM     ?= 0  # -O3 on %.wasm.o only (-O2 otherwise)
+OS          ?= 0  # -Os appended globally (last -O wins, so size-optimized)
+OS_WASM     ?= 0  # -Os on %.wasm.o only
+UNROLL_WASM ?= 0  # -funroll-loops on %.wasm.o
+DEBUG       ?= 1  # -g (default on); DEBUG=0 strips debug info
+BENCH       ?= 0  # -DBENCH, enables cycle/instret timing in main_*.c
+
+ifeq ($(LTO),1)
+    CFLAGS  += -flto
+    LDFLAGS += -flto
+endif
+
+ifeq ($(DEBUG),0)
+    CFLAGS := $(filter-out -g,$(CFLAGS))
+endif
+
+ifeq ($(O3_WASM),1)
+    WASM2C_CFLAGS += -O3
+endif
+
+ifeq ($(OS),1)
+    CFLAGS += -Os
+endif
+
+ifeq ($(OS_WASM),1)
+    WASM2C_CFLAGS += -Os
+endif
+
+ifeq ($(UNROLL_WASM),1)
+    WASM2C_CFLAGS += -funroll-loops
+endif
+
+ifeq ($(BENCH),1)
+    CFLAGS += -DBENCH
+endif
+# ------------------------------------------------------------------------------
 
 # The user may pass `NEWLIB_PREFIX` to force compiling and linking against a
 # custom newlib libc build. This is useful when the system one isn't compiled

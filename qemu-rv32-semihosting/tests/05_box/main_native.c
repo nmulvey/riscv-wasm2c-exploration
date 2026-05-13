@@ -1,3 +1,4 @@
+#include "cycles.h"
 #include "tweetnacl.h"
 #include <stdint.h>
 #include <stdio.h>
@@ -29,8 +30,10 @@ int main(int argc, char* argv[]) {
     unsigned char pk2[32], sk2[32];
 
     printf("Generating keypairs...\n");
+    BENCH_START();
     crypto_box_keypair(pk, sk);
     crypto_box_keypair(pk2, sk2);
+    BENCH_END("keygen");
 
     /* NaCl requires 32-byte zero padding before plaintext */
     unsigned char msg[ZERO_PAD + MSG_LEN];

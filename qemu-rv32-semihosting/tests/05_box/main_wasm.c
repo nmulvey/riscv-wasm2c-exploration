@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "cycles.h"
 #include "tweetnacl.wasm.h"
 
 /* #define MSG_LEN 64 */
@@ -124,6 +125,7 @@ int main(int argc, char* argv[]) {
 
     printf("Generating keypairs...\n");
 
+    BENCH_START();
     if (crypto_box_keypair_wrapped(&env, pk, sk) != 0) {
         fprintf(stderr, "Error: Failed to generate first keypair.\n");
         return 1;
@@ -133,6 +135,7 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Error: Failed to generate second keypair.\n");
         return 1;
     }
+    BENCH_END("keygen");
 
     printf("Keypairs generated successfully.\n");
 
