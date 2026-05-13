@@ -11,9 +11,12 @@ endif
 CC   := $(TOOLCHAIN_PREFIX)gcc
 SIZE := $(TOOLCHAIN_PREFIX)size
 
-MARCH ?= rv32imac
-MABI  ?= ilp32
-QEMU  ?= qemu-system-riscv32
+GDB  ?= $(shell command -v $(TOOLCHAIN_PREFIX)gdb 2>/dev/null || echo gdb)
+
+MARCH    ?= rv32imac
+MABI     ?= ilp32
+QEMU     ?= qemu-system-riscv32
+GDB_PORT ?= 1234
 
 BUILD := build
 
@@ -166,9 +169,30 @@ $(BUILD)/$(1)/$(3): $(COMMON_OBJS) $(BUILD)/$(1)/$(2).o $$($(1)_LIB_OBJS)
 	@echo
 	@$(SIZE) $$@
 
-.PHONY: qemu-$(3)
+.PHONY: qemu-$(3) qemu-gdb-$(3) gdb-$(3)
+
 qemu-$(3): $(BUILD)/$(1)/$(3)
 	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $$<
+
+# `qemu-gdb-<elf>` runs QEMU with the CPU halted at reset and a gdbserver
+# listening on $(GDB_PORT). Use with `gdb-<elf>` from a second terminal.
+qemu-gdb-$(3): $(BUILD)/$(1)/$(3)
+	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $$< \
+	    -gdb tcp::$(GDB_PORT) -S
+
+# `gdb-<elf>` prints the gdb invocation and writes a per-ELF .gdbinit.
+$(BUILD)/$(1)/$(3).gdbinit: $(BUILD)/$(1)/$(3)
+	@printf 'file %s\ntarget remote localhost:$(GDB_PORT)\n' '$$<' > $$@
+
+gdb-$(3): $(BUILD)/$(1)/$(3).gdbinit
+	@echo
+	@echo "Start QEMU in another terminal:"
+	@echo "    make qemu-gdb-$(3)"
+	@echo
+	@echo "Then attach gdb:"
+	@echo "    $(GDB) -x $$<"
+	@echo
+	@echo "Or source $$< from an already-running gdb session."
 
 ELFS += $(BUILD)/$(1)/$(3)
 

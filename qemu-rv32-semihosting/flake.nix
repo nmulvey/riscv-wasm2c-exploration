@@ -209,6 +209,7 @@
             # Development packages:
             pkgs.gnumake
             pkgs.gdb
+            pkgs.qemu
           ];
           CROSS_COMPILE = "riscv32-none-elf-";
           NEWLIB_PREFIX = "${targetNewlib}";
