@@ -1,0 +1,4 @@
+Testing TweetNaCl crypto_box
+
+Generating keypairs...
+Keypairs generated successfully.
