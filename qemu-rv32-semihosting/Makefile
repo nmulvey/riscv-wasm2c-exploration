@@ -216,12 +216,12 @@ $(BUILD)/$(1)/$(3): $(COMMON_OBJS) $(BUILD)/$(1)/$(2).o $$($(1)_LIB_OBJS)
 .PHONY: qemu-$(3) qemu-gdb-$(3) gdb-$(3)
 
 qemu-$(3): $(BUILD)/$(1)/$(3)
-	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $$<
+	$(QEMU) -machine virt -icount shift=0 -bios none -nographic -semihosting -kernel $$<
 
 # `qemu-gdb-<elf>` runs QEMU with the CPU halted at reset and a gdbserver
 # listening on $(GDB_PORT). Use with `gdb-<elf>` from a second terminal.
 qemu-gdb-$(3): $(BUILD)/$(1)/$(3)
-	$(QEMU) -machine virt -bios none -nographic -semihosting -kernel $$< \
+	$(QEMU) -machine virt -icount shift=0 -bios none -nographic -semihosting -kernel $$< \
 	    -gdb tcp::$(GDB_PORT) -S
 
 # `gdb-<elf>` prints the gdb invocation and writes a per-ELF .gdbinit.
