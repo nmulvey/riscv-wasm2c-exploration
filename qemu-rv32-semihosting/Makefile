@@ -150,7 +150,7 @@ $(1)_STAGE1 := \
 # C -> WASM
 $(BUILD)/$(1)/%.wasm: tests/$(1)/%.c
 	mkdir -p $$(dir $$@)
-	clang --target=wasm32 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -o $$@ $$^
+	clang -O3 --target=wasm32 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -o $$@ $$^
 
 # WAT -> WASM
 $(BUILD)/$(1)/%.wasm: tests/$(1)/%.wat
