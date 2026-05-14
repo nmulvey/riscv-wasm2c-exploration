@@ -38,7 +38,8 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix",
+        "wabt-easm": "wabt-easm"
       }
     },
     "systems": {
@@ -74,6 +75,25 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "wabt-easm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778014054,
+        "narHash": "sha256-a2JTuvQXniYBmQKTc5qapqz8MG+ZIQ8d14NHHSEqmC8=",
+        "ref": "easm",
+        "rev": "780ae0621b2118f54af48ba757276a5f63b32282",
+        "revCount": 2546,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/lschuermann/wabt-easm"
+      },
+      "original": {
+        "ref": "easm",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/lschuermann/wabt-easm"
       }
     }
   },

@@ -8,6 +8,13 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wabt-easm = {
+      type = "git";
+      url = "https://github.com/lschuermann/wabt-easm";
+      ref = "easm";
+      flake = false;
+      submodules = true;
+    };
   };
 
   outputs =
@@ -16,6 +23,7 @@
       nixpkgs,
       flake-utils,
       treefmt-nix,
+      wabt-easm,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -41,7 +49,8 @@
         crossPkgs = pkgs.pkgsCross.riscv32-embedded;
 
         patchedWabt = pkgs.wabt.overrideAttrs (oldAttrs: {
-          patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
+          # patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
+          src = wabt-easm;
         });
 
         # Build a gcc + newlib pair re-configured for the given march/mabi.
