@@ -48,6 +48,8 @@ OS_WASM     ?= 0  # -Os on %.wasm.o only
 UNROLL_WASM ?= 0  # -funroll-loops on %.wasm.o
 DEBUG       ?= 1  # -g (default on); DEBUG=0 strips debug info
 BENCH       ?= 0  # -DBENCH, enables cycle/instret timing in main_*.c
+NO_STRICT_ALIGN ?= 0 # -mno-strict-align
+
 
 ifeq ($(LTO),1)
     CFLAGS  += -flto
@@ -76,6 +78,9 @@ endif
 
 ifeq ($(BENCH),1)
     CFLAGS += -DBENCH
+endif
+ifeq ($(NO_STRICT_ALIGN),1)
+	CFLAGS += -mno-strict-align
 endif
 # ------------------------------------------------------------------------------
 
