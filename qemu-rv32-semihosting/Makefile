@@ -1,17 +1,42 @@
+# By default, we try to find a gcc toolchain for compiling to the RISC-V target.
+# Set USE_CLANG=1 to use `clang` for compiling and linking instead.
+USE_CLANG ?= 0
+
+# Runtime helper library for the clang path (compiler ABI helpers like
+# __mulsi3, __ashldi3, etc.). Only consulted when USE_CLANG=1.
+#   libgcc       (default): link gcc's libgcc.a. Always available since
+#                newlib is built with gcc.
+#   compiler-rt: link clang's compiler-rt builtins. Requires
+#                COMPILER_RT_BUILTINS=/path/to/libclang_rt.builtins-riscv32.a
+#                (nixpkgs's clang doesn't ship one for bare-metal riscv32;
+#                the flake builds it on demand for the *-clang-rt variants).
+RTLIB ?= libgcc
+
+# Discover a RISC-V binutils prefix. Used unconditionally for `size` / `gdb`
+# fallbacks; also used as the C compiler prefix in the gcc path.
 ifndef TOOLCHAIN_PREFIX
   ifneq (,$(shell command -v riscv32-none-elf-gcc 2>/dev/null))
     TOOLCHAIN_PREFIX := riscv32-none-elf-
   else ifneq (,$(shell command -v riscv64-unknown-elf-gcc 2>/dev/null))
     TOOLCHAIN_PREFIX := riscv64-unknown-elf-
-  else
+  else ifneq ($(USE_CLANG),1)
     $(error No RISC-V cross toolchain on PATH. Set TOOLCHAIN_PREFIX or run `nix develop`.)
   endif
 endif
 
-CC   := $(TOOLCHAIN_PREFIX)gcc
-SIZE := $(TOOLCHAIN_PREFIX)size
+ifeq ($(USE_CLANG),1)
+  CC     := clang
+  SIZE   := llvm-size
+else
+  CC     := $(TOOLCHAIN_PREFIX)gcc
+  SIZE   := $(TOOLCHAIN_PREFIX)size
+endif
 
-GDB  ?= $(shell command -v $(TOOLCHAIN_PREFIX)gdb 2>/dev/null || echo gdb)
+
+# Always use clang to compile C -> WASM
+WASM_CC  := clang
+
+GDB      ?= $(shell command -v $(TOOLCHAIN_PREFIX)gdb 2>/dev/null || echo gdb)
 
 MARCH    ?= rv32imac
 MABI     ?= ilp32
@@ -20,16 +45,46 @@ GDB_PORT ?= 1234
 
 BUILD := build
 
+# Flags for the C -> native compilation steps:
 ARCHFLAGS := -march=$(MARCH) -mabi=$(MABI) -mcmodel=medany
+ifeq ($(USE_CLANG),1)
+  ARCHFLAGS += --target=riscv32-none-elf
+endif
+
 CFLAGS    := $(ARCHFLAGS) -O2 -g -ffunction-sections -fdata-sections \
              -Wall -Wextra -Werror \
              -Isrc \
              -DWASM_RT_THREAD_LOCAL= \
              -MMD -MP
+ifdef WABT_INCLUDE
+  CFLAGS  += -I$(WABT_INCLUDE)
+endif
+
 ASFLAGS   := $(ARCHFLAGS)
+
 LDFLAGS   := $(ARCHFLAGS) -nostartfiles  -T src/link.ld \
-             -Wl,--no-warn-rwx-segments -Wl,--gc-sections \
-             -specs=semihost.specs
+             -Wl,--gc-sections
+
+# Libraries appended AFTER object files at link time. GNU make's standard
+# slot for this is LDLIBS — order matters because archives only contribute
+# symbols that are still unresolved when the linker reaches them.
+LDLIBS    :=
+
+ifeq ($(USE_CLANG),1)
+  LDFLAGS += -fuse-ld=lld
+  # Clang has no equivalent of GCC's -specs=semihost.specs, which transparently
+  # pulls in libsemihost + libnosys. The user must supply a newlib build via
+  # NEWLIB_PREFIX so we can link -lc -lsemihost explicitly via LDLIBS below.
+  ifndef NEWLIB_PREFIX
+    $(error USE_CLANG=1 requires NEWLIB_PREFIX (clang has no semihost.specs equivalent). Run via `nix develop` or set NEWLIB_PREFIX.)
+  endif
+else
+  LDFLAGS += -specs=semihost.specs -Wl,--no-warn-rwx-segments
+endif
+
+# Flags for the C -> WASM compilation steps:
+WASM_CFLAGS   :=  --target=wasm32 -O3 -nostdlib -fuse-ld=lld \
+                  -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all
 
 # Warnings to suppress when compiling wasm2c-generated C. Applied via a
 # target-specific variable on %.wasm.o below.
@@ -88,10 +143,49 @@ endif
 # custom newlib libc build. This is useful when the system one isn't compiled
 # with the right options, or the compiler isn't built with a multilib newlib.
 ifdef NEWLIB_PREFIX
-    CFLAGS  += -nolibc \
-               -I$(NEWLIB_PREFIX)/riscv32-none-elf/include
-    LDFLAGS += -L$(NEWLIB_PREFIX)/riscv32-none-elf/lib \
-               -lc -lsemihost
+  CFLAGS    += -I$(NEWLIB_PREFIX)/riscv32-none-elf/include
+  LDFLAGS   += -L$(NEWLIB_PREFIX)/riscv32-none-elf/lib
+  # gcc with -specs=semihost.specs auto-pulls libc + libsemihost from -L
+  # paths; clang has no such mechanism, so request them explicitly. These
+  # go in LDLIBS so they appear after the objects on the link line.
+  ifeq ($(USE_CLANG),1)
+    LDLIBS += -lc -lsemihost
+  endif
+endif
+
+# Wire up the chosen RTLIB for the clang path.
+ifeq ($(USE_CLANG),1)
+  ifeq ($(RTLIB),libgcc)
+    # The libgcc.a we pick must match MARCH/MABI. Two ways to find it:
+    #   - LIBGCC_PATH: set by the caller (the flake passes it as a direct
+    #     store path so the clang build doesn't need gcc on PATH).
+    #   - Otherwise: shell out to `gcc -print-libgcc-file-name`, which
+    #     requires $(TOOLCHAIN_PREFIX)gcc on PATH (standalone fallback).
+    ifdef LIBGCC_PATH
+      LIBGCC := $(LIBGCC_PATH)
+    else
+      LIBGCC := $(shell $(TOOLCHAIN_PREFIX)gcc -march=$(MARCH) -mabi=$(MABI) -print-libgcc-file-name 2>/dev/null)
+    endif
+    ifeq ($(LIBGCC),)
+      $(error Could not locate libgcc.a. Set LIBGCC_PATH=/path/to/libgcc.a, or ensure `$(TOOLCHAIN_PREFIX)gcc` is on PATH.)
+    endif
+    LDFLAGS += --rtlib=libgcc -L$(dir $(LIBGCC))
+  else ifeq ($(RTLIB),compiler-rt)
+    ifdef COMPILER_RT_BUILTINS
+      # nixpkgs's clang doesn't ship libclang_rt.builtins for bare-metal
+      # riscv32, so the caller must point at a prebuilt archive (the flake's
+      # *-clang-rt variants build it via `compilerRtBuiltinsFor` and pass the
+      # path here). We link the archive directly so we don't depend on clang's
+      # resource-dir search. If we provide this, we have to pass
+      # `-nodefaultlibs` too:
+      LDFLAGS += -nodefaultlibs
+      LDLIBS += $(COMPILER_RT_BUILTINS)
+    else
+      LDFLAGS += -rtlib=compiler-rt
+    endif
+  else
+    $(error Unknown RTLIB=$(RTLIB). Valid: libgcc, compiler-rt.)
+  endif
 endif
 
 # `all` would otherwise be eclipsed as the default goal by the explicit rules
@@ -155,7 +249,7 @@ $(1)_STAGE1 := \
 # C -> WASM
 $(BUILD)/$(1)/%.wasm: tests/$(1)/%.c
 	mkdir -p $$(dir $$@)
-	clang -O3 --target=wasm32 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -o $$@ $$^
+	$(WASM_CC) $(WASM_CFLAGS) -o $$@ $$^
 
 # WAT -> WASM
 $(BUILD)/$(1)/%.wasm: tests/$(1)/%.wat
@@ -214,7 +308,7 @@ define ENTRY_RULE
 
 $(BUILD)/$(1)/$(3): $(COMMON_OBJS) $(BUILD)/$(1)/$(2).o $$($(1)_LIB_OBJS)
 	mkdir -p $$(dir $$@)
-	$(CC) $(LDFLAGS) $$^ -o $$@
+	$(CC) $(LDFLAGS) $$^ $(LDLIBS) -o $$@
 	@echo
 	@$(SIZE) $$@
 

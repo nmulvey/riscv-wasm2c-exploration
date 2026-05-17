@@ -1,4 +1,5 @@
 #include "global.wasm.h"
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -14,21 +15,21 @@ int main(int argc, char* argv[]) {
 
     uint32_t val = w2c_global_get_counter(&instance);
     if (val != 0) {
-        printf("FAIL: Initial value is %lu, expected 0\n", val);
+        printf("FAIL: Initial value is %" PRIu32 ", expected 0\n", val);
         return 1;
     }
 
     w2c_global_increment_counter(&instance);
     val = w2c_global_get_counter(&instance);
     if (val != 1) {
-        printf("FAIL: After increment, value is %lu, expected 1\n", val);
+        printf("FAIL: After increment, value is %" PRIu32 ", expected 1\n", val);
         return 1;
     }
 
     w2c_global_set_counter(&instance, 42);
     val = w2c_global_get_counter(&instance);
     if (val != 42) {
-        printf("FAIL: After set_counter(42), value is %lu, expected 42\n", val);
+        printf("FAIL: After set_counter(42), value is %" PRIu32 ", expected 42\n", val);
         return 1;
     }
 
@@ -36,7 +37,7 @@ int main(int argc, char* argv[]) {
     w2c_global_increment_counter(&instance);
     val = w2c_global_get_counter(&instance);
     if (val != 44) {
-        printf("FAIL: After 2 increments from 42, value is %lu, expected 44\n", val);
+        printf("FAIL: After 2 increments from 42, value is %" PRIu32 ", expected 44\n", val);
         return 1;
     }
 

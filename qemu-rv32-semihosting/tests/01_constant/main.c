@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include <stdio.h>
 #include <wasm-rt.h>
 
@@ -13,7 +14,7 @@ int main(int argc, char* argv[]) {
     wasm2c_constant_instantiate(&instance);
     printf("instantiate done\n");
     uint32_t result = w2c_constant_get_value(&instance);
-    printf("wasm2c result: %lu\n", result);
+    printf("wasm2c result: %" PRIu32 "\n", result);
     wasm2c_constant_free(&instance);
     wasm_rt_free();
 }

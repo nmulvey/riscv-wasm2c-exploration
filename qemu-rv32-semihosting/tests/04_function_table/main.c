@@ -1,4 +1,5 @@
 #include "function_table.wasm.h"
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -13,16 +14,16 @@ int main(int argc, char* argv[]) {
     wasm2c_function__table_instantiate(&instance);
 
     printf("Direct function calls:\n");
-    printf("  add_one(5) = %lu\n", w2c_function__table_add_one(&instance, 5));
-    printf("  multiply_two(7) = %lu\n", w2c_function__table_multiply_two(&instance, 7));
-    printf("  square(4) = %lu\n\n", w2c_function__table_square(&instance, 4));
+    printf("  add_one(5) = %" PRIu32 "\n", w2c_function__table_add_one(&instance, 5));
+    printf("  multiply_two(7) = %" PRIu32 "\n", w2c_function__table_multiply_two(&instance, 7));
+    printf("  square(4) = %" PRIu32 "\n\n", w2c_function__table_square(&instance, 4));
 
     printf("Now testing indirect calls via function table...\n");
-    printf("  table[0](5) = %lu\n", w2c_function__table_call_by_index(&instance, 0, 5));
-    printf("  table[1](5) = %lu\n", w2c_function__table_call_by_index(&instance, 1, 5));
-    printf("  table[2](7) = %lu\n", w2c_function__table_call_by_index(&instance, 2, 7));
-    printf("  table[3](7) = %lu\n", w2c_function__table_call_by_index(&instance, 3, 7));
-    printf("  table[4](4) = %lu\n\n", w2c_function__table_call_by_index(&instance, 4, 4));
+    printf("  table[0](5) = %" PRIu32 "\n", w2c_function__table_call_by_index(&instance, 0, 5));
+    printf("  table[1](5) = %" PRIu32 "\n", w2c_function__table_call_by_index(&instance, 1, 5));
+    printf("  table[2](7) = %" PRIu32 "\n", w2c_function__table_call_by_index(&instance, 2, 7));
+    printf("  table[3](7) = %" PRIu32 "\n", w2c_function__table_call_by_index(&instance, 3, 7));
+    printf("  table[4](4) = %" PRIu32 "\n\n", w2c_function__table_call_by_index(&instance, 4, 4));
 
     printf("Testing bounds checking...\n");
     uint32_t result = w2c_function__table_call_by_index(&instance, 10, 5);

@@ -2,7 +2,7 @@
   description = "Bare-metal rv32 hello-world for QEMU `virt` with semihosting.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -40,67 +40,130 @@
         # });
         crossPkgs = pkgs.pkgsCross.riscv32-embedded;
 
+        # Build a compiler-rt for the target platform
+        mkCompilerRtForTarget =
+          { march, mabi }:
+          let
+            hostLlvm = pkgs.llvmPackages_22;
+
+            # A clang wrapper that:
+            #  - is host-built (no cross-bootstrap)
+            #  - has libc = null, libcxx = null  → haveLibc/haveLibcxx false in compiler-rt
+            #  - has isClang = true              → satisfies the broken= check
+            #  - emits riscv32-none-elf code     → CMAKE_C_COMPILER_TARGET works
+            clangForTarget = pkgs.wrapCCWith {
+              cc = hostLlvm.clang-unwrapped;
+              libc = null;
+              libcxx = null;
+              bintools = pkgs.bintoolsNoLibc; # not used for linking; STATIC_LIBRARY try_compile avoids it
+              extraBuildCommands = ''
+                echo "-target riscv32-none-elf" >> $out/nix-support/cc-cflags
+                echo "-march=${march} -mabi=${mabi} -mno-relax" >> $out/nix-support/cc-cflags
+              '';
+            };
+
+            # Required because `compiler-rt` wants to be built with clang, and
+            # checks that it's stdenv is a clang stdenv. However, there are a
+            # million errors when we try to get a `useLLVM` stdenv for
+            # riscv32-embedded. So we hack one together here:
+            customStdenv = crossPkgs.overrideCC crossPkgs.stdenvNoCC clangForTarget;
+
+            compilerRtPkg =
+              (hostLlvm.compiler-rt.override {
+                stdenv = customStdenv;
+
+                # useLLVM isn't set on hostPlatform (we're avoiding pkgsCross's useLLVM
+                # bootstrap), so two flags that the derivation only adds under useLLVM
+                # need to come in via this escape hatch:
+                devExtraCmakeFlags = [
+                  "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY"
+                  "-DCOMPILER_RT_BUILD_BUILTINS=ON"
+                ];
+              }).overrideAttrs
+                (old: {
+                  # Not supported on embedded RISC-V targets:
+                  hardeningDisable = (old.hardeningDisable or [ ]) ++ [ "zerocallusedregs" ];
+                });
+          in
+          "${compilerRtPkg}/lib/baremetal/libclang_rt.builtins-riscv32.a";
+
         patchedWabt = pkgs.wabt.overrideAttrs (oldAttrs: {
           patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
         });
 
-        # Build a gcc + newlib pair re-configured for the given march/mabi.
-        #
-        # The prebuilt cross-toolchain ships a single libgcc.a built for the
-        # gcc-default arch (rv32imafdc / ilp32d — hard-float). Linking that
-        # against e.g. soft-float rv32imac/ilp32 objects fails as soon as
-        # gcc outlines anything into a libgcc helper (e.g. 64-bit shifts at
-        # -Os). To target a different ABI we re-set gcc's configure-time
-        # defaults so the libgcc baked into the next gcc build matches, and
-        # rebuild newlib with matching flags. One-time gcc rebuild — only
-        # paid when a non-default toolchain is actually forced.
-        #
-        # `buildPackages.gcc` is the cross-compiler that runs on the build
-        # platform and targets riscv32 — distinct from `crossPkgs.gcc`,
-        # which would be a (nonexistent) gcc that runs on riscv32 itself.
-        mkRebuiltToolchain =
-          march: mabi:
-          let
-            gccCc = crossPkgs.buildPackages.gcc.cc.overrideAttrs (old: {
-              configureFlags = (old.configureFlags or [ ]) ++ [
-                "--with-arch=${march}"
-                "--with-abi=${mabi}"
-              ];
-            });
-          in
-          {
-            inherit march mabi;
-            # Re-wrap with the existing cc-wrapper so binutils / specs paths
-            # stay wired up.
-            cc = crossPkgs.stdenv.cc.override { cc = gccCc; };
-            newlib = crossPkgs.newlib.overrideAttrs (_old: {
-              CFLAGS_FOR_TARGET = "-O2 -march=${march} -mabi=${mabi} -mcmodel=medany";
-            });
-          };
+        # libgcc.a path for a toolchain entry. We compute it in the flake
+        # (rather than having Make shell out to gcc) so clang derivations
+        # don't need the gcc wrapper in nativeBuildInputs at all — the
+        # archive is referenced as a plain store path.
+        libgccFromGcc = gccPkg: "${gccPkg}/lib/gcc/riscv32-none-elf/${gccPkg.version}/libgcc.a";
 
         # Registry of supported RISC-V toolchain variants. Each entry
-        # bundles a wrapped cc, a matching newlib, and the -march/-mabi
-        # flags the Makefile expects. Add an entry here (and rebuild via
-        # `mkRebuiltToolchain` if the ABI differs from the prebuilt
-        # default) to introduce a new variant.
+        # bundles a wrapped cc, a matching newlib, the -march/-mabi
+        # flags the Makefile expects, and a `useClang` flag that picks
+        # between gcc (default) and clang+lld for the compile/link steps.
+        # Add an entry here (and rebuild via `mkRebuiltToolchain` if the
+        # ABI differs from the prebuilt default) to introduce a new variant.
         #
         # `rv32imafdc` (hard-float) reuses the prebuilt Nix cross-toolchain
         # as-is — no gcc/newlib rebuild, so it evaluates and builds fast.
-        # `rv32imac` (soft-float) pays the one-time compiler rebuild on
-        # first use.
-        toolchains = {
-          rv32imafdc = {
+        # `rv32imafdc-clang` likewise — it just drives the compile/link
+        # with clang+lld against the prebuilt gcc-built newlib.
+        # `rv32imac` (soft-float) pays the one-time gcc rebuild on first
+        # use. `rv32imac-clang` rides on top of `rv32imac`'s newlib and
+        # binutils but drives compilation/linking with clang+lld.
+        mkRv32imafdcToolchain =
+          { compilerFamily, rtlib }:
+          {
+            inherit compilerFamily rtlib;
+
             march = "rv32imafdc";
             mabi = "ilp32d";
+          }
+          // (lib.optionalAttrs (compilerFamily == "gcc") {
             cc = crossPkgs.stdenv.cc;
+            libgcc = libgccFromGcc crossPkgs.buildPackages.gcc.cc;
             newlib = crossPkgs.newlib;
+          })
+          // (
+            lib.optionalAttrs (compilerFamily == "clang") {
+              # Unwrapped clang compiler (we don't want the wrapped one in path,
+              # that conflicts with manual cross compile options, at least for the
+              # WASM target).
+              cc = pkgs.clang.cc;
+              # Still build newlib using gcc---if we want to use `clang`, we're back
+              # to having to get a clang stdenv and having to resolve a bunch of
+              # bugs in upstream clang and Nixpkgs.
+              newlib = crossPkgs.newlib;
+            }
+            // (lib.optionalAttrs (rtlib == "libgcc") {
+              libgcc = libgccFromGcc crossPkgs.buildPackages.gcc.cc;
+            })
+            // (lib.optionalAttrs (rtlib == "compiler-rt") {
+              compiler-rt = mkCompilerRtForTarget {
+                march = "rv32imafdc";
+                mabi = "ilp32d";
+              };
+            })
+          );
+
+        toolchains = {
+          rv32imafdc-gcc = mkRv32imafdcToolchain {
+            compilerFamily = "gcc";
+            rtlib = "libgcc"; # only libgcc supported
           };
-          rv32imac = mkRebuiltToolchain "rv32imac" "ilp32";
+          rv32imafdc-clang-libgcc = mkRv32imafdcToolchain {
+            compilerFamily = "clang";
+            rtlib = "libgcc";
+          };
+          rv32imafdc-clang-compiler-rt = mkRv32imafdcToolchain {
+            compilerFamily = "clang";
+            rtlib = "compiler-rt";
+          };
         };
 
         # Arch used when an app / check / shell is referenced without an
         # explicit prefix. Picked to be the fast (no-rebuild) variant.
-        defaultArch = "rv32imafdc";
+        defaultArch = "rv32imafdc-clang-libgcc";
 
         archs = builtins.attrNames toolchains;
 
@@ -167,7 +230,16 @@
             version = "0.1.0";
             src = ./.;
             nativeBuildInputs = [
-              # For compiling towards our RISC-V target:
+              # wasm2c and other related tools:
+              patchedWabt
+
+              # Regular (unwrapped) clang to compile C to WASM32. If we use the
+              # Nix-wrapped clang, we get errors regarding multilib, etc.:
+              pkgs.clang.cc
+              pkgs.lld # Required, otherwise the compiler can't find the linker.
+
+              # Add the toolchain's compiler for the target (may be identical to
+              # pkgs.clang.cc for clang toolchains, but that's harmless):
               tc.cc
 
               # Newlib is referenced by NEWLIB_PREFIX below (an absolute store
@@ -176,25 +248,39 @@
               # `crossPkgs.newlib` to a misconfigured `pkgs.newlib` whose
               # build fails ("cannot compute suffix of object files") because
               # no cross-compiler is in PATH during its own build.
+            ]
+            # llvm-size is needed by the Makefile's `SIZE := llvm-size`
+            # line under USE_CLANG=1. bintools-unwrapped also brings
+            # llvm-objcopy and friends if anything reaches for them.
+            ++ lib.optional (tc.compilerFamily == "clang") pkgs.llvmPackages.bintools-unwrapped;
 
-              # wasm2c and other related tools:
-              patchedWabt
-
-              # Regular (unwrapped) clang to compile C to WASM32. If we use the
-              # Nix-wrapped clang, we get errors regarding multilib, etc.:
-              pkgs.clang.cc
-              pkgs.lld # Required, otherwise the compiler can't find the linker.
-            ];
             makeFlags = [
-              "TOOLCHAIN_PREFIX=riscv32-none-elf-"
-              "NEWLIB_PREFIX=${tc.newlib}"
               "MARCH=${tc.march}"
               "MABI=${tc.mabi}"
+              "NEWLIB_PREFIX=${tc.newlib}"
+              "WABT_INCLUDE=${patchedWabt}/include"
+            ]
+            ++ lib.optionals (tc.compilerFamily == "gcc") [
+              "USE_CLANG=0"
+              "TOOLCHAIN_PREFIX=riscv32-none-elf-"
+            ]
+            ++ lib.optionals (tc.compilerFamily == "clang") [
+              "USE_CLANG=1"
+            ]
+            ++ lib.optionals (tc.rtlib == "libgcc") [
+              "RTLIB=libgcc"
+              "LIBGCC_PATH=${tc.libgcc}"
+            ]
+            ++ lib.optionals (tc.rtlib == "compiler-rt") [
+              "RTLIB=compiler-rt"
+              "COMPILER_RT_BUILTINS=${tc.compiler-rt}"
             ];
+
             hardeningDisable = [
               "relro"
               "bindnow"
             ];
+
             installPhase = ''
               mkdir -p $out/bin
               ${lib.concatStringsSep "\n" (
@@ -210,9 +296,7 @@
         # `nix develop` shell, etc.) actually needs the artifacts.
         builtByArch = lib.mapAttrs (arch: _: mkBuiltTestApps arch) toolchains;
 
-        # Default arch gets bare names (`qemu-<elf>`); other archs are
-        # prefixed (`qemu-<arch>-<elf>`).
-        appName = arch: elf: if arch == defaultArch then "qemu-${elf}" else "qemu-${arch}-${elf}";
+        appName = arch: elf: "qemu-${arch}-${elf}";
 
         mkApp =
           arch: e:
@@ -246,7 +330,7 @@
           lib.optional (builtins.pathExists expectedPath) {
             inherit name;
             value =
-              pkgs.runCommand "check-${name}"
+              pkgs.runCommand "check-${arch}-${name}"
                 {
                   nativeBuildInputs = [ pkgs.qemu ];
                   expected = expectedPath;
@@ -273,10 +357,20 @@
               pkgs.gdb
               pkgs.qemu
             ];
+
             CROSS_COMPILE = "riscv32-none-elf-";
-            NEWLIB_PREFIX = "${tc.newlib}";
             MARCH = tc.march;
             MABI = tc.mabi;
+
+            NEWLIB_PREFIX = "${tc.newlib}";
+            WABT_INCLUDE = "${patchedWabt}/include";
+
+            USE_CLANG = if (tc.compilerFamily == "clang") then "1" else "0";
+
+            RTLIB = tc.rtlib;
+            LIBGCC_PATH = if (tc.rtlib == "libgcc") then tc.libgcc else null;
+            COMPILER_RT_BUILTINS = if (tc.rtlib == "compiler-rt") then tc.compiler-rt else null;
+
             hardeningDisable = [
               "relro"
               "bindnow"
