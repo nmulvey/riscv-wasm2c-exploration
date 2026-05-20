@@ -1,0 +1,86 @@
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -c src/crt0.S -o build/crt0.o
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -c src/wasm-rt-baremetal.c -o build/wasm-rt-baremetal.o
+mkdir -p build/00_semihosting-hello-world/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/00_semihosting-hello-world -c tests/00_semihosting-hello-world/main.c -o build/00_semihosting-hello-world/main.o
+mkdir -p build/00_semihosting-hello-world/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/00_semihosting-hello-world/main.o -lc -lsemihost -o build/00_semihosting-hello-world/00_semihosting-hello-world
+
+   text	   data	    bss	    dec	    hex	filename
+  12900	   1392	    940	  15232	   3b80	build/00_semihosting-hello-world/00_semihosting-hello-world
+mkdir -p build/01_constant/
+wat2wasm -o build/01_constant/constant.wasm tests/01_constant/constant.wat
+mkdir -p build/01_constant/
+wasm2c -n constant -o build/01_constant/constant.wasm.c build/01_constant/constant.wasm
+mkdir -p build/01_constant/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/01_constant -c tests/01_constant/main.c -o build/01_constant/main.o
+mkdir -p build/01_constant/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/01_constant -c build/01_constant/constant.wasm.c -o build/01_constant/constant.wasm.o
+mkdir -p build/01_constant/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/01_constant/main.o build/01_constant/constant.wasm.o -lc -lsemihost -o build/01_constant/01_constant
+
+   text	   data	    bss	    dec	    hex	filename
+  13400	   1392	    944	  15736	   3d78	build/01_constant/01_constant
+mkdir -p build/02_global/
+wat2wasm -o build/02_global/global.wasm tests/02_global/global.wat
+mkdir -p build/02_global/
+wasm2c -n global -o build/02_global/global.wasm.c build/02_global/global.wasm
+mkdir -p build/02_global/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/02_global -c tests/02_global/main.c -o build/02_global/main.o
+mkdir -p build/02_global/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/02_global -c build/02_global/global.wasm.c -o build/02_global/global.wasm.o
+mkdir -p build/02_global/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/02_global/main.o build/02_global/global.wasm.o -lc -lsemihost -o build/02_global/02_global
+
+   text	   data	    bss	    dec	    hex	filename
+  13768	   1392	    944	  16104	   3ee8	build/02_global/02_global
+mkdir -p build/03_memory/
+wat2wasm -o build/03_memory/memory.wasm tests/03_memory/memory.wat
+mkdir -p build/03_memory/
+wasm2c -n memory -o build/03_memory/memory.wasm.c build/03_memory/memory.wasm
+mkdir -p build/03_memory/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/03_memory -c tests/03_memory/main.c -o build/03_memory/main.o
+mkdir -p build/03_memory/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/03_memory -c build/03_memory/memory.wasm.c -o build/03_memory/memory.wasm.o
+mkdir -p build/03_memory/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/03_memory/main.o build/03_memory/memory.wasm.o -lc -lsemihost -o build/03_memory/03_memory
+
+   text	   data	    bss	    dec	    hex	filename
+  14328	   1392	  66480	  82200	  14118	build/03_memory/03_memory
+mkdir -p build/04_function_table/
+wat2wasm -o build/04_function_table/function_table.wasm tests/04_function_table/function_table.wat
+mkdir -p build/04_function_table/
+wasm2c -n function_table -o build/04_function_table/function_table.wasm.c build/04_function_table/function_table.wasm
+mkdir -p build/04_function_table/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/04_function_table -c tests/04_function_table/main.c -o build/04_function_table/main.o
+mkdir -p build/04_function_table/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/04_function_table -c build/04_function_table/function_table.wasm.c -o build/04_function_table/function_table.wasm.o
+mkdir -p build/04_function_table/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/04_function_table/main.o build/04_function_table/function_table.wasm.o -lc -lsemihost -o build/04_function_table/04_function_table
+
+   text	   data	    bss	    dec	    hex	filename
+  16472	   1392	    944	  18808	   4978	build/04_function_table/04_function_table
+mkdir -p build/05_box/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -o build/05_box/tweetnacl.wasm tests/05_box/tweetnacl.c
+mkdir -p build/05_box/
+wasm2c -n tweetnacl -o build/05_box/tweetnacl.wasm.c build/05_box/tweetnacl.wasm
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/05_box -c tests/05_box/main_native.c -o build/05_box/main_native.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-sign-compare -Wno-error=unterminated-string-initialization -Ibuild/05_box -c tests/05_box/tweetnacl.c -o build/05_box/tweetnacl.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/05_box -c build/05_box/tweetnacl.wasm.c -o build/05_box/tweetnacl.wasm.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/05_box/main_native.o build/05_box/tweetnacl.o build/05_box/tweetnacl.wasm.o -lc -lsemihost -o build/05_box/05_box_native
+
+   text	   data	    bss	    dec	    hex	filename
+  21460	   1392	    940	  23792	   5cf0	build/05_box/05_box_native
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/fjlpzv7w057hvxq6m22s059mjhpvvcl3-wabt-1.0.41/include -I/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/05_box -c tests/05_box/main_wasm.c -o build/05_box/main_wasm.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/g5d3k510n0gc4i8iq0f51390nwyb8nl8-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/i5is4r8ia8vvngsmi6dpvx49f14c1g7r-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ build/crt0.o build/wasm-rt-baremetal.o build/05_box/main_wasm.o build/05_box/tweetnacl.o build/05_box/tweetnacl.wasm.o -lc -lsemihost -o build/05_box/05_box_wasm
+
+   text	   data	    bss	    dec	    hex	filename
+  95032	   1392	  66480	 162904	  27c58	build/05_box/05_box_wasm
+rm build/03_memory/memory.wasm build/04_function_table/function_table.wasm build/01_constant/constant.wasm build/05_box/tweetnacl.wasm build/02_global/global.wasm
