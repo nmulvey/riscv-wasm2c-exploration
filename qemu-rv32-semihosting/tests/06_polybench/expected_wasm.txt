@@ -1,0 +1,3 @@
+PolyBench/atax (MINI, wasm)
+fingerprint=1151832
+PASS: atax kernel completed
