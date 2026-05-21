@@ -203,11 +203,31 @@ COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o
 # that should be fed through the C->WASM->wasm2c pipeline. *.wat files are auto-
 # discovered and always go through wat2wasm + wasm2c.
 WASM_SOURCES_05_box := tweetnacl.c
+WASM_SOURCES_06_polybench := atax.c
 
 # Per-source CFLAGS overrides.
 #
 # tweetnacl.c trips warnings, silence them only for that compilation step.
 $(BUILD)/05_box/tweetnacl.o: CFLAGS += -Wno-sign-compare -Wno-error=unterminated-string-initialization
+
+# 06_polybench: atax.c (kernel) needs the upstream polybench utilities on
+# its include path. POLYBENCH_STACK_ARRAYS keeps everything off the heap;
+# MINI_DATASET picks the smallest problem size so the WASM linear memory
+# stays comfortably under our backing buffer. Applied to both the native
+# object and the C->WASM step, because atax.c is fed through both pipelines.
+POLYBENCH_INC := -Itests/06_polybench/PolyBenchC-4.2.1/utilities
+POLYBENCH_DEFS := -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS
+
+# `polybench.h` does `#include <stdlib.h>` unconditionally. The native
+# (riscv32-none-elf) build picks it up from newlib. The wasm32 freestanding
+# build does not have <stdlib.h>, so we shim it (only size_t / stddef.h is
+# actually needed under POLYBENCH_STACK_ARRAYS). The shim include path
+# precedes the polybench include path so it's found first.
+# `#pragma scop` / `#pragma endscop` are polybench markers for source-to-source
+# tools (Pluto, etc.); clang doesn't know them and -Werror=unknown-pragmas
+# would otherwise fail the native compile.
+$(BUILD)/06_polybench/atax.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/atax.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
 
 # crt0 and wasm-rt-baremetal are shared across all tests.
 $(BUILD)/crt0.o: src/crt0.S
@@ -247,9 +267,12 @@ $(1)_STAGE1 := \
     $$(patsubst %.c,$(BUILD)/$(1)/%.wasm.c,$$(WASM_SOURCES_$(1)))
 
 # C -> WASM
+#
+# `$$(WASM_CFLAGS)` (deferred) so per-target overrides set on a specific
+# *.wasm target take effect at recipe time (mirrors how %.o uses $$(CFLAGS)).
 $(BUILD)/$(1)/%.wasm: tests/$(1)/%.c
 	mkdir -p $$(dir $$@)
-	$(WASM_CC) $(WASM_CFLAGS) -o $$@ $$^
+	$(WASM_CC) $$(WASM_CFLAGS) -o $$@ $$^
 
 # WAT -> WASM
 $(BUILD)/$(1)/%.wasm: tests/$(1)/%.wat

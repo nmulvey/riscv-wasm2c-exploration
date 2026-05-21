@@ -21,5 +21,8 @@
     # Files that we vendor and don't want formatted:
     "tests/05_box/tweetnacl.c"
     "tests/05_box/tweetnacl.h"
+    # PolyBenchC submodule + the near-verbatim copies kept upstream-faithful:
+    "tests/06_polybench/PolyBenchC-4.2.1/**"
+    "tests/06_polybench/atax.h"
   ];
 }
