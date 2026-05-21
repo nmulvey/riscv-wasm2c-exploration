@@ -1,6 +1,9 @@
 {
   description = "Bare-metal rv32 hello-world for QEMU `virt` with semihosting.";
 
+  # Make submodules available in Nix build sandbox:
+  inputs.self.submodules = true;
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     flake-utils.url = "github:numtide/flake-utils";
