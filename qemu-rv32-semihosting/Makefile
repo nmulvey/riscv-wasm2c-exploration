@@ -1,5 +1,12 @@
-# By default, we try to find a gcc toolchain for compiling to the RISC-V target.
-# Set USE_CLANG=1 to use `clang` for compiling and linking instead.
+# Which ISA family this build targets. Each family fills in its own defaults
+# below (compiler prefix, ARCHFLAGS, linker script, QEMU machine, etc.).
+# Add a family by extending the block below (and providing matching crt0/
+# linker script under src/).
+ARCH_FAMILY ?= riscv32
+
+# By default, we try to find a gcc toolchain for compiling to the chosen
+# target family. Set USE_CLANG=1 to use `clang` for compiling and linking
+# instead. The ARM and RISC-V paths both support clang.
 USE_CLANG ?= 0
 
 # Runtime helper library for the clang path (compiler ABI helpers like
@@ -7,20 +14,80 @@ USE_CLANG ?= 0
 #   libgcc       (default): link gcc's libgcc.a. Always available since
 #                newlib is built with gcc.
 #   compiler-rt: link clang's compiler-rt builtins. Requires
-#                COMPILER_RT_BUILTINS=/path/to/libclang_rt.builtins-riscv32.a
-#                (nixpkgs's clang doesn't ship one for bare-metal riscv32;
+#                COMPILER_RT_BUILTINS=/path/to/libclang_rt.builtins-<arch>.a
+#                (nixpkgs's clang doesn't ship one for bare-metal targets;
 #                the flake builds it on demand for the *-clang-rt variants).
 RTLIB ?= libgcc
 
-# Discover a RISC-V binutils prefix. Used unconditionally for `size` / `gdb`
-# fallbacks; also used as the C compiler prefix in the gcc path.
+# --- Per-family defaults -------------------------------------------------
+# Variables filled in here:
+#   TARGET_TRIPLE  : sysroot subdir under NEWLIB_PREFIX
+#   ABIFLAGS       : multilib/ABI selection flags accepted by *both* gcc and
+#                    clang for this family (-march/-mabi on RISC-V,
+#                    -mcpu/-mthumb/-mfloat-abi/-mfpu on ARM). Used as-is when
+#                    invoking $(TOOLCHAIN_PREFIX)gcc to query libgcc.
+#   CLANG_TARGET   : value for clang's --target= (USE_CLANG=1 only). Not in
+#                    ABIFLAGS because gcc doesn't understand --target=.
+#   SEMIHOST_SPECS : newlib specs file for the gcc path (semihost.specs / rdimon.specs)
+#   SEMIHOST_LIB   : libc helper for the clang path (-lsemihost / -lrdimon)
+#   CRT0_SRC       : assembly entrypoint compiled into $(BUILD)/crt0.o
+#   LINK_SCRIPT    : board-specific linker script
+#   QEMU_SYSTEM    : qemu binary
+#   QEMU_MACHINE   : -machine value
+#   QEMU_EXTRA     : extra flags (e.g. RISC-V virt needs -bios none)
+#   TOOLCHAIN_TRIPLES : list of binutils prefixes to probe when
+#                       TOOLCHAIN_PREFIX is not set
+ifeq ($(ARCH_FAMILY),riscv32)
+  TARGET_TRIPLE     ?= riscv32-none-elf
+  MARCH             ?= rv32imac
+  MABI              ?= ilp32
+  ABIFLAGS          := -march=$(MARCH) -mabi=$(MABI) -mcmodel=medany
+  CLANG_TARGET      ?= riscv32-none-elf
+  SEMIHOST_SPECS    ?= semihost.specs
+  SEMIHOST_LIB      ?= -lsemihost
+  CRT0_SRC          ?= src/crt0.S
+  LINK_SCRIPT       ?= src/link.ld
+  QEMU_SYSTEM       ?= qemu-system-riscv32
+  QEMU_MACHINE      ?= virt
+  QEMU_EXTRA        ?= -bios none
+  TOOLCHAIN_TRIPLES := riscv32-none-elf- riscv64-unknown-elf-
+else ifeq ($(ARCH_FAMILY),arm)
+  TARGET_TRIPLE     ?= arm-none-eabi
+  MCPU              ?= cortex-m4
+  MTHUMB            ?= 1
+  MFLOAT_ABI        ?= hard
+  MFPU              ?= fpv4-sp-d16
+  ABIFLAGS          := -mcpu=$(MCPU) -mfloat-abi=$(MFLOAT_ABI)
+  ifeq ($(MTHUMB),1)
+    ABIFLAGS        += -mthumb
+  endif
+  ifneq ($(MFPU),)
+    ABIFLAGS        += -mfpu=$(MFPU)
+  endif
+  CLANG_TARGET      ?= thumbv7em-none-eabihf
+  SEMIHOST_SPECS    ?= rdimon.specs
+  SEMIHOST_LIB      ?= -lrdimon
+  CRT0_SRC          ?= src/crt0_arm_v7m.S
+  LINK_SCRIPT       ?= src/link_mps2_an386.ld
+  QEMU_SYSTEM       ?= qemu-system-arm
+  QEMU_MACHINE      ?= mps2-an386
+  QEMU_EXTRA        ?=
+  TOOLCHAIN_TRIPLES := arm-none-eabi-
+else
+  $(error Unknown ARCH_FAMILY=$(ARCH_FAMILY). Valid: riscv32, arm.)
+endif
+# -------------------------------------------------------------------------
+
+# Probe TOOLCHAIN_TRIPLES for a usable binutils prefix. Used unconditionally
+# for `size` / `gdb` fallbacks; also used as the C compiler prefix in the
+# gcc path.
 ifndef TOOLCHAIN_PREFIX
-  ifneq (,$(shell command -v riscv32-none-elf-gcc 2>/dev/null))
-    TOOLCHAIN_PREFIX := riscv32-none-elf-
-  else ifneq (,$(shell command -v riscv64-unknown-elf-gcc 2>/dev/null))
-    TOOLCHAIN_PREFIX := riscv64-unknown-elf-
-  else ifneq ($(USE_CLANG),1)
-    $(error No RISC-V cross toolchain on PATH. Set TOOLCHAIN_PREFIX or run `nix develop`.)
+  TOOLCHAIN_PREFIX := $(firstword $(foreach t,$(TOOLCHAIN_TRIPLES),\
+                       $(if $(shell command -v $(t)gcc 2>/dev/null),$(t))))
+  ifeq ($(TOOLCHAIN_PREFIX),)
+    ifneq ($(USE_CLANG),1)
+      $(error No $(ARCH_FAMILY) cross toolchain on PATH (looked for: $(TOOLCHAIN_TRIPLES)gcc). Set TOOLCHAIN_PREFIX or run `nix develop`.)
+    endif
   endif
 endif
 
@@ -38,17 +105,18 @@ WASM_CC  := clang
 
 GDB      ?= $(shell command -v $(TOOLCHAIN_PREFIX)gdb 2>/dev/null || echo gdb)
 
-MARCH    ?= rv32imac
-MABI     ?= ilp32
-QEMU     ?= qemu-system-riscv32
+QEMU     ?= $(QEMU_SYSTEM)
 GDB_PORT ?= 1234
 
 BUILD := build
 
-# Flags for the C -> native compilation steps:
-ARCHFLAGS := -march=$(MARCH) -mabi=$(MABI) -mcmodel=medany
+# Flags for the C -> native compilation steps. ABIFLAGS comes from the
+# per-family block above; we splice in --target= only for the clang path
+# (gcc doesn't accept --target=, which is why the libgcc lookup below
+# uses ABIFLAGS directly rather than ARCHFLAGS).
+ARCHFLAGS := $(ABIFLAGS)
 ifeq ($(USE_CLANG),1)
-  ARCHFLAGS += --target=riscv32-none-elf
+  ARCHFLAGS += --target=$(CLANG_TARGET)
 endif
 
 CFLAGS    := $(ARCHFLAGS) -O2 -g -ffunction-sections -fdata-sections \
@@ -62,7 +130,7 @@ endif
 
 ASFLAGS   := $(ARCHFLAGS)
 
-LDFLAGS   := $(ARCHFLAGS) -nostartfiles  -T src/link.ld \
+LDFLAGS   := $(ARCHFLAGS) -nostartfiles  -T $(LINK_SCRIPT) \
              -Wl,--gc-sections
 
 # Libraries appended AFTER object files at link time. GNU make's standard
@@ -72,14 +140,15 @@ LDLIBS    :=
 
 ifeq ($(USE_CLANG),1)
   LDFLAGS += -fuse-ld=lld
-  # Clang has no equivalent of GCC's -specs=semihost.specs, which transparently
-  # pulls in libsemihost + libnosys. The user must supply a newlib build via
-  # NEWLIB_PREFIX so we can link -lc -lsemihost explicitly via LDLIBS below.
+  # Clang has no equivalent of GCC's -specs={semihost,rdimon}.specs, which
+  # transparently pulls in libc + the semihost stubs. The user must supply
+  # a newlib build via NEWLIB_PREFIX so we can link -lc + $(SEMIHOST_LIB)
+  # explicitly via LDLIBS below.
   ifndef NEWLIB_PREFIX
-    $(error USE_CLANG=1 requires NEWLIB_PREFIX (clang has no semihost.specs equivalent). Run via `nix develop` or set NEWLIB_PREFIX.)
+    $(error USE_CLANG=1 requires NEWLIB_PREFIX (clang has no semihost-specs equivalent). Run via `nix develop` or set NEWLIB_PREFIX.)
   endif
 else
-  LDFLAGS += -specs=semihost.specs -Wl,--no-warn-rwx-segments
+  LDFLAGS += -specs=$(SEMIHOST_SPECS) -Wl,--no-warn-rwx-segments
 endif
 
 # Flags for the C -> WASM compilation steps:
@@ -135,21 +204,37 @@ ifeq ($(BENCH),1)
     CFLAGS += -DBENCH
 endif
 ifeq ($(NO_STRICT_ALIGN),1)
-	CFLAGS += -mno-strict-align
+  # RISC-V toolchains spell "allow misaligned access" as -mno-strict-align.
+  # ARM Cortex-M (M3+) supports misaligned access by default; -munaligned-access
+  # is GCC's positive spelling. The knob is a no-op on families where unaligned
+  # access is already the default.
+  ifeq ($(ARCH_FAMILY),riscv32)
+    CFLAGS += -mno-strict-align
+  else ifeq ($(ARCH_FAMILY),arm)
+    CFLAGS += -munaligned-access
+  endif
 endif
 # ------------------------------------------------------------------------------
 
 # The user may pass `NEWLIB_PREFIX` to force compiling and linking against a
 # custom newlib libc build. This is useful when the system one isn't compiled
 # with the right options, or the compiler isn't built with a multilib newlib.
+#
+# `NEWLIB_LIBDIR` overrides the lib search path. Defaults to the top-level
+# $(NEWLIB_PREFIX)/$(TARGET_TRIPLE)/lib, which is correct for single-multilib
+# toolchains (e.g. the nixpkgs riscv32 cross — `--disable-multilib`). Multilib
+# toolchains where the top-level lib holds the wrong ABI (e.g. gcc-arm-embedded,
+# whose top-level lib is armv4t soft-float) must override this with the matching
+# subdirectory (e.g. arm-none-eabi/lib/thumb/v7e-m+fp/hard).
 ifdef NEWLIB_PREFIX
-  CFLAGS    += -I$(NEWLIB_PREFIX)/riscv32-none-elf/include
-  LDFLAGS   += -L$(NEWLIB_PREFIX)/riscv32-none-elf/lib
-  # gcc with -specs=semihost.specs auto-pulls libc + libsemihost from -L
-  # paths; clang has no such mechanism, so request them explicitly. These
-  # go in LDLIBS so they appear after the objects on the link line.
+  CFLAGS    += -I$(NEWLIB_PREFIX)/$(TARGET_TRIPLE)/include
+  NEWLIB_LIBDIR ?= $(NEWLIB_PREFIX)/$(TARGET_TRIPLE)/lib
+  LDFLAGS   += -L$(NEWLIB_LIBDIR)
+  # gcc with -specs=$(SEMIHOST_SPECS) auto-pulls libc + the semihost stub
+  # from -L paths; clang has no such mechanism, so request them explicitly.
+  # These go in LDLIBS so they appear after the objects on the link line.
   ifeq ($(USE_CLANG),1)
-    LDLIBS += -lc -lsemihost
+    LDLIBS += -lc $(SEMIHOST_LIB)
   endif
 endif
 
@@ -164,12 +249,23 @@ ifeq ($(USE_CLANG),1)
     ifdef LIBGCC_PATH
       LIBGCC := $(LIBGCC_PATH)
     else
-      LIBGCC := $(shell $(TOOLCHAIN_PREFIX)gcc -march=$(MARCH) -mabi=$(MABI) -print-libgcc-file-name 2>/dev/null)
+      # ABIFLAGS (-march/-mabi on RISC-V; -mcpu/-mthumb/-mfloat-abi/-mfpu on
+      # ARM) is the multilib-selecting subset of ARCHFLAGS, and is exactly
+      # what gcc consults to resolve the libgcc directory. ARCHFLAGS itself
+      # may carry --target= under USE_CLANG=1, which gcc rejects, so don't
+      # pass it here.
+      LIBGCC := $(shell $(TOOLCHAIN_PREFIX)gcc $(ABIFLAGS) -print-libgcc-file-name 2>/dev/null)
     endif
     ifeq ($(LIBGCC),)
       $(error Could not locate libgcc.a. Set LIBGCC_PATH=/path/to/libgcc.a, or ensure `$(TOOLCHAIN_PREFIX)gcc` is on PATH.)
     endif
     LDFLAGS += --rtlib=libgcc -L$(dir $(LIBGCC))
+    # clang's ARM driver auto-adds `-lgcc_s` (or `-lgcc_eh` under -static),
+    # which gcc-arm-embedded doesn't ship — link fails with "unable to find
+    # library -lgcc_s". `--unwindlib=none` strips that out and leaves just
+    # `-lgcc -lc`. Harmless on RISC-V where the driver wasn't adding it
+    # anyway (no exception-unwinding multilib for riscv32-none-elf).
+    LDFLAGS += --unwindlib=none
   else ifeq ($(RTLIB),compiler-rt)
     ifdef COMPILER_RT_BUILTINS
       # nixpkgs's clang doesn't ship libclang_rt.builtins for bare-metal
@@ -209,8 +305,10 @@ WASM_SOURCES_05_box := tweetnacl.c
 # tweetnacl.c trips warnings, silence them only for that compilation step.
 $(BUILD)/05_box/tweetnacl.o: CFLAGS += -Wno-sign-compare -Wno-error=unterminated-string-initialization
 
-# crt0 and wasm-rt-baremetal are shared across all tests.
-$(BUILD)/crt0.o: src/crt0.S
+# crt0 and wasm-rt-baremetal are shared across all tests. The crt0 source
+# comes from $(CRT0_SRC) — set by ARCH_FAMILY above (src/crt0.S on RISC-V,
+# src/crt0_arm_v7m.S on ARM).
+$(BUILD)/crt0.o: $(CRT0_SRC)
 	mkdir -p $(dir $@)
 	$(CC) $(ASFLAGS) -c $< -o $@
 
@@ -315,12 +413,12 @@ $(BUILD)/$(1)/$(3): $(COMMON_OBJS) $(BUILD)/$(1)/$(2).o $$($(1)_LIB_OBJS)
 .PHONY: qemu-$(3) qemu-gdb-$(3) gdb-$(3)
 
 qemu-$(3): $(BUILD)/$(1)/$(3)
-	$(QEMU) -machine virt -icount shift=0 -bios none -nographic -semihosting -kernel $$<
+	$(QEMU) -machine $(QEMU_MACHINE) -icount shift=0 $(QEMU_EXTRA) -nographic -semihosting -kernel $$<
 
 # `qemu-gdb-<elf>` runs QEMU with the CPU halted at reset and a gdbserver
 # listening on $(GDB_PORT). Use with `gdb-<elf>` from a second terminal.
 qemu-gdb-$(3): $(BUILD)/$(1)/$(3)
-	$(QEMU) -machine virt -icount shift=0 -bios none -nographic -semihosting -kernel $$< \
+	$(QEMU) -machine $(QEMU_MACHINE) -icount shift=0 $(QEMU_EXTRA) -nographic -semihosting -kernel $$< \
 	    -gdb tcp::$(GDB_PORT) -S
 
 # `gdb-<elf>` prints the gdb invocation and writes a per-ELF .gdbinit.
