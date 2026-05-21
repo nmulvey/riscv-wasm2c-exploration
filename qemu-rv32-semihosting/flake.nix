@@ -106,7 +106,11 @@
         # via NIX_CFLAGS_COMPILE_<target_triple>, which the gcc wrapper
         # appends to every cc/as invocation it issues.
         mkArmCompilerRtBuiltins =
-          { mcpu, mfloatAbi, mfpu ? null }:
+          {
+            mcpu,
+            mfloatAbi,
+            mfpu ? null,
+          }:
           let
             flagStr = lib.concatStringsSep " " (
               [

@@ -8,6 +8,17 @@ _start:
     /* Set up the stack (top of image, see link.ld). */
     la      sp, _stack_top
 
+    /* Enable the FPU if the build targets F/D (compile-time gate so the
+       csr write isn't emitted for soft-float multilibs that don't have
+       FS bits). After reset mstatus.FS = Off (0), and any F/D
+       instruction would trap to an illegal-instruction handler we don't
+       provide — manifesting as a silent hang. mstatus.FS = Dirty (3)
+       leaves the registers writable for the first user. */
+#if defined(__riscv_flen) && __riscv_flen >= 32
+    li      t0, (3 << 13)   /* mstatus.FS = Dirty */
+    csrs    mstatus, t0
+#endif
+
     /* Zero .bss. */
     la      t0, _bss_start
     la      t1, _bss_end
