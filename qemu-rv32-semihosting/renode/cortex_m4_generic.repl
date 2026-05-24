@@ -1,0 +1,34 @@
+// Minimal Cortex-M4F platform for running this project's ARM ELFs under
+// Renode. Memory map mirrors src/link_mps2_an386.ld (4 MiB "FLASH" at
+// 0x00000000, 4 MiB SRAM at 0x20000000) so the same ELF that runs under
+// qemu-system-arm -M mps2-an386 loads here without relinking.
+//
+// Only the peripherals our binaries actually touch are wired up:
+//   - NVIC, required by any CortexM core in Renode.
+//   - DWT, so cycles.h's CYCCNT path returns non-zero (Renode backs CYCCNT
+//     with an ascending timer driven by `frequency:`; the value is virtual-
+//     time, not pipeline-accurate).
+//   - SemihostingUart attached to the CPU, so newlib/librdimon SYS_WRITEC/
+//     SYS_WRITE0 calls have a sink. Output is routed to stdout by the .resc
+//     script (Renode's headless mode has no analyzer window).
+//
+// `frequency: 50000000` is arbitrary but stable; if you want CYCCNT to match
+// a specific board's clock, override it here.
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    -> cpu@0
+
+dwt: Miscellaneous.DWT @ sysbus 0xE0001000
+    frequency: 50000000
+
+uartSemihosting: UART.SemihostingUart @ cpu
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x00400000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x00400000

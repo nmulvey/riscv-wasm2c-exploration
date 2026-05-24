@@ -73,6 +73,19 @@ else ifeq ($(ARCH_FAMILY),arm)
   QEMU_MACHINE      ?= mps2-an386
   QEMU_EXTRA        ?=
   TOOLCHAIN_TRIPLES := arm-none-eabi-
+  # Renode is wired up only for the ARM family today (the project's RISC-V
+  # path uses qemu-system-riscv32 -M virt, which Renode could also model;
+  # adding it is a follow-up). RENODE_SUPPORTED gates the per-entry .resc /
+  # renode-<elf> rules below.
+  RENODE_SUPPORTED  := 1
+  RENODE_PLATFORM   ?= renode/cortex_m4_generic.repl
+  # _write shim that emits each byte via semihosting SYS_WRITEC. Needed for
+  # the Renode path (Renode's ARM semihosting doesn't implement the SYS_OPEN
+  # / SYS_WRITE pair that librdimon uses for fd-based stdio); transparent on
+  # QEMU. See src/renode_write_shim.c for the full rationale.
+  # Deferred (=) assignment so $(BUILD) — defined further down — resolves at
+  # use time rather than now.
+  EXTRA_COMMON_OBJS = $(BUILD)/renode_write_shim.o
 else
   $(error Unknown ARCH_FAMILY=$(ARCH_FAMILY). Valid: riscv32, arm.)
 endif
@@ -106,6 +119,7 @@ WASM_CC  := clang
 GDB      ?= $(shell command -v $(TOOLCHAIN_PREFIX)gdb 2>/dev/null || echo gdb)
 
 QEMU     ?= $(QEMU_SYSTEM)
+RENODE   ?= renode
 GDB_PORT ?= 1234
 
 BUILD := build
@@ -293,7 +307,7 @@ endif
 MAKEFLAGS += --no-builtin-rules
 
 TESTS       := $(notdir $(wildcard tests/*))
-COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o
+COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o $(EXTRA_COMMON_OBJS)
 
 # Per-test declarations. WASM_SOURCES_<test> lists *.c files under tests/<test>/
 # that should be fed through the C->WASM->wasm2c pipeline. *.wat files are auto-
@@ -457,6 +471,26 @@ gdb-$(3): $(BUILD)/$(1)/$(3).gdbinit
 	@echo "    $(GDB) -x $$<"
 	@echo
 	@echo "Or source $$< from an already-running gdb session."
+
+# `renode-<elf>` mirrors `qemu-<elf>` for ARM targets. The .resc is generated
+# from renode/run.resc.in with @REPL@ / @ELF@ substituted in. Renode runs
+# headless (`--disable-xwt --console`); semihosting output is routed to
+# stdout by a Python hook inside the .resc, and a hook on the `_exit` symbol
+# quits Renode when the program returns (Renode does not implement ARM
+# semihosting SYS_EXIT itself).
+ifeq ($(RENODE_SUPPORTED),1)
+
+$(BUILD)/$(1)/$(3).resc: renode/run.resc.in $(BUILD)/$(1)/$(3)
+	mkdir -p $$(dir $$@)
+	sed -e 's|@REPL@|$$(abspath $(RENODE_PLATFORM))|g' \
+	    -e 's|@ELF@|$$(abspath $(BUILD)/$(1)/$(3))|g' \
+	    renode/run.resc.in > $$@
+
+.PHONY: renode-$(3)
+renode-$(3): $(BUILD)/$(1)/$(3).resc
+	$(RENODE) --disable-xwt --console --plain $$<
+
+endif
 
 ELFS += $(BUILD)/$(1)/$(3)
 

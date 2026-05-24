@@ -5,15 +5,34 @@
 # <flags>`, run the ELF under QEMU, and report the cycle/instret counts
 # printed by BENCH_END around the keygen call.
 #
+# Works on either ARCH_FAMILY (riscv32 / arm) by delegating the run to the
+# Makefile's `qemu-<elf>` / `renode-<elf>` target instead of calling
+# qemu-system-* directly — the Makefile already knows which binary, machine,
+# and flags to use for the current arch.
+#
+# RUNNER selection (override with `RUNNER=qemu` or `RUNNER=renode`):
+#   riscv32 → qemu   (rdcycle ≈ instret under qemu's `virt`; fine for
+#                     ablation)
+#   arm     → renode (qemu's mps2-an386 doesn't tick DWT CYCCNT, so cycles=
+#                     would always read 0; Renode's DWT does tick)
+# instret is always 0 on Cortex-M regardless of runner — Cortex-M has no
+# architectural retired-instructions counter.
+#
 # Run from inside `nix develop`. Edit CONFIGS/TARGETS below to taste.
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-command -v qemu-system-riscv32 >/dev/null || {
-    echo "qemu-system-riscv32 not on PATH — run inside 'nix develop'." >&2
+[[ -n "${ARCH_FAMILY:-}" ]] || {
+    echo "ARCH_FAMILY not set — run inside 'nix develop .#<arch>'." >&2
     exit 1
 }
+
+case "$ARCH_FAMILY" in
+    riscv32) RUNNER="${RUNNER:-qemu}"   ;;
+    arm)     RUNNER="${RUNNER:-renode}" ;;
+    *) echo "unknown ARCH_FAMILY=$ARCH_FAMILY" >&2; exit 1 ;;
+esac
 
 # "label : make-flags"
 CONFIGS=(
@@ -38,10 +57,11 @@ run() {
             "$label" "$target" "$BUILD_LOG"
         return
     fi
+    # Delegate the actual run to the Makefile's qemu-/renode-<elf> target so
+    # the right emulator+machine+flags are dispatched per arch family.
     local out
-    out=$(timeout 60 qemu-system-riscv32 \
-        -machine virt -bios none -nographic -semihosting \
-        -kernel "build/05_box/$target" </dev/null 2>&1 | grep '\[bench' || true)
+    out=$(timeout 120 make BENCH=1 $flags "$RUNNER-$target" </dev/null 2>&1 \
+            | grep '\[bench' || true)
     printf '  %-20s %-15s %s\n' "$label" "$target" "$out"
 }
 

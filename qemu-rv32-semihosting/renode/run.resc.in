@@ -1,0 +1,51 @@
+# Renode startup script template. The Makefile produces a concrete .resc by
+# substituting @REPL@ and @ELF@; the resulting file is fed to renode as
+# `renode --disable-xwt --console <resc>`.
+#
+# Why the Python block:
+#   1. In headless mode there's no analyzer window, so we route the
+#      SemihostingUart's CharReceived event to host stdout — that's what
+#      makes printf() output appear in the terminal.
+#   2. Renode's ARM semihosting handler implements SYS_WRITEC/SYS_WRITE0
+#      but NOT SYS_EXIT (operation 0x18). Without intervention,
+#      librdimon's _exit() spins forever after the unhandled SVC. Hooking
+#      the _exit symbol and calling `monitor.Parse('q')` quits Renode when
+#      the program reaches it, which is the closest analogue we have to
+#      QEMU's `-semihosting`-driven exit.
+
+using sysbus
+
+mach create
+machine LoadPlatformDescription @@REPL@
+sysbus LoadELF @@ELF@
+
+python """
+import sys
+
+uart = monitor.Machine['sysbus.cpu.uartSemihosting']
+def on_char(value):
+    sys.stdout.write(chr(value))
+    sys.stdout.flush()
+uart.CharReceived += on_char
+
+# Diagnostic prints around the _exit hook are deliberate. They let you
+# tell from the captured output where the program ended up:
+#   "[renode] hooking _exit at 0x..."       — hook installed (script ran)
+#   "[renode] _exit reached, quitting"      — program ran to completion
+#   neither shown, run ended early          — something else paused the
+#                                             emulator (fault, unhandled
+#                                             insn, external pause)
+#   "[renode] _exit reached" appears mid-run — hook misfired (Renode bug
+#                                              worth filing)
+cpu = monitor.Machine['sysbus.cpu']
+exit_addr = monitor.Machine.SystemBus.GetSymbolAddress('_exit')
+print('[renode] hooking _exit at 0x%x' % exit_addr)
+def on_exit(*_):
+    sys.stdout.flush()
+    print('[renode] _exit reached, quitting')
+    sys.stdout.flush()
+    monitor.Parse('q')
+cpu.AddHook(exit_addr, on_exit)
+"""
+
+start

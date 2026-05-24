@@ -649,12 +649,19 @@
           in
           pkgs.mkShell (
             {
-              packages = (mkBuiltTestApps arch).nativeBuildInputs ++ [
-                # Development packages:
-                pkgs.gnumake
-                pkgs.gdb
-                pkgs.qemu
-              ];
+              packages =
+                (mkBuiltTestApps arch).nativeBuildInputs
+                ++ [
+                  # Development packages:
+                  pkgs.gnumake
+                  pkgs.gdb
+                  pkgs.qemu
+                ]
+                # Renode is wired into the Makefile's `renode-<elf>` targets
+                # only for the ARM family today (see RENODE_SUPPORTED in
+                # Makefile). Pulling it into the RISC-V shells would add
+                # ~500 MB for no usable target, so gate on archFamily.
+                ++ lib.optional (tc.archFamily == "arm") pkgs.renode;
 
               ARCH_FAMILY = tc.archFamily;
               TARGET_TRIPLE = tc.targetTriple;

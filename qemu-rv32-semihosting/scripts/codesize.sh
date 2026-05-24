@@ -8,19 +8,34 @@
 # Flash = .text + .rodata (incl. .init_array) + .data
 # RAM   = .data + .bss (incl. the wasm-rt 64 KB guest heap)
 #
+# The size tool is picked from $TOOLCHAIN_PREFIX / $USE_CLANG (both
+# exported by `nix develop`), so this script works for any arch family
+# the flake supports.
+#
 # Run from inside `nix develop`. Edit CONFIGS below to taste.
 #
-# Known issue: `OS=1` and `OS_WASM=1` _without_ LTO fail to link against
-# this flake's cross-toolchain. `-Os` outlines 64-bit shifts into libgcc
-# helpers (__lshrdi3, __ashldi3) and the shipped libgcc.a has a hard-float
-# ABI that doesn't match our soft-float build. LTO sidesteps the problem
-# by re-deciding inlining at link time, so the LTO+OS combos work.
+# Known issue (RISC-V cross-toolchain only): `OS=1` / `OS_WASM=1` without
+# LTO fail to link against the nixpkgs riscv32 cross-toolchain. `-Os`
+# outlines 64-bit shifts into libgcc helpers (__lshrdi3, __ashldi3) whose
+# ABI doesn't match this build's soft-float multilib. LTO sidesteps it by
+# re-deciding inlining at link time, so LTO+OS combos work. The ARM path
+# (gcc-arm-embedded multilib) doesn't have this problem.
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-command -v riscv32-none-elf-size >/dev/null || {
-    echo "riscv32-none-elf-size not on PATH — run inside 'nix develop'." >&2
+[[ -n "${TOOLCHAIN_PREFIX:-}" ]] || {
+    echo "TOOLCHAIN_PREFIX not set — run inside 'nix develop .#<arch>'." >&2
+    exit 1
+}
+
+if [[ "${USE_CLANG:-0}" == "1" ]]; then
+    SIZE_TOOL=llvm-size
+else
+    SIZE_TOOL="${TOOLCHAIN_PREFIX}size"
+fi
+command -v "$SIZE_TOOL" >/dev/null || {
+    echo "$SIZE_TOOL not on PATH — run inside 'nix develop .#<arch>'." >&2
     exit 1
 }
 
@@ -45,7 +60,7 @@ trim() {
 
 # Sum loadable sections from `size -A`. Prints "text rodata data bss".
 sections() {
-    riscv32-none-elf-size -A "$1" | awk '
+    "$SIZE_TOOL" -A "$1" | awk '
         $1==".text"       { text   += $2 }
         $1==".rodata"     { rodata += $2 }
         $1==".init_array" { rodata += $2 }
