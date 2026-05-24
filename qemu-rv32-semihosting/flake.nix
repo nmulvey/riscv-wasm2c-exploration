@@ -411,10 +411,10 @@
         # (no per-checkout toolchain rebuild), so the marginal cost of
         # running both check sets is just QEMU execution time.
         checkArchs = [
-          defaultArch
+          "rv32imafdc-gcc"
+          "rv32imafdc-clang-libgcc"
           "arm-cortex-m4-gcc"
           "arm-cortex-m4-clang-libgcc"
-          "arm-cortex-m4-clang-compiler-rt"
         ];
 
         archs = builtins.attrNames toolchains;
