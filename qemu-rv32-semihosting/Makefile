@@ -299,7 +299,7 @@ COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o
 # that should be fed through the C->WASM->wasm2c pipeline. *.wat files are auto-
 # discovered and always go through wat2wasm + wasm2c.
 WASM_SOURCES_05_box := tweetnacl.c
-WASM_SOURCES_06_polybench := atax.c
+WASM_SOURCES_06_polybench := atax.c mm2.c
 
 # Per-source CFLAGS overrides.
 #
@@ -482,3 +482,10 @@ clean:
 
 # Pick up header dependencies emitted by -MMD on prior builds.
 -include $(shell find $(BUILD) -name '*.d' 2>/dev/null)
+
+$(BUILD)/06_polybench/mm2.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/mm2.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+
+# MM2 harness needs access to polybench-harness.h
+$(BUILD)/06_polybench/main_mm2_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_mm2_wasm.o: CFLAGS += -Itests/06_polybench
