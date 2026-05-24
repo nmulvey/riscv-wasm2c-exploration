@@ -5,48 +5,6 @@
 uint32_t wasm_rt_call_stack_depth = 0;
 uint32_t wasm_rt_saved_call_stack_depth = 0;
 
-#ifndef NATIVE
-#define UART0_THR ((volatile unsigned char*)0x10000000)
-
-static void uart_putc(char c) { *UART0_THR = c; }
-
-static void uart_putuint(unsigned int n) {
-    char buf[10];
-    int i = 0;
-    if (n == 0) {
-        uart_putc('0');
-        return;
-    }
-    while (n > 0) {
-        buf[i++] = '0' + (n % 10);
-        n /= 10;
-    }
-    while (i > 0)
-        uart_putc(buf[--i]);
-}
-
-int printf(const char* fmt, ...) {
-    __builtin_va_list args;
-    __builtin_va_start(args, fmt);
-    for (const char* p = fmt; *p; p++) {
-        if (*p == '%') {
-            p++;
-            if (*p == 'l')
-                p++; // skip 'l'
-            if (*p == 'u') {
-                uart_putuint(__builtin_va_arg(args, unsigned int));
-            }
-        } else {
-            uart_putc(*p);
-        }
-    }
-    __builtin_va_end(args);
-    return 0;
-}
-#else
-#include <stdio.h>
-#endif
-
 static uint8_t heap[65536];
 
 void wasm_rt_allocate_memory(wasm_rt_memory_t* mem, uint64_t initial_pages, uint64_t max_pages,
