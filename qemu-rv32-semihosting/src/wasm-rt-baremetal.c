@@ -5,7 +5,10 @@
 uint32_t wasm_rt_call_stack_depth = 0;
 uint32_t wasm_rt_saved_call_stack_depth = 0;
 
-static uint8_t heap[65536];
+/* WASM linear-memory backing store. Sized to fit several 64 KiB pages so
+ * that wasm2c modules with a non-trivial stack + .data + .bss footprint
+ * fit without overflowing. wasm_rt_allocate_memory points mem->data here. */
+static uint8_t heap[262144];
 
 void wasm_rt_allocate_memory(wasm_rt_memory_t* mem, uint64_t initial_pages, uint64_t max_pages,
                              bool is64, uint32_t page_size) {

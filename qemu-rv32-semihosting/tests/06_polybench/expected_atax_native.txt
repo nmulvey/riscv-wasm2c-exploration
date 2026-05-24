@@ -1,0 +1,3 @@
+PolyBench/atax (MINI, native)
+fingerprint=1151832
+PASS: atax kernel completed

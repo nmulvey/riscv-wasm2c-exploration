@@ -106,7 +106,11 @@
         # via NIX_CFLAGS_COMPILE_<target_triple>, which the gcc wrapper
         # appends to every cc/as invocation it issues.
         mkArmCompilerRtBuiltins =
-          { mcpu, mfloatAbi, mfpu ? null }:
+          {
+            mcpu,
+            mfloatAbi,
+            mfpu ? null,
+          }:
           let
             flagStr = lib.concatStringsSep " " (
               [
@@ -407,10 +411,10 @@
         # (no per-checkout toolchain rebuild), so the marginal cost of
         # running both check sets is just QEMU execution time.
         checkArchs = [
-          defaultArch
+          "rv32imafdc-gcc"
+          "rv32imafdc-clang-libgcc"
           "arm-cortex-m4-gcc"
           "arm-cortex-m4-clang-libgcc"
-          "arm-cortex-m4-clang-compiler-rt"
         ];
 
         archs = builtins.attrNames toolchains;
