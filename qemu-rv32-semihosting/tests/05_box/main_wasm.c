@@ -1,3 +1,4 @@
+#include "cycles.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>

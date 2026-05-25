@@ -504,3 +504,17 @@ $(BUILD)/06_polybench/mvt.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS
 $(BUILD)/06_polybench/mvt.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
 $(BUILD)/06_polybench/main_mvt_native.o: CFLAGS += -Itests/06_polybench
 $(BUILD)/06_polybench/main_mvt_wasm.o: CFLAGS += -Itests/06_polybench
+
+# No-bounds-check variant for overhead isolation
+$(BUILD)/$(1)/%.wasm.nobounds.o: $(BUILD)/$(1)/%.wasm.c
+	mkdir -p $$(dir $$@)
+	$(CC) $(CFLAGS) -DWASM_RT_NO_MEMORY_CHECKS $$(WASM2C_CFLAGS) -c $$< -o $$@
+
+# atax bounds vs no-bounds comparison
+$(BUILD)/06_polybench/06_polybench_atax_wasm_bounds: $(BUILD)/06_polybench/main_atax_wasm.o $(BUILD)/06_polybench/atax.o $(BUILD)/06_polybench/mm2.o $(BUILD)/06_polybench/mm3.o $(BUILD)/06_polybench/atax.wasm.o $(BUILD)/06_polybench/mm2.wasm.o $(BUILD)/06_polybench/mm3.wasm.o
+	mkdir -p $$(dir $$@)
+	$(LD) $(LDFLAGS) build/crt0.o build/wasm-rt-baremetal.o $$^ $(LDLIBS) -o $$@
+
+$(BUILD)/06_polybench/06_polybench_atax_wasm_nobounds: $(BUILD)/06_polybench/main_atax_wasm.o $(BUILD)/06_polybench/atax.o $(BUILD)/06_polybench/mm2.o $(BUILD)/06_polybench/mm3.o $(BUILD)/06_polybench/atax.wasm.nobounds.o $(BUILD)/06_polybench/mm2.wasm.o $(BUILD)/06_polybench/mm3.wasm.o
+	mkdir -p $$(dir $$@)
+	$(LD) $(LDFLAGS) build/crt0.o build/wasm-rt-baremetal.o $$^ $(LDLIBS) -o $$@
