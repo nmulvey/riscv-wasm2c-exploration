@@ -299,7 +299,7 @@ COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o
 # that should be fed through the C->WASM->wasm2c pipeline. *.wat files are auto-
 # discovered and always go through wat2wasm + wasm2c.
 WASM_SOURCES_05_box := tweetnacl.c
-WASM_SOURCES_06_polybench := atax.c mm2.c mm3.c
+WASM_SOURCES_06_polybench := atax.c mm2.c mm3.c gemm.c mvt.c
 
 # Per-source CFLAGS overrides.
 #
@@ -494,3 +494,13 @@ $(BUILD)/06_polybench/mm3.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS
 $(BUILD)/06_polybench/mm3.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
 $(BUILD)/06_polybench/main_mm3_native.o: CFLAGS += -Itests/06_polybench
 $(BUILD)/06_polybench/main_mm3_wasm.o: CFLAGS += -Itests/06_polybench
+
+$(BUILD)/06_polybench/gemm.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/gemm.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+$(BUILD)/06_polybench/main_gemm_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_gemm_wasm.o: CFLAGS += -Itests/06_polybench
+
+$(BUILD)/06_polybench/mvt.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/mvt.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+$(BUILD)/06_polybench/main_mvt_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_mvt_wasm.o: CFLAGS += -Itests/06_polybench
