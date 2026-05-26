@@ -7,8 +7,16 @@ uint32_t wasm_rt_saved_call_stack_depth = 0;
 
 /* WASM linear-memory backing store. Sized to fit several 64 KiB pages so
  * that wasm2c modules with a non-trivial stack + .data + .bss footprint
- * fit without overflowing. wasm_rt_allocate_memory points mem->data here. */
-static uint8_t heap[262144];
+ * fit without overflowing. wasm_rt_allocate_memory points mem->data here.
+ *
+ * WASM_RT_HEAP_SIZE is overridable at compile time: QEMU's machines have
+ * megabytes of RAM so the default is generous, but real targets (e.g. the
+ * nRF52840's 256 KiB SRAM) need a smaller buffer to leave room for the
+ * stack and .data/.bss. The Makefile's HEAP_SIZE knob feeds this. */
+#ifndef WASM_RT_HEAP_SIZE
+#define WASM_RT_HEAP_SIZE 262144
+#endif
+static uint8_t heap[WASM_RT_HEAP_SIZE];
 
 void wasm_rt_allocate_memory(wasm_rt_memory_t* mem, uint64_t initial_pages, uint64_t max_pages,
                              bool is64, uint32_t page_size) {

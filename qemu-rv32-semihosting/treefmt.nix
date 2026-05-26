@@ -13,6 +13,8 @@
     "*.wat"
     "*.txt"
     "*.patch"
+    "*.sh"
+    "*.md"
     "Makefile"
     "flake.lock"
     ".gitignore"

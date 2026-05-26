@@ -649,12 +649,19 @@
           in
           pkgs.mkShell (
             {
-              packages = (mkBuiltTestApps arch).nativeBuildInputs ++ [
-                # Development packages:
-                pkgs.gnumake
-                pkgs.gdb
-                pkgs.qemu
-              ];
+              packages =
+                (mkBuiltTestApps arch).nativeBuildInputs
+                ++ [
+                  # Development packages:
+                  pkgs.gnumake
+                  pkgs.gdb
+                  pkgs.qemu
+                ]
+                # OpenOCD drives the `run-nrf52840-<elf>` / `flash-nrf52840-<elf>`
+                # Makefile targets, flashing + running on a real nRF52840-DK over
+                # its on-board J-Link. Only meaningful for the ARM Cortex-M4(F)
+                # toolchains (the nRF52840 is the same CPU as QEMU's mps2-an386).
+                ++ lib.optional (tc.archFamily == "arm") pkgs.openocd;
 
               ARCH_FAMILY = tc.archFamily;
               TARGET_TRIPLE = tc.targetTriple;

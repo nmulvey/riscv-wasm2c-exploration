@@ -110,6 +110,19 @@ GDB_PORT ?= 1234
 
 BUILD := build
 
+# --- nRF52840-DK (real hardware over J-Link) -----------------------------
+# The `run-nrf52840-<elf>` / `flash-nrf52840-<elf>` targets (defined per
+# entrypoint in ENTRY_RULE) re-invoke make into a separate build dir with
+# the nRF52840 linker script and a small WASM heap, then hand the ELF to
+# scripts/run-nrf52840.sh (which flashes + runs it under semihosting via
+# OpenOCD). They only make sense for ARM Cortex-M4(F) builds — the nRF52840
+# is the same CPU as QEMU's mps2-an386, only the memory map differs.
+NRF52840_BUILD ?= build_nrf52840
+NRF52840_HEAP  ?= 131072            # 128 KiB; leaves 128 KiB for stack/.bss
+NRF52840_RUN   ?= ./scripts/run-nrf52840.sh
+NRF52840_LINK_SCRIPT ?= src/link_nrf52840.ld
+# -------------------------------------------------------------------------
+
 # Flags for the C -> native compilation steps. ABIFLAGS comes from the
 # per-family block above; we splice in --target= only for the clang path
 # (gcc doesn't accept --target=, which is why the libgcc lookup below
@@ -174,6 +187,14 @@ DEBUG       ?= 1  # -g (default on); DEBUG=0 strips debug info
 BENCH       ?= 0  # -DBENCH, enables cycle/instret timing in main_*.c
 NO_STRICT_ALIGN ?= 0 # -mno-strict-align
 
+# Size (bytes) of the WASM linear-memory backing buffer in
+# src/wasm-rt-baremetal.c. Empty = use the source default (256 KiB), which
+# suits QEMU's roomy machines. Real targets with small SRAM (e.g. the
+# nRF52840's 256 KiB total) must pass a smaller value so the heap + stack +
+# .data/.bss all fit. Each declared WASM page is 64 KiB, so a single-page
+# module needs at least 65536.
+HEAP_SIZE   ?=
+
 
 ifeq ($(LTO),1)
     CFLAGS  += -flto
@@ -213,6 +234,9 @@ ifeq ($(NO_STRICT_ALIGN),1)
   else ifeq ($(ARCH_FAMILY),arm)
     CFLAGS += -munaligned-access
   endif
+endif
+ifneq ($(strip $(HEAP_SIZE)),)
+  CFLAGS += -DWASM_RT_HEAP_SIZE=$(HEAP_SIZE)
 endif
 # ------------------------------------------------------------------------------
 
@@ -457,6 +481,27 @@ gdb-$(3): $(BUILD)/$(1)/$(3).gdbinit
 	@echo "    $(GDB) -x $$<"
 	@echo
 	@echo "Or source $$< from an already-running gdb session."
+
+# --- nRF52840-DK targets (real hardware) ---------------------------------
+# Build the same sources into a separate dir with the nRF52840 linker script
+# and a small WASM heap (re-invokes make so wasm-rt-baremetal.o is recompiled
+# with the smaller -DWASM_RT_HEAP_SIZE), then flash + run under semihosting.
+.PHONY: build-nrf52840-$(3) run-nrf52840-$(3) flash-nrf52840-$(3)
+
+# Build progress (recipe echo, compiler lines, size) is forced to stderr with
+# `1>&2`, and the recipe is `@`-quiet, so `run-nrf52840-<elf>`'s stdout carries
+# *only* the program's semihosting output — it pipes straight into
+# `diff tests/<t>/expected.txt -`, mirroring the QEMU check path.
+build-nrf52840-$(3):
+	@$$(MAKE) --no-print-directory BUILD=$(NRF52840_BUILD) \
+	    LINK_SCRIPT=$(NRF52840_LINK_SCRIPT) HEAP_SIZE=$(NRF52840_HEAP) \
+	    $(NRF52840_BUILD)/$(1)/$(3) 1>&2
+
+run-nrf52840-$(3): build-nrf52840-$(3)
+	@$(NRF52840_RUN) $(NRF52840_BUILD)/$(1)/$(3)
+
+flash-nrf52840-$(3): build-nrf52840-$(3)
+	@$(NRF52840_RUN) --flash-only $(NRF52840_BUILD)/$(1)/$(3)
 
 ELFS += $(BUILD)/$(1)/$(3)
 
