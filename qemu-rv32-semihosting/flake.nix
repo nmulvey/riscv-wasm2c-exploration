@@ -183,7 +183,7 @@
         #                      RISC-V; MCPU/MTHUMB/MFLOAT_ABI/MFPU on ARM).
         #                      The Makefile's per-family block consumes these.
         #   compilerFamily   : "gcc" | "clang"
-        #   rtlib            : "libgcc" | "compiler-rt"
+        #   rtlib            : null | "libgcc" | "compiler-rt"
         #   cc               : compiler derivation (added to nativeBuildInputs)
         #   newlib           : path passed as NEWLIB_PREFIX
         #   libgcc           : store path to libgcc.a (clang+libgcc only)
@@ -370,7 +370,7 @@
 
           arm-cortex-m4-gcc = mkArmCortexMToolchain {
             compilerFamily = "gcc";
-            rtlib = "libgcc";
+            rtlib = null; # arm-none-eabi-gcc ships its own libgcc
             mcpu = "cortex-m4";
             mfloatAbi = "hard";
             mfpu = "fpv4-sp-d16";
