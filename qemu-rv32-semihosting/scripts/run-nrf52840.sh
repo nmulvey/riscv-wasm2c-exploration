@@ -16,12 +16,15 @@
 # path drives both.
 #
 # How it works (J-Link, no GDB session visible to the user):
-#   JLinkGDBServer -singlerun -nogui -silent (background) listens on $JLINK_PORT.
-#   arm-none-eabi-gdb -batch then: target remote; monitor semihosting enable;
-#   monitor semihosting IOClient 2 (route SYS_WRITE through GDB O-packets);
-#   load; monitor reset; continue; quit. When the program issues SYS_EXIT
-#   the core halts, `continue` returns, GDB quits, and `-singlerun` makes
-#   JLinkGDBServer exit too.
+#   JLinkGDBServer -singlerun -nogui -silent (background) listens on
+#   $JLINK_PORT (GDB) and $JLINK_TELNET_PORT (semihosting). We open a TCP
+#   read socket to the telnet port via bash's built-in /dev/tcp and stream
+#   it to $out — this is SEGGER's documented primary semihosting output
+#   channel and is independent of GDB's stream handling. arm-none-eabi-gdb
+#   -batch then: target remote; monitor semihosting enable; load; monitor
+#   reset; continue; quit. When the program issues SYS_EXIT the core
+#   halts, `continue` returns, GDB quits, JLinkGDBServer closes the
+#   telnet socket and exits (-singlerun), the reader EOFs.
 #
 # How it works (OpenOCD standalone, no GDB):
 #   init; halt; program <elf>; reset halt; arm semihosting enable; resume
@@ -34,8 +37,9 @@
 # is only echoed on failure); the target's semihosting fd-1 writes go to
 # this script's stdout, so the output diffs cleanly against
 # tests/<t>/expected.txt — exactly like the QEMU `nix flake check` path.
-# For the J-Link backend specifically, `set logging redirect on` keeps GDB's
-# CLI chatter in the logfile while inferior O-packet output stays on stdout.
+# For the J-Link backend specifically, GDB's own stdout/stderr is folded
+# into the log file — semihosting output never flows through GDB at all,
+# it comes straight from JLinkGDBServer's telnet socket.
 #
 # Usage:
 #   scripts/run-nrf52840.sh [--flash-only] <elf>
@@ -50,6 +54,7 @@
 #   JLINK_DEVICE          device id                (default: nRF52840_xxAA)
 #   JLINK_SPEED           SWD speed (kHz)          (default: 4000)
 #   JLINK_PORT            local GDB TCP port       (default: 2331)
+#   JLINK_TELNET_PORT     semihosting telnet port  (default: 2333)
 #   GDB                   cross-gdb binary         (default: arm-none-eabi-gdb)
 #
 # OpenOCD backend overrides:
@@ -67,6 +72,7 @@ JLINK_GDB_SERVER="${JLINK_GDB_SERVER:-JLinkGDBServer}"
 JLINK_DEVICE="${JLINK_DEVICE:-nRF52840_xxAA}"
 JLINK_SPEED="${JLINK_SPEED:-4000}"
 JLINK_PORT="${JLINK_PORT:-2331}"
+JLINK_TELNET_PORT="${JLINK_TELNET_PORT:-2333}"
 GDB="${GDB:-arm-none-eabi-gdb}"
 
 OPENOCD="${OPENOCD:-openocd}"
@@ -79,7 +85,7 @@ elf=""
 while [ $# -gt 0 ]; do
     case "$1" in
         --flash-only) flash_only=1; shift ;;
-        -h|--help) sed -n '2,60p' "$0"; exit 0 ;;
+        -h|--help) sed -n '2,64p' "$0"; exit 0 ;;
         -*) echo "run-nrf52840.sh: unknown option '$1'" >&2; exit 2 ;;
         *)  elf="$1"; shift ;;
     esac
@@ -149,7 +155,12 @@ esac
 log="$(mktemp -t run-nrf52840.XXXXXX.log)"
 out="$(mktemp -t run-nrf52840.XXXXXX.out)"
 jlink_server_pid=0
+jlink_reader_pid=0
 cleanup() {
+    if [ "$jlink_reader_pid" -ne 0 ] && kill -0 "$jlink_reader_pid" 2>/dev/null; then
+        kill "$jlink_reader_pid" 2>/dev/null || true
+        wait "$jlink_reader_pid" 2>/dev/null || true
+    fi
     if [ "$jlink_server_pid" -ne 0 ] && kill -0 "$jlink_server_pid" 2>/dev/null; then
         kill "$jlink_server_pid" 2>/dev/null || true
         wait "$jlink_server_pid" 2>/dev/null || true
@@ -203,6 +214,7 @@ start_jlink_gdbserver() {
         -if SWD \
         -speed "$JLINK_SPEED" \
         -port "$JLINK_PORT" \
+        -telnetport "$JLINK_TELNET_PORT" \
         -singlerun \
         -nogui \
         -silent \
@@ -250,21 +262,65 @@ jlink_timeout_sec() {
     printf '%s\n' "$s"
 }
 
-# GDB script. With `set logging redirect on`, GDB's own CLI output goes to
-# the log file *instead of* stdout, while inferior I/O (the O-packet
-# semihosting writes) stays on stdout — exactly what we want for the
-# expected.txt diff. `monitor semihosting IOClient 2` forces J-Link to
-# route SYS_WRITE through GDB O-packets (not its own telnet console, which
-# is the default and would otherwise bypass our stdout entirely).
+# Connect to JLinkGDBServer's semihosting telnet port and stream every byte
+# straight into $out. Uses bash's built-in /dev/tcp so we don't depend on
+# nc/socat. The connection is established in a backgrounded subshell that
+# owns its own fd; when JLinkGDBServer exits (-singlerun) the socket EOFs
+# and the subshell terminates on its own.
+#
+# We must connect *before* the target is resumed: JLinkGDBServer buffers
+# little (if anything) on the telnet port, so any semihosting writes that
+# happen before we attach are dropped. The reader is started right after
+# the GDB-port probe succeeds (both server ports come up together) but
+# before GDB issues `monitor reset` / `continue`.
+start_jlink_telnet_reader() {
+    local i
+    for i in $(seq 1 50); do
+        if (exec 3<>"/dev/tcp/127.0.0.1/${JLINK_TELNET_PORT}") 2>/dev/null; then
+            exec 3<&- 3>&-
+            break
+        fi
+        sleep 0.1
+        if [ "$i" -eq 50 ]; then
+            echo "run-nrf52840.sh: J-Link semihosting telnet port ${JLINK_TELNET_PORT} never listened" >>"$log"
+            return 1
+        fi
+    done
+    # `( exec 3<>...; cat <&3 ) >"$out" &` ensures the subshell stdout (and
+    # thus cat's stdout) is $out, while fd 3 holds the TCP socket.
+    ( exec 3<>"/dev/tcp/127.0.0.1/${JLINK_TELNET_PORT}"
+      cat <&3 ) >"$out" &
+    jlink_reader_pid=$!
+    return 0
+}
+
+stop_jlink_telnet_reader() {
+    if [ "$jlink_reader_pid" -ne 0 ]; then
+        # The reader should EOF on its own once JLinkGDBServer closes the
+        # socket; give it a moment, then force it down if it's still alive.
+        local i
+        for i in $(seq 1 30); do
+            if ! kill -0 "$jlink_reader_pid" 2>/dev/null; then
+                break
+            fi
+            sleep 0.1
+        done
+        if kill -0 "$jlink_reader_pid" 2>/dev/null; then
+            kill "$jlink_reader_pid" 2>/dev/null || true
+        fi
+        wait "$jlink_reader_pid" 2>/dev/null || true
+        jlink_reader_pid=0
+    fi
+}
+
+# GDB drives the target; semihosting bytes are captured separately from
+# JLinkGDBServer's semihosting telnet port (see start_jlink_telnet_reader).
+# So GDB's own stdout/stderr is purely diagnostic — fold it into $log.
 jlink_run_gdb() {
     local gdb_args=(
         -batch -q
         -ex "set confirm off"
         -ex "set pagination off"
-        -ex "set logging file ${log}"
-        -ex "set logging overwrite off"
-        -ex "set logging redirect on"
-        -ex "set logging enabled on"
         -ex "target remote :${JLINK_PORT}"
     )
     if [ "$flash_only" -eq 1 ]; then
@@ -277,7 +333,6 @@ jlink_run_gdb() {
     else
         gdb_args+=(
             -ex "monitor semihosting enable"
-            -ex "monitor semihosting IOClient 2"
             -ex "load"
             -ex "monitor reset"
             -ex "continue"
@@ -285,9 +340,9 @@ jlink_run_gdb() {
         )
     fi
     if [ "$flash_only" -eq 1 ] || ! command -v timeout >/dev/null 2>&1; then
-        "$GDB" "${gdb_args[@]}" "$elf_abs" >"$out"
+        "$GDB" "${gdb_args[@]}" "$elf_abs" >>"$log" 2>&1
     else
-        timeout -k 5s "$(jlink_timeout_sec)s" "$GDB" "${gdb_args[@]}" "$elf_abs" >"$out"
+        timeout -k 5s "$(jlink_timeout_sec)s" "$GDB" "${gdb_args[@]}" "$elf_abs" >>"$log" 2>&1
     fi
 }
 
@@ -295,10 +350,22 @@ jlink_attempt() {
     if ! start_jlink_gdbserver; then
         return 1
     fi
+    # No telnet reader for --flash-only: nothing to capture, and the target
+    # keeps running after we disconnect.
+    if [ "$flash_only" -ne 1 ]; then
+        if ! start_jlink_telnet_reader; then
+            stop_jlink_gdbserver
+            return 1
+        fi
+    fi
     local rc=0
     if ! jlink_run_gdb; then
         rc=$?
     fi
+    # Drain the reader first so any trailing bytes JLinkGDBServer is still
+    # flushing land in $out before we hand it to the driver loop. Then
+    # reap the server.
+    stop_jlink_telnet_reader
     stop_jlink_gdbserver
     return $rc
 }
