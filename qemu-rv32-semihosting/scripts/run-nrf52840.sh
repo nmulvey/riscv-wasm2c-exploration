@@ -62,7 +62,7 @@
 #   OPENOCD_INTERFACE     interface config         (default: interface/jlink.cfg)
 #   OPENOCD_TARGET        target config            (default: target/nrf52.cfg)
 #   OPENOCD_TRANSPORT     transport                (default: swd)
-set -euo pipefail
+set -exuo pipefail
 
 RUN_NRF52840_BACKEND="${RUN_NRF52840_BACKEND:-auto}"
 NRF_TIMEOUT_MS="${NRF_TIMEOUT_MS:-60000}"

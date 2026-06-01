@@ -413,11 +413,6 @@ $(BUILD)/$(1)/%.o: tests/$(1)/%.c
 	mkdir -p $$(dir $$@)
 	$(CC) $$(CFLAGS) -I$(BUILD)/$(1) -c $$< -o $$@
 
-# wasm2c-generated C -> object (with bounds-check control)
-$(BUILD)/$(1)/%.wasm.o: $(BUILD)/$(1)/%.wasm.c
-	mkdir -p $$(dir $$@)
-	$(CC) $$(CFLAGS) -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -I$(BUILD)/$(1) -c $$< -o $$@
-
 # wasm2c-generated C -> object (from $(BUILD)/<test>/).
 $(BUILD)/$(1)/%.o: $(BUILD)/$(1)/%.c
 	mkdir -p $$(dir $$@)

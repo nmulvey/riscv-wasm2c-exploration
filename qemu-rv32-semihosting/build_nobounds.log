@@ -1,0 +1,22 @@
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -c src/crt0.S -o build/crt0.o
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/0hc4qrx2cmgh7d96zkb5wp3wx3lw8qmb-wabt-1.0.41/include -DBENCH -mno-strict-align -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -c src/wasm-rt-baremetal.c -o build/wasm-rt-baremetal.o
+mkdir -p build/06_polybench/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -Itests/06_polybench/wasm_shim -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -o build/06_polybench/atax.wasm tests/06_polybench/atax.c
+mkdir -p build/06_polybench/
+wasm2c -n atax -o build/06_polybench/atax.wasm.c build/06_polybench/atax.wasm
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/0hc4qrx2cmgh7d96zkb5wp3wx3lw8qmb-wabt-1.0.41/include -DBENCH -mno-strict-align -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/06_polybench -c tests/06_polybench/main_atax_wasm.c -o build/06_polybench/main_atax_wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/0hc4qrx2cmgh7d96zkb5wp3wx3lw8qmb-wabt-1.0.41/include -DBENCH -mno-strict-align -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -Wno-unknown-pragmas -Ibuild/06_polybench -c tests/06_polybench/atax.c -o build/06_polybench/atax.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/0hc4qrx2cmgh7d96zkb5wp3wx3lw8qmb-wabt-1.0.41/include -DBENCH -mno-strict-align -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -Ibuild/06_polybench -c build/06_polybench/atax.wasm.c -o build/06_polybench/atax.wasm.o
+In file included from build/06_polybench/atax.wasm.c:19:
+In file included from build/06_polybench/atax.wasm.h:5:
+/nix/store/0hc4qrx2cmgh7d96zkb5wp3wx3lw8qmb-wabt-1.0.41/include/wasm-rt.h:194:2: error: "Must choose at least one from WASM_RT_MEMCHECK_GUARD_PAGES and WASM_RT_MEMCHECK_BOUNDS_CHECK"
+  194 | #error \
+      |  ^
+1 error generated.
+make: *** [Makefile:524: build/06_polybench/atax.wasm.o] Error 1
+rm build/06_polybench/atax.wasm
