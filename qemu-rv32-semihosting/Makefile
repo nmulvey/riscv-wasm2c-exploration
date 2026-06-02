@@ -480,5 +480,46 @@ all: $(ELFS)
 clean:
 	rm -rf $(BUILD)
 
+# ------------------------------------------------------------------------------
+# Disassembly-analysis harness.
+#
+# `analysis/analyze.py` drives small single-function cases through the *same*
+# C -> wasm -> wasm2c -> native-object pipeline as the real build, reusing
+# $(WASM_CC)/$(WASM_CFLAGS)/$(CC)/$(CFLAGS)/$(WASM2C_CFLAGS) so the flags can
+# never drift from what the tests actually compile with. It stops at the `.o`
+# (no link, no crt0, no newlib) and writes into a caller-chosen directory so
+# flag sweeps don't collide. Nothing here is arch-specific: the per-family
+# block at the top already resolved the compiler, ABI flags and include paths,
+# and the alignment knob (NO_STRICT_ALIGN) is translated per family there too.
+ANALYSIS_SRC_DIR  ?= analysis/cases
+ANALYSIS_OUT      ?= build/analysis/scratch
+CASE              ?=
+EXTRA_WASM_CFLAGS ?=
+EXTRA_CFLAGS      ?=
+
+.PHONY: analysis-object analysis-native-object
+analysis-object:
+	@test -n "$(CASE)" || { echo "analysis-object: set CASE=<name> (looks for $(ANALYSIS_SRC_DIR)/<name>.c)"; exit 1; }
+	mkdir -p $(ANALYSIS_OUT)
+	$(WASM_CC) $(WASM_CFLAGS) $(EXTRA_WASM_CFLAGS) -o $(ANALYSIS_OUT)/$(CASE).wasm $(ANALYSIS_SRC_DIR)/$(CASE).c
+	wasm2c -n $(CASE) -o $(ANALYSIS_OUT)/$(CASE).wasm.c $(ANALYSIS_OUT)/$(CASE).wasm
+	$(CC) $(CFLAGS) $(WASM2C_CFLAGS) $(EXTRA_CFLAGS) -I$(ANALYSIS_OUT) \
+	    -c $(ANALYSIS_OUT)/$(CASE).wasm.c -o $(ANALYSIS_OUT)/$(CASE).wasm.o
+
+# Native baseline: compile the case C straight to a target object, *without*
+# the wasm2c sandboxing pipeline, using the same compiler/flags. This is the
+# reference the sandboxed disassembly is compared against (bounds check,
+# call-depth guard and alignment lowering are exactly the delta).
+analysis-native-object:
+	@test -n "$(CASE)" || { echo "analysis-native-object: set CASE=<name> (looks for $(ANALYSIS_SRC_DIR)/<name>.c)"; exit 1; }
+	mkdir -p $(ANALYSIS_OUT)
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $(ANALYSIS_SRC_DIR)/$(CASE).c -o $(ANALYSIS_OUT)/$(CASE).native.o
+
+# Print any make variable's fully-expanded value, e.g. `make print-CFLAGS`.
+# Used by analysis/analyze.py to read canonical flags / the compiler binary
+# without keeping a second copy of them.
+print-%:
+	@echo '$($*)'
+
 # Pick up header dependencies emitted by -MMD on prior builds.
 -include $(shell find $(BUILD) -name '*.d' 2>/dev/null)

@@ -654,6 +654,9 @@
                 pkgs.gnumake
                 pkgs.gdb
                 pkgs.qemu
+
+                # Required for analysis/analyze.py:
+                pkgs.python3
               ];
 
               ARCH_FAMILY = tc.archFamily;
