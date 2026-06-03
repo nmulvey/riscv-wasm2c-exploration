@@ -707,18 +707,47 @@
                 "arm-cortex-m4-clang-libgcc"
                 "arm-cortex-m4-gcc"
               ];
+              # Pair each arch with the store path of its dev-shell env
+              # script. Referencing these paths in `text` below makes
+              # every analyzed toolchain a build-time dep of analyze-all,
+              # so `nix run .#analyze-all` builds them all up front
+              # instead of spawning `nix develop` per arch at run time.
+              archEnvs = lib.map (arch: {
+                inherit arch;
+                # This technically relies on an implementation detail of
+                # `mkShell` that shouldn't be relied on, but is fine for now:
+                envScript = pkgs.runCommand "env-script-${arch}" {} ''
+                  ${pkgs.gnused}/bin/sed -n '/^declare/,$p' ${mkDevShell arch} >$out
+                  # The above includes a bunch of Nix build environment vars,
+                  # override the ones that break:
+                  echo "declare -x TMP=/tmp" >>$out
+                  echo "declare -x TMPDIR=/tmp" >>$out
+                '';
+              }) analyzeArchs;
             in
             {
               type = "app";
               program = "${
                 pkgs.writeShellApplication {
                   name = "analyze-all";
-                  runtimeInputs = [ pkgs.nix ];
+                  # No nix at runtime: the env scripts and everything
+                  # they reference are already in the closure.
+                  runtimeInputs = [
+                    pkgs.bash
+                    pkgs.coreutils
+                  ];
                   text = ''
-                    archs=(${lib.concatStringsSep " " analyzeArchs})
-                    for arch in "''${archs[@]}"; do
+                    entries=(${
+                      lib.concatMapStringsSep " " (
+                        e: "\"${e.arch}:${e.envScript}\""
+                      ) archEnvs
+                    })
+                    for entry in "''${entries[@]}"; do
+                      arch="''${entry%%:*}"
+                      envScript="''${entry#*:}"
                       echo "==> [analyze-all] Running analysis/analyze.py for $arch"
-                      nix develop ".#$arch" --command python3 analysis/analyze.py
+                      env -i bash -c \
+                        "source '$envScript' && python3 analysis/analyze.py"
                       echo "==> [analyze-all] Finished $arch"
                     done
                     echo "==> [analyze-all] All toolchains analyzed successfully."
