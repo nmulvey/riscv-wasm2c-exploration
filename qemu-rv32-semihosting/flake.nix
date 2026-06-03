@@ -129,7 +129,10 @@
           "${armRt}/lib/baremetal/libclang_rt.builtins-arm.a";
 
         patchedWabt = pkgs.wabt.overrideAttrs (oldAttrs: {
-          patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
+          patches = [
+            ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch
+            ./0002-wasm2c-wasm-rt-allow-not-generating-any-bounds-check.patch
+          ];
         });
 
         # gcc-arm-embedded sets `version = "15.2.rel1"` but the on-disk
@@ -690,7 +693,39 @@
         # bare `qemu-<elf>` names; alternate archs are prefixed
         # (`qemu-rv32imac-<elf>`). None force a toolchain build until the
         # corresponding `nix run` is invoked.
-        apps = lib.listToAttrs (lib.concatMap (arch: lib.map (mkApp arch) allElfs) archs);
+        apps = (lib.listToAttrs (lib.concatMap (arch: lib.map (mkApp arch) allElfs) archs)) // {
+          # `nix run .#analyze-all` runs analysis/analyze.py inside each
+          # of the prebuilt-only toolchain dev shells in sequence. Set -e
+          # via writeShellApplication aborts the whole run on the first
+          # failure.
+          analyze-all =
+            let
+              analyzeArchs = [
+                "rv32imafdc-clang-libgcc"
+                "rv32imafdc-gcc"
+                "arm-cortex-m4-clang-libgcc"
+                "arm-cortex-m4-gcc"
+              ];
+            in
+            {
+              type = "app";
+              program = "${
+                pkgs.writeShellApplication {
+                  name = "analyze-all";
+                  runtimeInputs = [ pkgs.nix ];
+                  text = ''
+                    archs=(${lib.concatStringsSep " " analyzeArchs})
+                    for arch in "''${archs[@]}"; do
+                      echo "==> [analyze-all] Running analysis/analyze.py for $arch"
+                      nix develop ".#$arch" --command python3 analysis/analyze.py
+                      echo "==> [analyze-all] Finished $arch"
+                    done
+                    echo "==> [analyze-all] All toolchains analyzed successfully."
+                  '';
+                }
+              }/bin/analyze-all";
+            };
+        };
 
         # Per-arch test-ELF bundles, plus a `default` alias for the
         # default arch. Build a non-default arch explicitly with

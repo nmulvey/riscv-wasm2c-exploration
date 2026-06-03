@@ -1,7 +1,7 @@
-From 780ae0621b2118f54af48ba757276a5f63b32282 Mon Sep 17 00:00:00 2001
+From f28f3e7f6f621260e0a707142ff09a869d00ac77 Mon Sep 17 00:00:00 2001
 From: Leon Schuermann <leon@is.currently.online>
 Date: Tue, 5 May 2026 16:47:34 -0400
-Subject: [PATCH] wasm2c/wasm-rt: allow overriding WASM_RT_THREAD_LOCAL
+Subject: [PATCH 1/2] wasm2c/wasm-rt: allow overriding WASM_RT_THREAD_LOCAL
 
 Freestanding / bare-metal targets have no TLS runtime, so _Thread_local &
 co. link-fail. This lets these users opt out of thread local storage (in a
@@ -40,7 +40,7 @@ index c6859f73..c114ebf1 100644
   * If enabled, perform additional sanity checks in the generated wasm2c code and
   * wasm2c runtime. This is useful to enable on debug builds.
 
-base-commit: 77a95c8c82325ac3a716f9aacbe0a3822718f3cf
+base-commit: 9bbc21ef33932532fbee97025eecb5b5a6fa4d7f
 -- 
-2.51.2
+2.54.0
 

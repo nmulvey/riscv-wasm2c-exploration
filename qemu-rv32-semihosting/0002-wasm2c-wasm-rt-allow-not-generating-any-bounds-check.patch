@@ -1,0 +1,27 @@
+From b1c9b003f6177735369f4a9c230b8f72d896616c Mon Sep 17 00:00:00 2001
+From: Leon Schuermann <leon@is.currently.online>
+Date: Wed, 3 Jun 2026 01:26:06 -0400
+Subject: [PATCH 2/2] wasm2c/wasm-rt: allow not generating any bounds checks
+
+---
+ wasm2c/wasm-rt.h | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/wasm2c/wasm-rt.h b/wasm2c/wasm-rt.h
+index c114ebf1..4e7befc0 100644
+--- a/wasm2c/wasm-rt.h
++++ b/wasm2c/wasm-rt.h
+@@ -189,10 +189,6 @@ extern "C" {
+ #if WASM_RT_MEMCHECK_GUARD_PAGES && WASM_RT_MEMCHECK_BOUNDS_CHECK
+ #error \
+     "Cannot use both WASM_RT_MEMCHECK_GUARD_PAGES and WASM_RT_MEMCHECK_BOUNDS_CHECK"
+-
+-#elif !WASM_RT_MEMCHECK_GUARD_PAGES && !WASM_RT_MEMCHECK_BOUNDS_CHECK
+-#error \
+-    "Must choose at least one from WASM_RT_MEMCHECK_GUARD_PAGES and WASM_RT_MEMCHECK_BOUNDS_CHECK"
+ #endif
+ 
+ /**
+-- 
+2.54.0
+

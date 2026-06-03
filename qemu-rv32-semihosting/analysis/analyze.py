@@ -51,11 +51,6 @@ OBJDUMP = ""
 # Each axis is a list of (label, make-variable-overrides). The Cartesian
 # product is the config matrix; identical disassembly across configs is the
 # headline result. Add axes here -- they need no code changes elsewhere.
-#
-# Bounds checking is intentionally NOT an axis: on our 32-bit targets guard
-# pages are unsupported, so wasm2c's BOUNDS_CHECK mode is always on (forcing
-# WASM_RT_MEMCHECK_GUARD_PAGES=1 hits a #error in wasm-rt.h). The explicit
-# range check is therefore always visible in the disassembly.
 AXES: list[tuple[str, list[tuple[str, dict[str, str]]]]] = [
     (
         "opt",
@@ -70,6 +65,13 @@ AXES: list[tuple[str, list[tuple[str, dict[str, str]]]]] = [
         [
             ("strict", {"NO_STRICT_ALIGN": "0"}),
             ("unaligned", {"NO_STRICT_ALIGN": "1"}),
+        ],
+    ),
+    (
+        "bounds",
+        [
+            ("branches", {"WASM_BOUNDS_CHECKS": "branches"}),
+            ("unchecked", {"WASM_BOUNDS_CHECKS": "unchecked"}),
         ],
     ),
 ]

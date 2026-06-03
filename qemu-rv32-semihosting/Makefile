@@ -173,7 +173,17 @@ UNROLL_WASM ?= 0  # -funroll-loops on %.wasm.o
 DEBUG       ?= 1  # -g (default on); DEBUG=0 strips debug info
 BENCH       ?= 0  # -DBENCH, enables cycle/instret timing in main_*.c
 NO_STRICT_ALIGN ?= 0 # -mno-strict-align
+WASM_BOUNDS_CHECKS ?= branches # default to branch-based bounds checks
 
+ifeq ($(WASM_BOUNDS_CHECKS),branches)
+    WASM2C_CFLAGS += \
+        -DWASM_RT_MEMCHECK_GUARD_PAGES=0 \
+        -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1
+else ifeq ($(WASM_BOUNDS_CHECKS),unchecked)
+    WASM2C_CFLAGS += \
+        -DWASM_RT_MEMCHECK_GUARD_PAGES=0 \
+        -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0
+endif
 
 ifeq ($(LTO),1)
     CFLAGS  += -flto

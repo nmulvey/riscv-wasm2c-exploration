@@ -12,26 +12,29 @@
 **Canonical pipeline flags** (from the Makefile)
 
 - `WASM_CFLAGS` = `--target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all`
-- `CFLAGS` = `-march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/4h9r4ibrq3x14k3jds7m1cvgh88ya6bc-wabt-1.0.41/include -I/nix/store/q6kbnass9k9rdlh62rzpmjabf7by042a-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include`
+- `CFLAGS` = `-march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/arh6aqqgd8s6zhgha7ngs3rdwjd2gl7m-wabt-1.0.41/include -I/nix/store/q6kbnass9k9rdlh62rzpmjabf7by042a-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include`
 
 ---
 ## `loadptr`
 
 - **Sandboxed focus symbol:** `w2c_loadptr_do_load` (C → wasm → wasm2c → native)
 - **Native baseline symbol:** `do_load` (C → native, no WASM)
-- **Configurations swept:** 6
+- **Configurations swept:** 12
 
 ### Sandboxed (wasm2c) disassembly
 
 2 distinct disassembly groups.
 
-#### Group 1 — 3 configs, 41 instructions
+#### Group 1 — 6 configs, 41 instructions
 
 Configurations in this group (exact Make flags):
 
-- `O2-strict` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0`
-- `O3-strict` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0`
-- `Os-strict` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0`
+- `O2-strict-branches` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches`
+- `O2-strict-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked`
+- `O3-strict-branches` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches`
+- `O3-strict-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked`
+- `Os-strict-branches` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches`
+- `Os-strict-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked`
 
 ```asm
 addi sp, sp, -0x10
@@ -77,13 +80,16 @@ auipc ra, 0x0
 jalr ra <.Lpcrel_hi1+0x6e>
 ```
 
-#### Group 2 — 3 configs, 32 instructions
+#### Group 2 — 6 configs, 32 instructions
 
 Configurations in this group (exact Make flags):
 
-- `O2-unaligned` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1`
-- `O3-unaligned` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1`
-- `Os-unaligned` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1`
+- `O2-unaligned-branches` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches`
+- `O2-unaligned-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked`
+- `O3-unaligned-branches` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches`
+- `O3-unaligned-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked`
+- `Os-unaligned-branches` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches`
+- `Os-unaligned-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked`
 
 ```asm
 addi sp, sp, -0x10
@@ -124,16 +130,22 @@ jalr ra <.Lpcrel_hi1+0x54>
 
 1 distinct disassembly group.
 
-#### Group 1 — 6 configs, 2 instructions
+#### Group 1 — 12 configs, 2 instructions
 
 Configurations in this group (exact Make flags):
 
-- `O2-strict` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0`
-- `O2-unaligned` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1`
-- `O3-strict` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0`
-- `O3-unaligned` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1`
-- `Os-strict` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0`
-- `Os-unaligned` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1`
+- `O2-strict-branches` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches`
+- `O2-strict-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked`
+- `O2-unaligned-branches` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches`
+- `O2-unaligned-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked`
+- `O3-strict-branches` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches`
+- `O3-strict-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked`
+- `O3-unaligned-branches` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches`
+- `O3-unaligned-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked`
+- `Os-strict-branches` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches`
+- `Os-strict-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked`
+- `Os-unaligned-branches` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches`
+- `Os-unaligned-unchecked` — `DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked`
 
 ```asm
 lw a0, 0x0(a0)
