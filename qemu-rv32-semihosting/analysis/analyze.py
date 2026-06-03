@@ -246,7 +246,9 @@ def config_flags_str(cfg: Config) -> str:
     return " ".join(f"{k}={v}" for k, v in sorted(config_make_vars(cfg).items()))
 
 
-def build(case: str, cfg: Config, tcid: str, make_target: str, out_name: str) -> Path:
+def build(
+    case: str, cfg: Config, tcid: str, make_target: str, out_name: str
+) -> tuple[Path, str]:
     out_dir = BUILD_ROOT / tcid / case / cfg.cfgid
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -259,12 +261,16 @@ def build(case: str, cfg: Config, tcid: str, make_target: str, out_name: str) ->
     make_cmd += [f"{k}={v}" for k, v in sorted(config_make_vars(cfg).items())]
 
     cp = run(make_cmd)
+    log = (
+        f"$ {' '.join(make_cmd)}\n"
+        f"--- stdout ---\n{cp.stdout}"
+        f"--- stderr ---\n{cp.stderr}"
+    )
     if cp.returncode != 0:
         sys.exit(
-            f"build failed for {case} [{cfg.cfgid}] ({make_target}):\n"
-            f"$ {' '.join(make_cmd)}\n{cp.stdout}\n{cp.stderr}"
+            f"build failed for {case} [{cfg.cfgid}] ({make_target}):\n{log}"
         )
-    return out_dir / out_name
+    return out_dir / out_name, log
 
 
 def disassemble(obj: Path, focus: str) -> list[str]:
@@ -314,12 +320,18 @@ def analyze_case(case_src: Path, tcid: str) -> str:
 
     wasm_results: dict[str, list[str]] = {}
     native_results: dict[str, list[str]] = {}
+    wasm_logs: dict[str, str] = {}
+    native_logs: dict[str, str] = {}
     for cfg in all_configs():
-        wobj = build(case, cfg, tcid, "analysis-object", f"{case}.wasm.o")
+        wobj, wlog = build(case, cfg, tcid, "analysis-object", f"{case}.wasm.o")
         wasm_results[cfg.cfgid] = disassemble(wobj, focus)
+        wasm_logs[cfg.cfgid] = wlog
 
-        nobj = build(case, cfg, tcid, "analysis-native-object", f"{case}.native.o")
+        nobj, nlog = build(
+            case, cfg, tcid, "analysis-native-object", f"{case}.native.o"
+        )
         native_results[cfg.cfgid] = disassemble(nobj, native_focus)
+        native_logs[cfg.cfgid] = nlog
 
     flags_by_cfg = {cfg.cfgid: config_flags_str(cfg) for cfg in all_configs()}
 
@@ -330,11 +342,31 @@ def analyze_case(case_src: Path, tcid: str) -> str:
         group_disasm(wasm_results),
         group_disasm(native_results),
         flags_by_cfg,
+        wasm_logs,
+        native_logs,
     )
 
 
+def render_make_logs(cfgs: list[str], logs_by_cfg: dict[str, str]) -> list[str]:
+    joined = "\n\n".join(logs_by_cfg[c] for c in cfgs)
+    return [
+        "<details>",
+        f"<summary>Build output ({len(cfgs)} <code>make</code> "
+        "invocation{}, stdout &amp; stderr)</summary>".format(
+            "" if len(cfgs) == 1 else "s"
+        ),
+        "",
+        "```",
+        *joined.splitlines(),
+        "```",
+        "",
+        "</details>",
+        "",
+    ]
+
+
 def render_groups(
-    groups: list[dict], flags_by_cfg: dict[str, str]
+    groups: list[dict], flags_by_cfg: dict[str, str], logs_by_cfg: dict[str, str]
 ) -> list[str]:
     lines: list[str] = []
     for i, g in enumerate(groups, 1):
@@ -348,6 +380,7 @@ def render_groups(
         ]
         lines += [f"- `{c}` — `{flags_by_cfg[c]}`" for c in g["cfgs"]]
         lines += ["", "```asm", *g["insns"], "```", ""]
+        lines += render_make_logs(g["cfgs"], logs_by_cfg)
     return lines
 
 
@@ -358,6 +391,8 @@ def render_case_md(
     wasm_groups: list[dict],
     native_groups: list[dict],
     flags_by_cfg: dict[str, str],
+    wasm_logs: dict[str, str],
+    native_logs: dict[str, str],
 ) -> str:
     total = sum(len(g["cfgs"]) for g in wasm_groups)
     lines = [
@@ -372,13 +407,13 @@ def render_case_md(
         f"{len(wasm_groups)} distinct disassembly "
         f"{'group' if len(wasm_groups) == 1 else 'groups'}.",
         "",
-        *render_groups(wasm_groups, flags_by_cfg),
+        *render_groups(wasm_groups, flags_by_cfg, wasm_logs),
         "### Native baseline disassembly (no WASM)",
         "",
         f"{len(native_groups)} distinct disassembly "
         f"{'group' if len(native_groups) == 1 else 'groups'}.",
         "",
-        *render_groups(native_groups, flags_by_cfg),
+        *render_groups(native_groups, flags_by_cfg, native_logs),
     ]
     return "\n".join(lines)
 

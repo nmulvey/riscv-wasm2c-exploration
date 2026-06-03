@@ -132,6 +132,7 @@
           patches = [
             ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch
             ./0002-wasm2c-wasm-rt-allow-not-generating-any-bounds-check.patch
+            ./0003-wasm2c-support-disabling-all-memchecks.patch
           ];
         });
 
