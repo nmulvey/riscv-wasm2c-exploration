@@ -1,5 +1,5 @@
 #include "atax.wasm.h"
-#include "cycles.h"
+#include "polybench-harness.h"
 #include <stdint.h>
 #include <stdio.h>
 

@@ -299,7 +299,7 @@ COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o
 # that should be fed through the C->WASM->wasm2c pipeline. *.wat files are auto-
 # discovered and always go through wat2wasm + wasm2c.
 WASM_SOURCES_05_box := tweetnacl.c
-WASM_SOURCES_06_polybench := atax.c
+WASM_SOURCES_06_polybench := atax.c mm2.c mm3.c gemm.c mvt.c
 
 # Per-source CFLAGS overrides.
 #
@@ -482,3 +482,39 @@ clean:
 
 # Pick up header dependencies emitted by -MMD on prior builds.
 -include $(shell find $(BUILD) -name '*.d' 2>/dev/null)
+
+$(BUILD)/06_polybench/mm2.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/mm2.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+
+# MM2 harness needs access to polybench-harness.h
+$(BUILD)/06_polybench/main_mm2_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_mm2_wasm.o: CFLAGS += -Itests/06_polybench
+
+$(BUILD)/06_polybench/mm3.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/mm3.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+$(BUILD)/06_polybench/main_mm3_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_mm3_wasm.o: CFLAGS += -Itests/06_polybench
+
+$(BUILD)/06_polybench/gemm.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/gemm.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+$(BUILD)/06_polybench/main_gemm_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_gemm_wasm.o: CFLAGS += -Itests/06_polybench
+
+$(BUILD)/06_polybench/mvt.o:    CFLAGS      += $(POLYBENCH_INC) $(POLYBENCH_DEFS) -Wno-unknown-pragmas
+$(BUILD)/06_polybench/mvt.wasm: WASM_CFLAGS += -Itests/06_polybench/wasm_shim $(POLYBENCH_INC) $(POLYBENCH_DEFS)
+$(BUILD)/06_polybench/main_mvt_native.o: CFLAGS += -Itests/06_polybench
+$(BUILD)/06_polybench/main_mvt_wasm.o: CFLAGS += -Itests/06_polybench
+
+# No-bounds-check variant for overhead isolation
+$(BUILD)/$(1)/%.wasm.nobounds.o: $(BUILD)/$(1)/%.wasm.c
+	mkdir -p $$(dir $$@)
+	$(CC) $(CFLAGS) -DWASM_RT_NO_MEMORY_CHECKS $$(WASM2C_CFLAGS) -c $$< -o $$@
+
+# atax bounds vs no-bounds comparison
+$(BUILD)/06_polybench/06_polybench_atax_wasm_bounds: $(BUILD)/06_polybench/main_atax_wasm.o $(BUILD)/06_polybench/atax.o $(BUILD)/06_polybench/mm2.o $(BUILD)/06_polybench/mm3.o $(BUILD)/06_polybench/atax.wasm.o $(BUILD)/06_polybench/mm2.wasm.o $(BUILD)/06_polybench/mm3.wasm.o
+	mkdir -p $$(dir $$@)
+	$(LD) $(LDFLAGS) build/crt0.o build/wasm-rt-baremetal.o $$^ $(LDLIBS) -o $$@
+
+$(BUILD)/06_polybench/06_polybench_atax_wasm_nobounds: $(BUILD)/06_polybench/main_atax_wasm.o $(BUILD)/06_polybench/atax.o $(BUILD)/06_polybench/mm2.o $(BUILD)/06_polybench/mm3.o $(BUILD)/06_polybench/atax.wasm.nobounds.o $(BUILD)/06_polybench/mm2.wasm.o $(BUILD)/06_polybench/mm3.wasm.o
+	mkdir -p $$(dir $$@)
+	$(LD) $(LDFLAGS) build/crt0.o build/wasm-rt-baremetal.o $$^ $(LDLIBS) -o $$@

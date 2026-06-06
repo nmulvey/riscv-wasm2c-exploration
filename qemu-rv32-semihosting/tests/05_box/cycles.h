@@ -1,7 +1,8 @@
-#ifndef POLYBENCH_HARNESS_H
-#define POLYBENCH_HARNESS_H
+#ifndef CYCLES_H
+#define CYCLES_H
 
 #include <stdint.h>
+#include <stdio.h>
 
 static inline uint64_t read_rdcycle(void) {
     uint32_t lo, hi, hi_again;
