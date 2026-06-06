@@ -129,7 +129,11 @@
           "${armRt}/lib/baremetal/libclang_rt.builtins-arm.a";
 
         patchedWabt = pkgs.wabt.overrideAttrs (oldAttrs: {
-          patches = [ ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch ];
+          patches = [
+            ./0001-wasm2c-wasm-rt-allow-overriding-WASM_RT_THREAD_LOCAL.patch
+            ./0002-wasm2c-wasm-rt-allow-not-generating-any-bounds-check.patch
+            ./0003-wasm2c-support-disabling-all-memchecks.patch
+          ];
         });
 
         # gcc-arm-embedded sets `version = "15.2.rel1"` but the on-disk
@@ -654,6 +658,9 @@
                 pkgs.gnumake
                 pkgs.gdb
                 pkgs.qemu
+
+                # Required for analysis/analyze.py:
+                pkgs.python3
               ];
 
               ARCH_FAMILY = tc.archFamily;
@@ -687,7 +694,68 @@
         # bare `qemu-<elf>` names; alternate archs are prefixed
         # (`qemu-rv32imac-<elf>`). None force a toolchain build until the
         # corresponding `nix run` is invoked.
-        apps = lib.listToAttrs (lib.concatMap (arch: lib.map (mkApp arch) allElfs) archs);
+        apps = (lib.listToAttrs (lib.concatMap (arch: lib.map (mkApp arch) allElfs) archs)) // {
+          # `nix run .#analyze-all` runs analysis/analyze.py inside each
+          # of the prebuilt-only toolchain dev shells in sequence. Set -e
+          # via writeShellApplication aborts the whole run on the first
+          # failure.
+          analyze-all =
+            let
+              analyzeArchs = [
+                "rv32imafdc-clang-libgcc"
+                "rv32imafdc-gcc"
+                "arm-cortex-m4-clang-libgcc"
+                "arm-cortex-m4-gcc"
+              ];
+              # Pair each arch with the store path of its dev-shell env
+              # script. Referencing these paths in `text` below makes
+              # every analyzed toolchain a build-time dep of analyze-all,
+              # so `nix run .#analyze-all` builds them all up front
+              # instead of spawning `nix develop` per arch at run time.
+              archEnvs = lib.map (arch: {
+                inherit arch;
+                # This technically relies on an implementation detail of
+                # `mkShell` that shouldn't be relied on, but is fine for now:
+                envScript = pkgs.runCommand "env-script-${arch}" {} ''
+                  ${pkgs.gnused}/bin/sed -n '/^declare/,$p' ${mkDevShell arch} >$out
+                  # The above includes a bunch of Nix build environment vars,
+                  # override the ones that break:
+                  echo "declare -x TMP=/tmp" >>$out
+                  echo "declare -x TMPDIR=/tmp" >>$out
+                '';
+              }) analyzeArchs;
+            in
+            {
+              type = "app";
+              program = "${
+                pkgs.writeShellApplication {
+                  name = "analyze-all";
+                  # No nix at runtime: the env scripts and everything
+                  # they reference are already in the closure.
+                  runtimeInputs = [
+                    pkgs.bash
+                    pkgs.coreutils
+                  ];
+                  text = ''
+                    entries=(${
+                      lib.concatMapStringsSep " " (
+                        e: "\"${e.arch}:${e.envScript}\""
+                      ) archEnvs
+                    })
+                    for entry in "''${entries[@]}"; do
+                      arch="''${entry%%:*}"
+                      envScript="''${entry#*:}"
+                      echo "==> [analyze-all] Running analysis/analyze.py for $arch"
+                      env -i bash -c \
+                        "source '$envScript' && python3 analysis/analyze.py"
+                      echo "==> [analyze-all] Finished $arch"
+                    done
+                    echo "==> [analyze-all] All toolchains analyzed successfully."
+                  '';
+                }
+              }/bin/analyze-all";
+            };
+        };
 
         # Per-arch test-ELF bundles, plus a `default` alias for the
         # default arch. Build a non-default arch explicitly with

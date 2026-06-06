@@ -1,0 +1,46 @@
+From 4fefa8871b1a1f6b4dc6f74b163e69179aacceba Mon Sep 17 00:00:00 2001
+From: Leon Schuermann <leon@is.currently.online>
+Date: Wed, 3 Jun 2026 02:10:18 -0400
+Subject: [PATCH] wasm2c: support disabling all memchecks
+
+---
+ src/template/wasm2c.declarations.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/src/template/wasm2c.declarations.c b/src/template/wasm2c.declarations.c
+index a0cd5a7c..adeb480e 100644
+--- a/src/template/wasm2c.declarations.c
++++ b/src/template/wasm2c.declarations.c
+@@ -125,17 +125,24 @@ static inline bool add_overflow(uint64_t a, uint64_t b, uint64_t* resptr) {
+ // or it may do a slightly faster RANGE_CHECK.
+ #if WASM_RT_MEMCHECK_GUARD_PAGES
+ #define MEMCHECK_DEFAULT32(mem, a, t) WASM_RT_CHECK_BASE(mem);
+-#else
++#elif WASM_RT_MEMCHECK_BOUNDS_CHECK
+ #define MEMCHECK_DEFAULT32(mem, a, t)                \
+   WASM_RT_CHECK_BASE(mem);                           \
+   if (UNLIKELY(a + (uint64_t)sizeof(t) > mem->size)) \
+     TRAP(OOB);
++#else
++// Neither GUARD_PAGES or BOUNDS_CHECK, do nothing:
++#define MEMCHECK_DEFAULT32(mem, a, t)
+ #endif
+ 
+ // MEMCHECK_GENERAL can be used for any memory
++#if WASM_RT_DISABLE_MEMCHECK_GENERAL
+ #define MEMCHECK_GENERAL(mem, a, t) \
+   WASM_RT_CHECK_BASE(mem);          \
+   RANGE_CHECK(mem, a, sizeof(t));
++#else
++#define MEMCHECK_GENERAL(mem, a, t)
++#endif
+ 
+ #ifdef __GNUC__
+ #define FORCE_READ_INT(var) __asm__("" ::"r"(var));
+
+base-commit: 9bbc21ef33932532fbee97025eecb5b5a6fa4d7f
+prerequisite-patch-id: 96704c643f0fb333b01ebc425a89e3effea3ebc2
+prerequisite-patch-id: 383251a2280fb8a30a724347aaadc12445e204ad
+-- 
+2.54.0
+

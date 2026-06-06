@@ -17,6 +17,7 @@
     "flake.lock"
     ".gitignore"
     ".clang-format"
+    "*.py"
 
     # Files that we vendor and don't want formatted:
     "tests/05_box/tweetnacl.c"
