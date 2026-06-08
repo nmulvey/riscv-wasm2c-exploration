@@ -1,3 +1,6 @@
 [submodule "qemu-rv32-semihosting/tests/06_polybench/PolyBenchC-4.2.1"]
 	path = qemu-rv32-semihosting/tests/06_polybench/PolyBenchC-4.2.1
 	url = https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1.git
+[submodule "qemu-rv32-semihosting/tests/07_lwip/lwip"]
+	path = qemu-rv32-semihosting/tests/07_lwip/lwip
+	url = https://github.com/lwip-tcpip/lwip.git

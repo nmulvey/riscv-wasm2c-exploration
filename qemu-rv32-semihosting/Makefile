@@ -532,3 +532,25 @@ clean:
 
 # Pick up header dependencies emitted by -MMD on prior builds.
 -include $(shell find $(BUILD) -name '*.d' 2>/dev/null)
+
+# 07_lwip: LwIP IPv4 checksum + pbuf core. The port dir supplies lwipopts.h
+# and arch/cc.h (NO_SYS=1, IPv4-only, no stdio pull-in). LWIP_INC lists the
+# upstream include root and our port dir; the port dir precedes upstream so
+# lwipopts.h/cc.h are found first. inet_chksum.c + pbuf.c are fed through both
+# the native and C->WASM pipelines.
+WASM_SOURCES_07_lwip := inet_chksum.c pbuf.c mem.c memp.c
+LWIP_INC := -Itests/07_lwip/port -Itests/07_lwip/lwip/src/include
+$(BUILD)/07_lwip/main_lwip_native.o:   CFLAGS      += $(LWIP_INC)
+$(BUILD)/07_lwip/main_lwip_wasm.o:     CFLAGS      += $(LWIP_INC)
+$(BUILD)/07_lwip/inet_chksum.o:        CFLAGS      += $(LWIP_INC) -Wno-error
+$(BUILD)/07_lwip/pbuf.o:               CFLAGS      += $(LWIP_INC) -Wno-error
+$(BUILD)/07_lwip/inet_chksum.wasm:     WASM_CFLAGS += -Itests/07_lwip/wasm_shim $(LWIP_INC)
+$(BUILD)/07_lwip/pbuf.wasm:            WASM_CFLAGS += -Itests/07_lwip/wasm_shim $(LWIP_INC)
+$(BUILD)/07_lwip/mem.o:                CFLAGS      += $(LWIP_INC) -Wno-error
+$(BUILD)/07_lwip/memp.o:               CFLAGS      += $(LWIP_INC) -Wno-error
+$(BUILD)/07_lwip/mem.wasm:             WASM_CFLAGS += -Itests/07_lwip/wasm_shim $(LWIP_INC)
+$(BUILD)/07_lwip/memp.wasm:            WASM_CFLAGS += -Itests/07_lwip/wasm_shim $(LWIP_INC)
+$(BUILD)/07_lwip/mem.o:                CFLAGS      += $(LWIP_INC) -Wno-error
+$(BUILD)/07_lwip/memp.o:               CFLAGS      += $(LWIP_INC) -Wno-error
+$(BUILD)/07_lwip/mem.wasm:             WASM_CFLAGS += -Itests/07_lwip/wasm_shim $(LWIP_INC)
+$(BUILD)/07_lwip/memp.wasm:            WASM_CFLAGS += -Itests/07_lwip/wasm_shim $(LWIP_INC)
