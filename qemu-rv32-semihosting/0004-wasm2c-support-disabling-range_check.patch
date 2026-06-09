@@ -1,0 +1,34 @@
+From 55a3c7159389a8448aff85c06c3110ebc2152984 Mon Sep 17 00:00:00 2001
+From: Nicole <nmulvey12@gmail.com>
+Date: Mon, 8 Jun 2026 19:43:48 -0700
+Subject: [PATCH] disable range_check
+
+---
+ src/template/wasm2c.declarations.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/template/wasm2c.declarations.c b/src/template/wasm2c.declarations.c
+index adeb480..280dfe3 100644
+--- a/src/template/wasm2c.declarations.c
++++ b/src/template/wasm2c.declarations.c
+@@ -99,6 +99,9 @@ static inline bool add_overflow(uint64_t a, uint64_t b, uint64_t* resptr) {
+ #endif
+ }
+ 
++#if WASM_RT_DISABLE_RANGE_CHECK
++#define RANGE_CHECK(mem, offset, len)
++#else
+ #define RANGE_CHECK(mem, offset, len)              \
+   do {                                             \
+     uint64_t res;                                  \
+@@ -107,6 +110,7 @@ static inline bool add_overflow(uint64_t a, uint64_t b, uint64_t* resptr) {
+     if (UNLIKELY(res > (mem)->size))               \
+       TRAP(OOB);                                   \
+   } while (0);
++#endif
+ 
+ #if WASM_RT_USE_SEGUE_FOR_THIS_MODULE && WASM_RT_SANITY_CHECKS
+ #include <stdio.h>
+-- 
+2.50.1 (Apple Git-155)
+
