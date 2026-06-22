@@ -561,7 +561,7 @@ $(BUILD)/06_polybench/main_mvt_wasm.o: CFLAGS += -Itests/06_polybench
 # No-bounds-check variant for overhead isolation
 $(BUILD)/$(1)/%.wasm.nobounds.o: $(BUILD)/$(1)/%.wasm.c
 	mkdir -p $$(dir $$@)
-	$(CC) $(CFLAGS) -DWASM_RT_NO_MEMORY_CHECKS $$(WASM2C_CFLAGS) -c $$< -o $$@
+	$(CC) $(CFLAGS) -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 $$(WASM2C_CFLAGS) -c $$< -o $$@
 
 # atax bounds vs no-bounds comparison
 $(BUILD)/06_polybench/06_polybench_atax_wasm_bounds: $(BUILD)/06_polybench/main_atax_wasm.o $(BUILD)/06_polybench/atax.o $(BUILD)/06_polybench/mm2.o $(BUILD)/06_polybench/mm3.o $(BUILD)/06_polybench/atax.wasm.o $(BUILD)/06_polybench/mm2.wasm.o $(BUILD)/06_polybench/mm3.wasm.o
