@@ -12,7 +12,7 @@
 **Canonical pipeline flags** (from the Makefile)
 
 - `WASM_CFLAGS` = `--target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all`
-- `CFLAGS` = `-mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include`
+- `CFLAGS` = `-mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include`
 
 ---
 ## `loadptr`
@@ -71,7 +71,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.wasm.o
 --- stderr ---
 
@@ -81,7 +81,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.wasm.o
 --- stderr ---
 
@@ -91,7 +91,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.wasm.o
 --- stderr ---
 
@@ -101,7 +101,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.wasm.o
 --- stderr ---
 ```
@@ -144,7 +144,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.wasm.o
 --- stderr ---
 
@@ -154,7 +154,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 -O2 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.wasm.o
 --- stderr ---
 
@@ -164,7 +164,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.wasm.o
 --- stderr ---
 
@@ -174,7 +174,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 -O3 -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.wasm.o
 --- stderr ---
 ```
@@ -224,7 +224,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.wasm.o
 --- stderr ---
 
@@ -234,7 +234,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.wasm.o
 --- stderr ---
 ```
@@ -275,7 +275,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.wasm.o
 --- stderr ---
 
@@ -285,7 +285,7 @@ $ make analysis-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gc
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked
 clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all  -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.wasm analysis/cases/loadptr.c
 wasm2c -n loadptr -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.wasm.c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.wasm
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked \
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -DWASM_RT_MEMCHECK_GUARD_PAGES=0 -DWASM_RT_MEMCHECK_BOUNDS_CHECK=0 -DWASM_RT_DISABLE_MEMCHECK_GENERAL=1 -DWASM_RT_DISABLE_RANGE_CHECK=1 -Os -Ibuild/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked \
     -c build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.wasm.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.wasm.o
 --- stderr ---
 ```
@@ -325,84 +325,84 @@ bx lr
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-branches/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-strict-unchecked/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-branches/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked DEBUG=0 EXTRA_CFLAGS=-O2 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -O2 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O2-unaligned-unchecked/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-branches/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-strict-unchecked/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-branches/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked DEBUG=0 EXTRA_CFLAGS=-O3 NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -O3 -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/O3-unaligned-unchecked/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=branches
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-branches/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=0 WASM_BOUNDS_CHECKS=unchecked
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-strict-unchecked/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=branches
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-branches/loadptr.native.o
 --- stderr ---
 
 
 $ make analysis-native-object CASE=loadptr ANALYSIS_OUT=build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked DEBUG=0 EXTRA_CFLAGS=-Os NO_STRICT_ALIGN=1 WASM_BOUNDS_CHECKS=unchecked
 --- stdout ---
 mkdir -p build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked
-arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/lhlmj8629y0gqzxqgw82vh51vpy7ws3j-wabt-1.0.41/include -munaligned-access -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.native.o
+arm-none-eabi-gcc -mcpu=cortex-m4 -mfloat-abi=hard -mthumb -mfpu=fpv4-sp-d16 -O2 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/8ladf4anvpv05m40mhiibzvv2rm50k2h-wabt-1.0.41/include -munaligned-access -Os -c analysis/cases/loadptr.c -o build/analysis/arm-none-eabi_gcc15.2.1_cortex-m4-hard-thumb-fpv4-sp-d16_libgcc/loadptr/Os-unaligned-unchecked/loadptr.native.o
 --- stderr ---
 ```
 
