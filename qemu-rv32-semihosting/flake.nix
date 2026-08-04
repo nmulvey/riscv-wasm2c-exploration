@@ -134,6 +134,7 @@
             ./0002-wasm2c-wasm-rt-allow-not-generating-any-bounds-check.patch
             ./0003-wasm2c-support-disabling-all-memchecks.patch
             ./0004-wasm2c-support-disabling-range_check.patch
+            ./0005-wasm2c-assume-natural-alignment.patch
           ];
         });
 

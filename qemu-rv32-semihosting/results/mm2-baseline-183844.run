@@ -1,0 +1,4 @@
+PolyBench/2mm (MINI, wasm)
+Cycles (2mm): 3323000
+fingerprint=17079286
+PASS: 2mm kernel completed

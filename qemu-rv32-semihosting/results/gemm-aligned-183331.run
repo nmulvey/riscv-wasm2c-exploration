@@ -1,0 +1,4 @@
+PolyBench/gemm (MINI, wasm)
+Cycles (gemm): 1614000
+fingerprint=4364911
+PASS: gemm kernel completed

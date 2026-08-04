@@ -1,0 +1,4 @@
+PolyBench/3mm (MINI, wasm)
+Cycles (3mm): 2250000
+fingerprint=168880
+PASS: 3mm kernel completed

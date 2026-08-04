@@ -1,0 +1,5 @@
+Testing TweetNaCl crypto_box
+
+Generating keypairs...
+Cycles (keygen): 29054000
+Keypairs generated successfully.

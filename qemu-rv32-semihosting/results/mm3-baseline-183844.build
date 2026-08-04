@@ -1,0 +1,53 @@
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -c src/crt0.S -o build/crt0.o
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -c src/wasm-rt-baremetal.c -o build/wasm-rt-baremetal.o
+mkdir -p build/06_polybench/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -Itests/06_polybench/wasm_shim -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -o build/06_polybench/atax.wasm tests/06_polybench/atax.c
+mkdir -p build/06_polybench/
+wasm2c -n atax -o build/06_polybench/atax.wasm.c build/06_polybench/atax.wasm
+mkdir -p build/06_polybench/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -Itests/06_polybench/wasm_shim -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -o build/06_polybench/mm2.wasm tests/06_polybench/mm2.c
+mkdir -p build/06_polybench/
+wasm2c -n mm2 -o build/06_polybench/mm2.wasm.c build/06_polybench/mm2.wasm
+mkdir -p build/06_polybench/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -Itests/06_polybench/wasm_shim -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -o build/06_polybench/mm3.wasm tests/06_polybench/mm3.c
+mkdir -p build/06_polybench/
+wasm2c -n mm3 -o build/06_polybench/mm3.wasm.c build/06_polybench/mm3.wasm
+mkdir -p build/06_polybench/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -Itests/06_polybench/wasm_shim -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -o build/06_polybench/gemm.wasm tests/06_polybench/gemm.c
+mkdir -p build/06_polybench/
+wasm2c -n gemm -o build/06_polybench/gemm.wasm.c build/06_polybench/gemm.wasm
+mkdir -p build/06_polybench/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -Itests/06_polybench/wasm_shim -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -o build/06_polybench/mvt.wasm tests/06_polybench/mvt.c
+mkdir -p build/06_polybench/
+wasm2c -n mvt -o build/06_polybench/mvt.wasm.c build/06_polybench/mvt.wasm
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench -Ibuild/06_polybench -c tests/06_polybench/main_mm3_wasm.c -o build/06_polybench/main_mm3_wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -Wno-unknown-pragmas -Ibuild/06_polybench -c tests/06_polybench/atax.c -o build/06_polybench/atax.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -Wno-unknown-pragmas -Ibuild/06_polybench -c tests/06_polybench/gemm.c -o build/06_polybench/gemm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -Wno-unknown-pragmas -Ibuild/06_polybench -c tests/06_polybench/mm2.c -o build/06_polybench/mm2.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -Wno-unknown-pragmas -Ibuild/06_polybench -c tests/06_polybench/mm3.c -o build/06_polybench/mm3.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Itests/06_polybench/PolyBenchC-4.2.1/utilities -DMINI_DATASET -DPOLYBENCH_STACK_ARRAYS -Wno-unknown-pragmas -Ibuild/06_polybench -c tests/06_polybench/mvt.c -o build/06_polybench/mvt.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/06_polybench -c build/06_polybench/atax.wasm.c -o build/06_polybench/atax.wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/06_polybench -c build/06_polybench/mm2.wasm.c -o build/06_polybench/mm2.wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/06_polybench -c build/06_polybench/mm3.wasm.c -o build/06_polybench/mm3.wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/06_polybench -c build/06_polybench/gemm.wasm.c -o build/06_polybench/gemm.wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/06_polybench -c build/06_polybench/mvt.wasm.c -o build/06_polybench/mvt.wasm.o
+mkdir -p build/06_polybench/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/h7qy6i2c2ishk3mzm33jlz3pdpxkmshq-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ --unwindlib=none build/crt0.o build/wasm-rt-baremetal.o build/06_polybench/main_mm3_wasm.o build/06_polybench/atax.o build/06_polybench/gemm.o build/06_polybench/mm2.o build/06_polybench/mm3.o build/06_polybench/mvt.o build/06_polybench/atax.wasm.o build/06_polybench/mm2.wasm.o build/06_polybench/mm3.wasm.o build/06_polybench/gemm.wasm.o build/06_polybench/mvt.wasm.o -lc -lsemihost -o build/06_polybench/06_polybench_mm3_wasm
+clang: warning: argument unused during compilation: '--unwindlib=none' [-Wunused-command-line-argument]
+
+   text	   data	    bss	    dec	    hex	filename
+  61541	   1752	 263100	 326393	  4faf9	build/06_polybench/06_polybench_mm3_wasm
+rm build/06_polybench/mm3.wasm build/06_polybench/mvt.wasm build/06_polybench/mm2.wasm build/06_polybench/gemm.wasm build/06_polybench/atax.wasm

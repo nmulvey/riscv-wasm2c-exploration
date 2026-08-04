@@ -1,0 +1,4 @@
+PolyBench/mvt (MINI, wasm)
+Cycles (mvt): 2238000
+fingerprint=739225
+PASS: mvt kernel completed

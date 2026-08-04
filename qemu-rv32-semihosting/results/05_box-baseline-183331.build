@@ -1,0 +1,21 @@
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -c src/crt0.S -o build/crt0.o
+mkdir -p build/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -c src/wasm-rt-baremetal.c -o build/wasm-rt-baremetal.o
+mkdir -p build/05_box/
+clang --target=wasm32 -O3 -nostdlib -fuse-ld=lld -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -o build/05_box/tweetnacl.wasm tests/05_box/tweetnacl.c
+mkdir -p build/05_box/
+wasm2c -n tweetnacl -o build/05_box/tweetnacl.wasm.c build/05_box/tweetnacl.wasm
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Ibuild/05_box -c tests/05_box/main_wasm.c -o build/05_box/main_wasm.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-sign-compare -Wno-error=unterminated-string-initialization -Ibuild/05_box -c tests/05_box/tweetnacl.c -o build/05_box/tweetnacl.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -O2 -g -ffunction-sections -fdata-sections -Wall -Wextra -Werror -Isrc -DWASM_RT_THREAD_LOCAL= -MMD -MP -I/nix/store/ynivnfqgbvacbfc9bdciwhqbk3mvc74j-wabt-1.0.41/include -DBENCH -I/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/include -Wno-unused-variable -Wno-unused-function -Wno-unused-value -Wno-unused-parameter -Ibuild/05_box -c build/05_box/tweetnacl.wasm.c -o build/05_box/tweetnacl.wasm.o
+mkdir -p build/05_box/
+clang -march=rv32imafdc -mabi=ilp32d -mcmodel=medany --target=riscv32-none-elf -nostartfiles  -T src/link.ld -Wl,--gc-sections -fuse-ld=lld -L/nix/store/izvzbga16i04i2hgnw19d5210104yfhk-newlib-riscv32-none-elf-4.5.0.20241231/riscv32-none-elf/lib --rtlib=libgcc -L/nix/store/h7qy6i2c2ishk3mzm33jlz3pdpxkmshq-riscv32-none-elf-gcc-15.2.0/lib/gcc/riscv32-none-elf/15.2.0/ --unwindlib=none build/crt0.o build/wasm-rt-baremetal.o build/05_box/main_wasm.o build/05_box/tweetnacl.o build/05_box/tweetnacl.wasm.o -lc -lsemihost -o build/05_box/05_box_wasm
+clang: warning: argument unused during compilation: '--unwindlib=none' [-Wunused-command-line-argument]
+
+   text	   data	    bss	    dec	    hex	filename
+ 117796	   1760	 263100	 382656	  5d6c0	build/05_box/05_box_wasm
+rm build/05_box/tweetnacl.wasm

@@ -1,0 +1,4 @@
+PolyBench/atax (MINI, wasm)
+Cycles (atax): 2743000
+fingerprint=1151832
+PASS: atax kernel completed

@@ -1,0 +1,57 @@
+
+
+diff --git a/src/template/wasm2c.declarations.c b/src/template/wasm2c.declarations.c
+--- a/src/template/wasm2c.declarations.c
++++ b/src/template/wasm2c.declarations.c
+@@ -213,11 +213,39 @@ static inline void load_data(u8* dest, const u8* src, size_t n) {
+     ret_kw name##_unchecked(mem, addr, val1, val2);                          \
+   }
+ 
++/* WASM_RT_ASSUME_ALIGNED (experimental): assume every wasm load/store is
++ * naturally aligned to its access width, letting the C compiler emit a single
++ * aligned load/store instead of the conservative byte-wise wasm_rt_memcpy.
++ *
++ * The wasm spec permits a load/store's alignment immediate to under-report the
++ * true alignment, so wasm2c must be conservative and copy bytes; on strict-
++ * alignment targets (e.g. rv32 without unaligned support) that lowers to an
++ * lbu-x4 + shift reconstruction. Doing a typed dereference asserts natural
++ * alignment: if the developer's C was aligned and Clang's hints are honest,
++ * every access really is aligned and we get one instruction; if a hint is ever
++ * wrong we get a genuine misaligned access (a trap on strict-align hardware),
++ * which is exactly the signal that confirms or refutes the hypothesis.
++ *
++ * Only the little-endian path takes the fast route; big-endian keeps the
++ * byte-reversing wasm_rt_memcpy. Enable with -DWASM_RT_ASSUME_ALIGNED. */
++#if defined(WASM_RT_ASSUME_ALIGNED) && !WABT_BIG_ENDIAN
++#define ASSUME_ALIGNED_LOAD(result, mem, addr, t1) \
++  result = *(t1*)MEM_ADDR_MEMOP(mem, addr, sizeof(t1))
++#define ASSUME_ALIGNED_STORE(mem, addr, t1, wrapped) \
++  *(t1*)MEM_ADDR_MEMOP(mem, addr, sizeof(t1)) = wrapped
++#else
++#define ASSUME_ALIGNED_LOAD(result, mem, addr, t1)                 \
++  wasm_rt_memcpy(&result, MEM_ADDR_MEMOP(mem, addr, sizeof(t1)),   \
++                 sizeof(t1))
++#define ASSUME_ALIGNED_STORE(mem, addr, t1, wrapped)               \
++  wasm_rt_memcpy(MEM_ADDR_MEMOP(mem, addr, sizeof(t1)), &wrapped,  \
++                 sizeof(t1))
++#endif
++
+ #define DEFINE_LOAD(name, t1, t2, t3, force_read)                      \
+   static inline t3 name##_unchecked(wasm_rt_memory_t* mem, u64 addr) { \
+     t1 result;                                                         \
+-    wasm_rt_memcpy(&result, MEM_ADDR_MEMOP(mem, addr, sizeof(t1)),     \
+-                   sizeof(t1));                                        \
++    ASSUME_ALIGNED_LOAD(result, mem, addr, t1);                        \
+     force_read(result);                                                \
+     return (t3)(t2)result;                                             \
+   }                                                                    \
+@@ -227,8 +255,7 @@ static inline void load_data(u8* dest, const u8* src, size_t n) {
+   static inline void name##_unchecked(wasm_rt_memory_t* mem, u64 addr, \
+                                       t2 value) {                      \
+     t1 wrapped = (t1)value;                                            \
+-    wasm_rt_memcpy(MEM_ADDR_MEMOP(mem, addr, sizeof(t1)), &wrapped,    \
+-                   sizeof(t1));                                        \
++    ASSUME_ALIGNED_STORE(mem, addr, t1, wrapped);                      \
+   }                                                                    \
+   DEF_MEM_CHECKS1(name, _, t1, , void, t2)
+ 

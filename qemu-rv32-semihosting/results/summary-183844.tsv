@@ -1,0 +1,13 @@
+prog	variant	runs	output	cycles	text
+05_box	baseline	ok	match	54331000	117796
+05_box	aligned	ok	match	29054000	81332
+atax	baseline	ok	match	2743000	49573
+atax	aligned	ok	match	1057000	42949
+gemm	baseline	ok	PASS	3062000	55165
+gemm	aligned	ok	PASS	1591000	45485
+mm2	baseline	ok	PASS	3323000	61805
+mm2	aligned	ok	PASS	2132000	49741
+mm3	baseline	ok	PASS	3483000	61541
+mm3	aligned	ok	PASS	2250000	49157
+mvt	baseline	ok	PASS	2776000	59149
+mvt	aligned	ok	PASS	1870000	47997
