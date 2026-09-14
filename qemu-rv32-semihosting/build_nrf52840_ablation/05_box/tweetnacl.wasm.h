@@ -27,24 +27,25 @@ extern "C" {
 struct w2c_env;
 
 typedef struct w2c_tweetnacl {
-  struct w2c_env* w2c_env_instance;
-  u32 w2c_g0;
-  u32 w2c_0x5F_dso_handle;
-  u32 w2c_0x5F_data_end;
-  u32 w2c_0x5F_stack_low;
-  u32 w2c_0x5F_stack_high;
-  u32 w2c_0x5F_global_base;
-  u32 w2c_0x5F_heap_base;
-  u32 w2c_0x5F_heap_end;
-  u32 w2c_0x5F_memory_base;
-  u32 w2c_0x5F_table_base;
-  u32 w2c_0x5F_wasm_first_page_end;
-  wasm_rt_memory_t w2c_memory;
+    struct w2c_env* w2c_env_instance;
+    u32 w2c_g0;
+    u32 w2c_0x5F_dso_handle;
+    u32 w2c_0x5F_data_end;
+    u32 w2c_0x5F_stack_low;
+    u32 w2c_0x5F_stack_high;
+    u32 w2c_0x5F_global_base;
+    u32 w2c_0x5F_heap_base;
+    u32 w2c_0x5F_heap_end;
+    u32 w2c_0x5F_memory_base;
+    u32 w2c_0x5F_table_base;
+    u32 w2c_0x5F_wasm_first_page_end;
+    wasm_rt_memory_t w2c_memory;
 } w2c_tweetnacl;
 
 void wasm2c_tweetnacl_instantiate(w2c_tweetnacl*, struct w2c_env*);
 void wasm2c_tweetnacl_free(w2c_tweetnacl*);
-wasm_rt_func_type_t wasm2c_tweetnacl_get_func_type(uint32_t param_count, uint32_t result_count, ...);
+wasm_rt_func_type_t wasm2c_tweetnacl_get_func_type(uint32_t param_count, uint32_t result_count,
+                                                   ...);
 
 /* import: 'env' 'randombytes' */
 void w2c_env_randombytes(struct w2c_env*, u32, u64);
@@ -89,7 +90,8 @@ u32 w2c_tweetnacl_crypto_onetimeauth_poly1305_tweet_verify(w2c_tweetnacl*, u32, 
 u32 w2c_tweetnacl_crypto_secretbox_xsalsa20poly1305_tweet(w2c_tweetnacl*, u32, u32, u64, u32, u32);
 
 /* export: 'crypto_secretbox_xsalsa20poly1305_tweet_open' */
-u32 w2c_tweetnacl_crypto_secretbox_xsalsa20poly1305_tweet_open(w2c_tweetnacl*, u32, u32, u64, u32, u32);
+u32 w2c_tweetnacl_crypto_secretbox_xsalsa20poly1305_tweet_open(w2c_tweetnacl*, u32, u32, u64, u32,
+                                                               u32);
 
 /* export: 'crypto_scalarmult_curve25519_tweet' */
 u32 w2c_tweetnacl_crypto_scalarmult_curve25519_tweet(w2c_tweetnacl*, u32, u32, u32);
@@ -101,19 +103,24 @@ u32 w2c_tweetnacl_crypto_scalarmult_curve25519_tweet_base(w2c_tweetnacl*, u32, u
 u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_keypair(w2c_tweetnacl*, u32, u32);
 
 /* export: 'crypto_box_curve25519xsalsa20poly1305_tweet_beforenm' */
-u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_beforenm(w2c_tweetnacl*, u32, u32, u32);
+u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_beforenm(w2c_tweetnacl*, u32, u32,
+                                                                       u32);
 
 /* export: 'crypto_box_curve25519xsalsa20poly1305_tweet_afternm' */
-u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_afternm(w2c_tweetnacl*, u32, u32, u64, u32, u32);
+u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_afternm(w2c_tweetnacl*, u32, u32, u64,
+                                                                      u32, u32);
 
 /* export: 'crypto_box_curve25519xsalsa20poly1305_tweet_open_afternm' */
-u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_open_afternm(w2c_tweetnacl*, u32, u32, u64, u32, u32);
+u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_open_afternm(w2c_tweetnacl*, u32, u32,
+                                                                           u64, u32, u32);
 
 /* export: 'crypto_box_curve25519xsalsa20poly1305_tweet' */
-u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet(w2c_tweetnacl*, u32, u32, u64, u32, u32, u32);
+u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet(w2c_tweetnacl*, u32, u32, u64, u32,
+                                                              u32, u32);
 
 /* export: 'crypto_box_curve25519xsalsa20poly1305_tweet_open' */
-u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_open(w2c_tweetnacl*, u32, u32, u64, u32, u32, u32);
+u32 w2c_tweetnacl_crypto_box_curve25519xsalsa20poly1305_tweet_open(w2c_tweetnacl*, u32, u32, u64,
+                                                                   u32, u32, u32);
 
 /* export: 'crypto_hashblocks_sha512_tweet' */
 u32 w2c_tweetnacl_crypto_hashblocks_sha512_tweet(w2c_tweetnacl*, u32, u32, u64);
@@ -164,4 +171,4 @@ u32* w2c_tweetnacl_0x5F_wasm_first_page_end(w2c_tweetnacl* instance);
 }
 #endif
 
-#endif  /* TWEETNACL_WASM_H_GENERATED_ */
+#endif /* TWEETNACL_WASM_H_GENERATED_ */

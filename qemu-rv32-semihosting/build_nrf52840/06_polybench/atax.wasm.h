@@ -25,18 +25,18 @@ extern "C" {
 #endif
 
 typedef struct w2c_atax {
-  u32 w2c_g0;
-  u32 w2c_0x5F_dso_handle;
-  u32 w2c_0x5F_data_end;
-  u32 w2c_0x5F_stack_low;
-  u32 w2c_0x5F_stack_high;
-  u32 w2c_0x5F_global_base;
-  u32 w2c_0x5F_heap_base;
-  u32 w2c_0x5F_heap_end;
-  u32 w2c_0x5F_memory_base;
-  u32 w2c_0x5F_table_base;
-  u32 w2c_0x5F_wasm_first_page_end;
-  wasm_rt_memory_t w2c_memory;
+    u32 w2c_g0;
+    u32 w2c_0x5F_dso_handle;
+    u32 w2c_0x5F_data_end;
+    u32 w2c_0x5F_stack_low;
+    u32 w2c_0x5F_stack_high;
+    u32 w2c_0x5F_global_base;
+    u32 w2c_0x5F_heap_base;
+    u32 w2c_0x5F_heap_end;
+    u32 w2c_0x5F_memory_base;
+    u32 w2c_0x5F_table_base;
+    u32 w2c_0x5F_wasm_first_page_end;
+    wasm_rt_memory_t w2c_memory;
 } w2c_atax;
 
 void wasm2c_atax_instantiate(w2c_atax*);
@@ -92,4 +92,4 @@ u32* w2c_atax_0x5F_wasm_first_page_end(w2c_atax* instance);
 }
 #endif
 
-#endif  /* ATAX_WASM_H_GENERATED_ */
+#endif /* ATAX_WASM_H_GENERATED_ */

@@ -1,18 +1,15 @@
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 static uint8_t sandbox_mem[256] __attribute__((aligned(16))) = {
-    0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
-    0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF,
+    0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF,
 };
 
-#define MEM_ADDR_MEMOP(base, addr) \
-    ((uint8_t *)(uintptr_t)((uint8_t *)(base) + (uint32_t)(addr)))
+#define MEM_ADDR_MEMOP(base, addr) ((uint8_t*)(uintptr_t)((uint8_t*)(base) + (uint32_t)(addr)))
 
-__attribute__((noinline))
-uint32_t load_i32_optimized(uint32_t addr) {
-    volatile uint32_t *p = (volatile uint32_t *)MEM_ADDR_MEMOP(sandbox_mem, addr);
+__attribute__((noinline)) uint32_t load_i32_optimized(uint32_t addr) {
+    volatile uint32_t* p = (volatile uint32_t*)MEM_ADDR_MEMOP(sandbox_mem, addr);
     return *p;
 }
 
@@ -27,7 +24,8 @@ static void try_load(uint32_t addr) {
     uint32_t v = load_i32_optimized(addr);
     if (g_trapped) {
         printf("TRAP mcause=%lu", (unsigned long)g_mcause);
-        if ((g_mcause & 0x7fffffff) == 4) printf(" (load address misaligned)");
+        if ((g_mcause & 0x7fffffff) == 4)
+            printf(" (load address misaligned)");
         printf("\n");
     } else {
         printf("0x%08lx  (survived)\n", (unsigned long)v);
@@ -35,7 +33,8 @@ static void try_load(uint32_t addr) {
 }
 
 int main(int argc, char* argv[]) {
-    (void)argc; (void)argv;
+    (void)argc;
+    (void)argv;
 
     install_trap_vector();
 
