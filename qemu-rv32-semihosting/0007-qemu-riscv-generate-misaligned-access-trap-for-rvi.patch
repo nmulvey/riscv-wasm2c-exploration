@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frederic Konrad <fkonrad@amd.com>
+Date: Wed, 11 Dec 2024 22:19:32 +0100
+Subject: [PATCH 2/3] target/riscv: generate misaligned access trap for rvi insn
+
+Now there is an option to enable misaligned accesses traps, check the alignment
+during load and store for the RVI instructions.  Do not generate them if the
+zama16b extension is there.
+
+Signed-off-by: Frederic Konrad <fkonrad@amd.com>
+
+[Backport note: retain QEMU 10.2.x's intervening mo_endian() setup.]
+---
+ target/riscv/insn_trans/trans_rvi.c.inc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 135258b..b5d650a 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -399,6 +399,10 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+     bool out;
+ 
+     memop |= mo_endian(ctx);
++    if (ctx->cfg_ptr->trap_misaligned_access && !ctx->cfg_ptr->ext_zama16b) {
++        memop |= MO_ALIGN;
++    }
++
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+@@ -504,6 +508,9 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+ {
+     memop |= mo_endian(ctx);
++    if (ctx->cfg_ptr->trap_misaligned_access && !ctx->cfg_ptr->ext_zama16b) {
++        memop |= MO_ALIGN;
++    }
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+-- 
+2.43.5
+

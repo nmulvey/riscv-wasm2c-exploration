@@ -138,6 +138,16 @@
           ];
         });
 
+        # QEMU normally completes ordinary misaligned RISC-V loads/stores.
+        # Add the RISC-V CPU switch which asks TCG to mark those memory ops
+        # MO_ALIGN, so they raise architectural address-misaligned traps.
+        strictAlignmentQemu = pkgs.qemu.overrideAttrs (oldAttrs: {
+          patches = (oldAttrs.patches or [ ]) ++ [
+            ./0006-qemu-riscv-add-a-trap-misaligned-access-property.patch
+            ./0007-qemu-riscv-generate-misaligned-access-trap-for-rvi.patch
+          ];
+        });
+
         # gcc-arm-embedded sets `version = "15.2.rel1"` but the on-disk
         # `lib/gcc/arm-none-eabi/<X>` subdir is named after the underlying
         # gcc release ("15.2.1"). nixpkgs's riscv32-embedded cross gcc
@@ -235,6 +245,8 @@
             qemuExtra = [
               "-bios"
               "none"
+              "-cpu"
+              "rv32,trap-misaligned-access=on"
             ];
           }
           // (lib.optionalAttrs (compilerFamily == "gcc") {
@@ -600,7 +612,7 @@
               program = "${
                 pkgs.writeShellApplication {
                   inherit name;
-                  runtimeInputs = [ pkgs.qemu ];
+                  runtimeInputs = [ strictAlignmentQemu ];
                   text = ''
                     exec ${qemuCmd tc} \
                       -kernel ${builtByArch.${arch}}/bin/${e.elf} "$@"
@@ -622,7 +634,7 @@
             value =
               pkgs.runCommand "check-${arch}-${name}"
                 {
-                  nativeBuildInputs = [ pkgs.qemu ];
+                  nativeBuildInputs = [ strictAlignmentQemu ];
                   expected = expectedPath;
                 }
                 ''
@@ -661,7 +673,7 @@
                 # Development packages:
                 pkgs.gnumake
                 pkgs.gdb
-                pkgs.qemu
+                strictAlignmentQemu
 
                 # Required for analysis/analyze.py:
                 pkgs.python3

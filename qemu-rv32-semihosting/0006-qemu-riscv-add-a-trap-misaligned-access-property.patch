@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Frederic Konrad <fkonrad@amd.com>
+Date: Wed, 11 Dec 2024 22:19:31 +0100
+Subject: [PATCH 1/3] target/riscv: add a trap-misaligned-access property
+
+On riscv target, misaligned accesses are either authorized and implemented in
+hardware, or unimplemented and generate a trap to be implemented in software.
+
+At the moment misaligned accesses for rvi just succeed, the intention of this
+new property is to let the user choose to have a trap when a misaligned access
+happens.
+
+Signed-off-by: Frederic Konrad <fkonrad@amd.com>
+
+[Backport note: RISCVCPUConfig fields live in cpu_cfg_fields.h.inc in QEMU
+10.2.x, rather than directly in cpu_cfg.h.]
+---
+ target/riscv/cpu.c                | 5 +++++
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index f40e67d..be52daf 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2692,5 +2692,10 @@ static Property riscv_cpu_properties[] = {
+      */
+     DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
++    /*
++     * when set, misaligned accesses will generate a trap.
++     */
++    DEFINE_PROP_BOOL("trap-misaligned-access", RISCVCPU,
++                     cfg.trap_misaligned_access, false),
+ };
+ 
+ static const gchar *riscv_gdb_arch_name(CPUState *cs)
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 0e626ef..609e047 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -152,6 +152,7 @@ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+ BOOL_FIELD(debug)
+ BOOL_FIELD(misa_w)
++BOOL_FIELD(trap_misaligned_access)
+ 
+ BOOL_FIELD(short_isa_string)
+ 
+-- 
+2.43.5

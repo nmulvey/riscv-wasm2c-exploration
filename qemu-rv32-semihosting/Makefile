@@ -3,6 +3,7 @@
 # Add a family by extending the block below (and providing matching crt0/
 # linker script under src/).
 ARCH_FAMILY ?= riscv32
+SHELL := bash
 
 # By default, we try to find a gcc toolchain for compiling to the chosen
 # target family. Set USE_CLANG=1 to use `clang` for compiling and linking
@@ -49,7 +50,10 @@ ifeq ($(ARCH_FAMILY),riscv32)
   LINK_SCRIPT       ?= src/link.ld
   QEMU_SYSTEM       ?= qemu-system-riscv32
   QEMU_MACHINE      ?= virt
-  QEMU_EXTRA        ?= -bios none
+  # QEMU otherwise completes ordinary misaligned RVI loads/stores.  Our
+  # patched QEMU maps this CPU property to TCG MO_ALIGN memory operations,
+  # producing architectural load/store-address-misaligned traps instead.
+  QEMU_EXTRA        ?= -bios none -cpu rv32,trap-misaligned-access=on
   TOOLCHAIN_TRIPLES := riscv32-none-elf- riscv64-unknown-elf-
 else ifeq ($(ARCH_FAMILY),arm)
   TARGET_TRIPLE     ?= arm-none-eabi
@@ -454,7 +458,12 @@ $(BUILD)/$(1)/$(3): $(COMMON_OBJS) $(BUILD)/$(1)/$(2).o $$($(1)_LIB_OBJS)
 .PHONY: qemu-$(3) qemu-gdb-$(3) gdb-$(3)
 
 qemu-$(3): $(BUILD)/$(1)/$(3)
-	$(QEMU) -machine $(QEMU_MACHINE) -icount shift=0 $(QEMU_EXTRA) -nographic -semihosting -kernel $$<
+	@log=$$$$(mktemp); trap 'rm -f "$$$$log"' EXIT; \
+	  set -o pipefail; \
+	  $(QEMU) -machine $(QEMU_MACHINE) -icount shift=0 $(QEMU_EXTRA) -nographic -semihosting -kernel $$< \
+	    2>&1 | tee "$$$$log"; status=$$$$?; \
+	  if grep -q '^ERROR:' "$$$$log"; then exit 1; fi; \
+	  exit $$$$status
 
 # `qemu-gdb-<elf>` runs QEMU with the CPU halted at reset and a gdbserver
 # listening on $(GDB_PORT). Use with `gdb-<elf>` from a second terminal.

@@ -45,5 +45,9 @@ int main(int argc, char* argv[]) {
         try_load(a);
 
     printf("== done ==\n");
+    if (g_trapped) {
+        fprintf(stderr, "ERROR: misaligned load trapped\n");
+        return 1;
+    }
     return 0;
 }
