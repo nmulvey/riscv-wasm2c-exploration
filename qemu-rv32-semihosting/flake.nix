@@ -629,7 +629,9 @@
                   ${qemuCmd tc} \
                     -kernel ${builtByArch.${arch}}/bin/${e.elf} \
                     </dev/null >actual.txt
-                  diff -u "$expected" actual.txt
+                  # Don't make comparison break on cycle count differences
+                  sed '/^Cycles (/d' actual.txt >actual-functional.txt
+                  diff -u "$expected" actual-functional.txt
                   touch $out
                 '';
           };
@@ -718,7 +720,7 @@
                 inherit arch;
                 # This technically relies on an implementation detail of
                 # `mkShell` that shouldn't be relied on, but is fine for now:
-                envScript = pkgs.runCommand "env-script-${arch}" {} ''
+                envScript = pkgs.runCommand "env-script-${arch}" { } ''
                   ${pkgs.gnused}/bin/sed -n '/^declare/,$p' ${mkDevShell arch} >$out
                   # The above includes a bunch of Nix build environment vars,
                   # override the ones that break:
@@ -739,11 +741,7 @@
                     pkgs.coreutils
                   ];
                   text = ''
-                    entries=(${
-                      lib.concatMapStringsSep " " (
-                        e: "\"${e.arch}:${e.envScript}\""
-                      ) archEnvs
-                    })
+                    entries=(${lib.concatMapStringsSep " " (e: "\"${e.arch}:${e.envScript}\"") archEnvs})
                     for entry in "''${entries[@]}"; do
                       arch="''${entry%%:*}"
                       envScript="''${entry#*:}"

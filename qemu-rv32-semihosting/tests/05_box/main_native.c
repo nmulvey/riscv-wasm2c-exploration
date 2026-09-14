@@ -1,5 +1,4 @@
 #include "cycles.h"
-#include "cycles.h"
 #include "tweetnacl.h"
 #include <stdint.h>
 #include <stdio.h>
