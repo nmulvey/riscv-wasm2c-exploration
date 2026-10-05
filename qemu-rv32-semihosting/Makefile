@@ -322,6 +322,7 @@ COMMON_OBJS := $(BUILD)/crt0.o $(BUILD)/wasm-rt-baremetal.o
 # discovered and always go through wat2wasm + wasm2c.
 WASM_SOURCES_05_box := tweetnacl.c
 WASM_SOURCES_06_polybench := atax.c mm2.c mm3.c gemm.c mvt.c
+WASM_SOURCES_09_toy_align := toy.c
 
 # Per-source CFLAGS overrides.
 #
