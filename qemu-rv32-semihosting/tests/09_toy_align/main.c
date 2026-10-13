@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "bytes.wasm.h"
 #include "toy.wasm.h"
 
 extern void install_trap_vector(void);
@@ -9,6 +10,7 @@ extern volatile uint32_t g_mcause;
 extern volatile uint32_t g_trap_count;
 
 static w2c_toy toy;
+static w2c_bytes bm;
 static int failures;
 static int traps;
 static unsigned long init_traps;
@@ -63,6 +65,8 @@ int main(int argc, char *argv[]) {
     printf("== toy_align start ==\n");
     wasm_rt_init();
     wasm2c_toy_instantiate(&toy);
+    wasm2c_bytes_instantiate(&bm);
+    w2c_bytes_fill(&bm);
     w2c_toy_init(&toy);
     init_traps = g_trap_count;
     printf("%-22s %lu traps\n", "init", init_traps);
@@ -75,6 +79,11 @@ int main(int argc, char *argv[]) {
     CHECK32("M  sum_u32_off2", w2c_toy_mSumU32Off2(&toy), w2c_toy_refSumU32At(&toy, 2));
     CHECK64("M  sum_u64_off3", w2c_toy_mSumU64Off3(&toy), w2c_toy_refSumU64Off3(&toy));
     CHECK32("M  sum_packed", w2c_toy_mSumPacked(&toy), w2c_toy_refSumPacked(&toy));
+    CHECK32("S  src_byteloop(0)", w2c_toy_sSumByteLoop(&toy, 0), w2c_toy_refSumU32At(&toy, 0));
+    CHECK32("S  src_byteloop(2)", w2c_toy_sSumByteLoop(&toy, 2), w2c_toy_refSumU32At(&toy, 2));
+    CHECK32("W  wat_bytes(0)", w2c_bytes_sumBytes(&bm, 0), w2c_toy_refSumU32At(&toy, 0));
+    CHECK32("W  wat_bytes(1)", w2c_bytes_sumBytes(&bm, 1), w2c_toy_refSumU32At(&toy, 1));
+    CHECK32("W  wat_bytes(2)", w2c_bytes_sumBytes(&bm, 2), w2c_toy_refSumU32At(&toy, 2));
 
     printf("== done: %lu init traps, %d tests trapped, %d mismatched ==\n", init_traps, traps, failures);
     if (init_traps || traps || failures) {

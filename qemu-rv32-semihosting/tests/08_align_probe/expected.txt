@@ -1,0 +1,6 @@
+== alignment probe start ==
+aligned optimized addr=0: 0x33221100
+misaligned optimized addr=1: TRAP mcause=4 (load address misaligned)
+misaligned optimized addr=2: TRAP mcause=4 (load address misaligned)
+misaligned optimized addr=3: TRAP mcause=4 (load address misaligned)
+== done ==

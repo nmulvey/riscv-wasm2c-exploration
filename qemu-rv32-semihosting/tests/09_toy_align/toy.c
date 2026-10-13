@@ -87,6 +87,18 @@ EXPORT("dSumU32At") uint32_t d_sum_u32_at(uint32_t off) {
     return s;
 }
 
+EXPORT("sSumByteLoop") uint32_t s_sum_byte_loop(uint32_t off) {
+    if (off > 16) return 0;
+    uint32_t s = 0;
+    for (uint32_t i = 0; i < NW; i++) {
+        const uint8_t *p = bytes + off + 4 * i;
+        uint32_t v = 0;
+        for (uint32_t k = 0; k < 4; k++) v |= (uint32_t)p[k] << (8 * k);
+        s += v;
+    }
+    return s;
+}
+
 EXPORT("mSumU32Off2") uint32_t m_sum_u32_off2(void) {
     uint32_t s = 0;
     for (uint32_t i = 0; i < NW; i++) {
