@@ -1,0 +1,54 @@
+/usr/lib/gcc/riscv64-unknown-elf/14.2.0/../../../riscv64-unknown-elf/bin/ld: warning: def_strict.elf has a LOAD segment with RWX permissions
+built def_strict.elf
+/usr/lib/gcc/riscv64-unknown-elf/14.2.0/../../../riscv64-unknown-elf/bin/ld: warning: def_nostrict.elf has a LOAD segment with RWX permissions
+built def_nostrict.elf
+/usr/lib/gcc/riscv64-unknown-elf/14.2.0/../../../riscv64-unknown-elf/bin/ld: warning: def_nostrict_ooo.elf has a LOAD segment with RWX permissions
+built def_nostrict_ooo.elf
+
+----- def_strict.elf : load_i32_defensive -----
+8000004a <load_i32_defensive>:
+8000004a:	800007b7          	lui	a5,0x80000
+8000004e:	35078793          	addi	a5,a5,848 # 80000350 <sandbox_mem>
+80000052:	953e                	add	a0,a0,a5
+80000054:	00054583          	lbu	a1,0(a0)
+80000058:	00154603          	lbu	a2,1(a0)
+8000005c:	00254683          	lbu	a3,2(a0)
+80000060:	00354703          	lbu	a4,3(a0)
+80000064:	1141                	addi	sp,sp,-16
+80000066:	00b10623          	sb	a1,12(sp)
+8000006a:	00c106a3          	sb	a2,13(sp)
+8000006e:	00d10723          	sb	a3,14(sp)
+80000072:	00e107a3          	sb	a4,15(sp)
+80000076:	4532                	lw	a0,12(sp)
+80000078:	0141                	addi	sp,sp,16
+8000007a:	8082                	ret
+  lw: 1   lbu: 4
+
+----- def_nostrict.elf : load_i32_defensive -----
+8000004a <load_i32_defensive>:
+8000004a:	800007b7          	lui	a5,0x80000
+8000004e:	36078793          	addi	a5,a5,864 # 80000360 <sandbox_mem>
+80000052:	953e                	add	a0,a0,a5
+80000054:	00054583          	lbu	a1,0(a0)
+80000058:	00154603          	lbu	a2,1(a0)
+8000005c:	00254683          	lbu	a3,2(a0)
+80000060:	00354703          	lbu	a4,3(a0)
+80000064:	1141                	addi	sp,sp,-16
+80000066:	00b10623          	sb	a1,12(sp)
+8000006a:	00c106a3          	sb	a2,13(sp)
+8000006e:	00d10723          	sb	a3,14(sp)
+80000072:	00e107a3          	sb	a4,15(sp)
+80000076:	4532                	lw	a0,12(sp)
+80000078:	0141                	addi	sp,sp,16
+8000007a:	8082                	ret
+  lw: 1   lbu: 4
+
+----- def_nostrict_ooo.elf : load_i32_defensive -----
+8000004a <load_i32_defensive>:
+8000004a:	800007b7          	lui	a5,0x80000
+8000004e:	33078793          	addi	a5,a5,816 # 80000330 <sandbox_mem>
+80000052:	97aa                	add	a5,a5,a0
+80000054:	4388                	lw	a0,0(a5)
+80000056:	8082                	ret
+  lw: 1   lbu: 0
+
