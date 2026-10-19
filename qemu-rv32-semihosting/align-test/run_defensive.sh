@@ -26,9 +26,9 @@ dump() {
 
 run() {
   for e in def_nostrict.elf def_nostrict_ooo.elf; do
-    echo "### strict qemu (misaligned=off): $e ###"
-    timeout 15 qemu-system-riscv32 -M virt -bios none -nographic -cpu rv32,misaligned=off \
-      -semihosting-config enable=on,target=native -kernel "$e"
+    echo "### strict qemu (trap-misaligned-access=on): $e ###"
+    timeout 15 qemu-system-riscv32 -M virt -bios none -nographic -cpu rv32,trap-misaligned-access=on \
+      -semihosting-config enable=on,target=native -kernel "$e" </dev/null
     echo
   done
 }

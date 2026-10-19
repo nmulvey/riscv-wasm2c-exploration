@@ -1,0 +1,16 @@
+### strict qemu (trap-misaligned-access=on): def_nostrict.elf ###
+== alignment probe start ==
+aligned defensive addr=0: 0x33221100
+aligned optimized addr=0: 0x33221100
+misaligned defensive addr=0x00000001: 0x44332211  (survived)
+misaligned defensive addr=0x00000002: 0x55443322  (survived)
+misaligned defensive addr=0x00000003: 0x66554433  (survived)
+== all misaligned loads completed, no trap ==
+
+### strict qemu (trap-misaligned-access=on): def_nostrict_ooo.elf ###
+== alignment probe start ==
+aligned defensive addr=0: 0x33221100
+aligned optimized addr=0: 0x33221100
+misaligned defensive addr=0x00000001: 
+trap! mcause=0x00000004  load address misaligned
+

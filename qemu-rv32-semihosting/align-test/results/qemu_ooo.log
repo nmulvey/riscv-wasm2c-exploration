@@ -1,0 +1,1 @@
+riscv_cpu_do_interrupt: hart:0, async:0, cause:00000004, epc:0x80000054, tval:0x80000331, desc=misaligned_load

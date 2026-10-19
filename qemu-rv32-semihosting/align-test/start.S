@@ -27,9 +27,12 @@ trap_entry:
 semi_call:
 .Lsemihost_call:
     .balign 4
+    .option push
+    .option norvc
     slli    x0, x0, 0x1f
     ebreak
     srai    x0, x0, 7
+    .option pop
     ret
 
     .section .bss
