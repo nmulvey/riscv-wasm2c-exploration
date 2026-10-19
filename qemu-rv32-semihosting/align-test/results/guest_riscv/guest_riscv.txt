@@ -1,0 +1,162 @@
+=== strict ===
+w2c_0x24guest0x2Ewasm_load_u32_ptr:
+	lui	a4,%tprel_hi(wasm_rt_call_stack_depth)
+	add	a3,a4,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	addi	sp,sp,-32
+	sw	ra,28(sp)
+	addi	a5,a2,1
+	sw	a5,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	li	a3,500
+	bgtu	a5,a3,.L15
+	lw	a3,68(a0)
+	addi	a6,a1,4
+	sltu	a5,a6,a1
+	bltu	a3,a5,.L13
+	beq	a3,a5,.L16
+.L11:
+	lw	a5,40(a0)
+	add	a1,a5,a1
+	lbu	a0,2(a1)
+	lbu	a7,0(a1)
+	lbu	a6,1(a1)
+	lbu	a5,3(a1)
+	sb	a7,12(sp)
+	sb	a6,13(sp)
+	sb	a0,14(sp)
+	sb	a5,15(sp)
+--
+w2c_0x24guest0x2Ewasm_load_u32_bytes:
+	lui	a4,%tprel_hi(wasm_rt_call_stack_depth)
+	add	a3,a4,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	addi	sp,sp,-32
+	sw	ra,28(sp)
+	addi	a5,a2,1
+	sw	a5,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	li	a3,500
+	bgtu	a5,a3,.L23
+	lw	a3,68(a0)
+	addi	a6,a1,4
+	sltu	a5,a6,a1
+	bltu	a3,a5,.L21
+	beq	a3,a5,.L24
+.L19:
+	lw	a5,40(a0)
+	add	a1,a5,a1
+	lbu	a0,2(a1)
+	lbu	a7,0(a1)
+	lbu	a6,1(a1)
+	lbu	a5,3(a1)
+	sb	a7,12(sp)
+	sb	a6,13(sp)
+	sb	a0,14(sp)
+	sb	a5,15(sp)
+=== nostrict ===
+w2c_0x24guest0x2Ewasm_load_u32_ptr:
+	lui	a4,%tprel_hi(wasm_rt_call_stack_depth)
+	add	a3,a4,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	addi	sp,sp,-32
+	sw	ra,28(sp)
+	addi	a5,a2,1
+	sw	a5,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	li	a3,500
+	bgtu	a5,a3,.L15
+	lw	a3,68(a0)
+	addi	a6,a1,4
+	sltu	a5,a6,a1
+	bltu	a3,a5,.L13
+	beq	a3,a5,.L16
+.L11:
+	lw	a5,40(a0)
+	add	a1,a5,a1
+	lbu	a0,2(a1)
+	lbu	a7,0(a1)
+	lbu	a6,1(a1)
+	lbu	a5,3(a1)
+	sb	a7,12(sp)
+	sb	a6,13(sp)
+	sb	a0,14(sp)
+	sb	a5,15(sp)
+--
+w2c_0x24guest0x2Ewasm_load_u32_bytes:
+	lui	a4,%tprel_hi(wasm_rt_call_stack_depth)
+	add	a3,a4,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	addi	sp,sp,-32
+	sw	ra,28(sp)
+	addi	a5,a2,1
+	sw	a5,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	li	a3,500
+	bgtu	a5,a3,.L23
+	lw	a3,68(a0)
+	addi	a6,a1,4
+	sltu	a5,a6,a1
+	bltu	a3,a5,.L21
+	beq	a3,a5,.L24
+.L19:
+	lw	a5,40(a0)
+	add	a1,a5,a1
+	lbu	a0,2(a1)
+	lbu	a7,0(a1)
+	lbu	a6,1(a1)
+	lbu	a5,3(a1)
+	sb	a7,12(sp)
+	sb	a6,13(sp)
+	sb	a0,14(sp)
+	sb	a5,15(sp)
+=== nostrict_ooo ===
+w2c_0x24guest0x2Ewasm_load_u32_ptr:
+	lui	a5,%tprel_hi(wasm_rt_call_stack_depth)
+	add	a3,a5,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	addi	sp,sp,-16
+	sw	ra,12(sp)
+	li	a6,500
+	addi	a4,a2,1
+	sw	a4,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	bgtu	a4,a6,.L15
+	lw	a3,68(a0)
+	addi	a6,a1,4
+	sltu	a4,a6,a1
+	bltu	a3,a4,.L13
+	beq	a3,a4,.L16
+.L11:
+	lw	a4,40(a0)
+	add	a4,a4,a1
+	lw	a0,0(a4)
+	add	a5,a5,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	ra,12(sp)
+	sw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a5)
+	addi	sp,sp,16
+	jr	ra
+.L16:
+	lw	a4,64(a0)
+--
+w2c_0x24guest0x2Ewasm_load_u32_bytes:
+	lui	a5,%tprel_hi(wasm_rt_call_stack_depth)
+	add	a3,a5,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	addi	sp,sp,-16
+	sw	ra,12(sp)
+	li	a6,500
+	addi	a4,a2,1
+	sw	a4,%tprel_lo(wasm_rt_call_stack_depth)(a3)
+	bgtu	a4,a6,.L23
+	lw	a3,68(a0)
+	addi	a6,a1,4
+	sltu	a4,a6,a1
+	bltu	a3,a4,.L21
+	beq	a3,a4,.L24
+.L19:
+	lw	a4,40(a0)
+	add	a4,a4,a1
+	lw	a0,0(a4)
+	add	a5,a5,tp,%tprel_add(wasm_rt_call_stack_depth)
+	lw	ra,12(sp)
+	sw	a2,%tprel_lo(wasm_rt_call_stack_depth)(a5)
+	addi	sp,sp,16
+	jr	ra
+.L24:
+	lw	a4,64(a0)

@@ -9,3 +9,9 @@
 |---|---|---|
 | Wasm | i32.load (align=4) | i32.load align=1 |
 | wasm2c | i32_load(...) | i32_load(...) |
+
+| Build | load_u32_ptr | load_u32_bytes |
+|---|---|---|
+| strict | 4x lbu | 4x lbu |
+| -mno-strict-align | 4x lbu | 4x lbu |
+| -mno-strict-align -mtune=generic-ooo | lw a0,0(a4) | lw a0,0(a4) |
